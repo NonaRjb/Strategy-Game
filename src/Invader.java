@@ -1,8 +1,8 @@
 abstract class Invader {
     private Coordinate coordinate;
     private HealthLevel healthLevel;
-    private int movementSpeed;
-    private int range;
+    protected int movementSpeed;
+    protected int range;
     private int InstanceNum;
     private boolean isFreezed;
     private boolean isBurning;
@@ -38,16 +38,8 @@ abstract class Invader {
         return InstanceNum;
     }
 
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
     public int getNumberOfKillings() {
         return numberOfKillings;
-    }
-
-    public int getRange() {
-        return range;
     }
 
     public void setHealthLevel(HealthLevel healthLevel) {
@@ -74,20 +66,12 @@ abstract class Invader {
         InstanceNum = instanceNum;
     }
 
-    public void setMovementSpeed(int movementSpeed) {
-        this.movementSpeed = movementSpeed;
-    }
-
     public void setNumberOfKillings(int numberOfKillings) {
         this.numberOfKillings = numberOfKillings;
     }
 
     public void setPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
-    }
-
-    public void setRange(int range) {
-        this.range = range;
     }
 
     public void showDetails(){

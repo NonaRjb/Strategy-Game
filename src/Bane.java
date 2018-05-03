@@ -1,12 +1,11 @@
-public class Henchman extends Invader implements InvaderAttack{
+public class Bane extends Invader implements InvaderAttack{
     private int shootPower;
     private Time attackRateTime;
 
     public int getShootPower() {
         return shootPower;
     }
-
-    public Time getAttackRateTime() {
+    public Time getAttackRateTime(){
         return attackRateTime;
     }
 
@@ -18,9 +17,8 @@ public class Henchman extends Invader implements InvaderAttack{
         this.attackRateTime = attackRateTime;
     }
 
-    ////// attack method
     @Override
-    public void attack(){
+    public void attack() {
 
     }
 }

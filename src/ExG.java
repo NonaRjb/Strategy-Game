@@ -1,6 +1,11 @@
-public class Henchman extends Invader implements InvaderAttack{
+public class ExG extends Invader implements InvaderAttack{
     private int shootPower;
     private Time attackRateTime;
+
+    /////// constructor
+    ExG(){
+
+    }
 
     public int getShootPower() {
         return shootPower;
@@ -10,17 +15,16 @@ public class Henchman extends Invader implements InvaderAttack{
         return attackRateTime;
     }
 
-    public void setShootPower(int shootPower) {
-        this.shootPower = shootPower;
-    }
-
     public void setAttackRateTime(Time attackRateTime) {
         this.attackRateTime = attackRateTime;
     }
 
-    ////// attack method
+    public void setShootPower(int shootPower) {
+        this.shootPower = shootPower;
+    }
+
     @Override
-    public void attack(){
+    public void attack() {
 
     }
 }
