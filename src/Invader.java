@@ -1,6 +1,6 @@
 abstract class Invader {
-    private Coordinate coordinate;
-    private HealthLevel healthLevel;
+    protected Coordinate coordinate;
+    protected HealthLevel healthDegree;
     protected int movementSpeed;
     protected int range;
     private int InstanceNum;
@@ -30,8 +30,8 @@ abstract class Invader {
         return graphicalSize;
     }
 
-    public HealthLevel getHealthLevel() {
-        return healthLevel;
+    public HealthLevel getHealthDegree() {
+        return healthDegree;
     }
 
     public int getInstanceNum() {
@@ -42,8 +42,8 @@ abstract class Invader {
         return numberOfKillings;
     }
 
-    public void setHealthLevel(HealthLevel healthLevel) {
-        this.healthLevel = healthLevel;
+    public void setHealthDegree(HealthLevel healthDegree) {
+        this.healthDegree = healthDegree;
     }
 
     public void setBurning(boolean burning) {

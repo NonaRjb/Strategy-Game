@@ -1,10 +1,16 @@
 public class Smelly extends Invader implements InvaderAttack{
-    private int shootPower;
-    private Time attackRateTime;
-    private Poison poisonPlume;
+    final int shootPower;
+    final Time attackRateTime;
+    //private Poison poisonPlume;
 
-    Smelly(){
-
+    //constructor
+    Smelly(Coordinate init_coordinate){
+        this.shootPower = 2; //Medium shoot power
+        this.attackRateTime = new Time(3); //attacks every 3 time units
+        super.coordinate = init_coordinate;
+        super.healthDegree = new HealthLevel(3); //Low degree of health
+        super.movementSpeed = 2; //moves every 2 time units
+        super.range = 3; //Medium range
     }
 
     public int getShootPower() {
@@ -13,14 +19,6 @@ public class Smelly extends Invader implements InvaderAttack{
 
     public Time getAttackRateTime() {
         return attackRateTime;
-    }
-
-    public void setShootPower(int shootPower) {
-        this.shootPower = shootPower;
-    }
-
-    public void setAttackRateTime(Time attackRateTime) {
-        this.attackRateTime = attackRateTime;
     }
 
     @Override

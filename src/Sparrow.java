@@ -1,6 +1,16 @@
 public class Sparrow extends Invader implements InvaderAttack{
-    private int shootPower;
-    private Time attackRateTime;
+    final int shootPower;
+    final Time attackRateTime;
+
+    //constructor
+    Sparrow(Coordinate init_coordinate){
+        this.shootPower = 2; //low shoot power
+        this.attackRateTime = new Time(2); //attacks every 2 time units
+        super.coordinate = init_coordinate;
+        super.healthDegree = new HealthLevel(2); //Medium degree of health
+        super.movementSpeed = 2; //moves every 2 time units
+        super.range = 3; //Medium range
+    }
 
     public int getShootPower() {
         return shootPower;
@@ -8,14 +18,6 @@ public class Sparrow extends Invader implements InvaderAttack{
 
     public Time getAttackRateTime() {
         return attackRateTime;
-    }
-
-    public void setShootPower(int shootPower) {
-        this.shootPower = shootPower;
-    }
-
-    public void setAttackRateTime(Time attackRateTime) {
-        this.attackRateTime = attackRateTime;
     }
 
     @Override

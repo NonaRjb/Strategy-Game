@@ -1,9 +1,15 @@
 public class HockeyMaskMan extends Invader implements InvaderAttack{
-    protected int shootPower;
-    protected Time attackRateTime;
+    final int shootPower;
+    final Time attackRateTime;
 
-    HockeyMaskMan(){
-
+    //constructor
+    HockeyMaskMan(Coordinate init_coordinate){
+        this.shootPower = 3; //Medium shoot power
+        this.attackRateTime = new Time(2); //attacks every 2 time units
+        super.coordinate = init_coordinate;
+        super.healthDegree = new HealthLevel(1); //High degree of health
+        super.movementSpeed = 3; //moves every 3 time units
+        super.range = 3; //Medium range
     }
 
     public int getShootPower() {
@@ -12,14 +18,6 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
 
     public Time getAttackRateTime() {
         return attackRateTime;
-    }
-
-    public void setAttackRateTime(Time attackRateTime) {
-        this.attackRateTime = attackRateTime;
-    }
-
-    public void setShootPower(int shootPower) {
-        this.shootPower = shootPower;
     }
 
     @Override

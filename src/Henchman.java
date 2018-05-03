@@ -1,21 +1,24 @@
 public class Henchman extends Invader implements InvaderAttack{
-    private int shootPower;
-    private Time attackRateTime;
+    final int shootPower;
+    final Time attackRateTime;
 
+    //constructor
+    Henchman(Coordinate init_coordinate){
+        this.shootPower = 2; //Low shoot power
+        this.attackRateTime = new Time(2); //attacks every 2 time units
+        super.coordinate = init_coordinate;
+        super.healthDegree = new HealthLevel(2); //Medium healthLevel
+        super.movementSpeed = 1; //moves each time unit
+        super.range = 3; //Medium Range
+    }
+
+    //getters
     public int getShootPower() {
         return shootPower;
     }
 
     public Time getAttackRateTime() {
         return attackRateTime;
-    }
-
-    public void setShootPower(int shootPower) {
-        this.shootPower = shootPower;
-    }
-
-    public void setAttackRateTime(Time attackRateTime) {
-        this.attackRateTime = attackRateTime;
     }
 
     ////// attack method

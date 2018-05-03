@@ -1,9 +1,15 @@
 public class Motivator extends Invader implements InvaderAttack {
-    private int motivePower;
-    private int motiveRate;
+    final int motivePower;
+    final int motiveRate;
 
-    Motivator(){
-
+    //constructor
+    Motivator(Coordinate init_coordinate){
+        this.motivePower = 1; //low motive power
+        this.motiveRate = 2; //motives every 2 time units
+        super.coordinate = init_coordinate;
+        super.healthDegree = new HealthLevel(2); //Medium degree of health
+        super.movementSpeed = 3; //moves every 3 time units
+        super.range = 2; //low range
     }
 
     public int getMotivePower() {
@@ -12,14 +18,6 @@ public class Motivator extends Invader implements InvaderAttack {
 
     public int getMotiveRate() {
         return motiveRate;
-    }
-
-    public void setMotivePower(int motivePower) {
-        this.motivePower = motivePower;
-    }
-
-    public void setMotiveRate(int motiveRate) {
-        this.motiveRate = motiveRate;
     }
 
     @Override

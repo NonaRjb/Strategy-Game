@@ -1,5 +1,10 @@
 public class HealthLevel {
     private int healthLevel;
+    private int healthUnit;
+
+    HealthLevel(int healthUnit){
+       this.healthUnit = healthUnit;
+    }
 
     public int getHealthLevel() {
         return healthLevel;
@@ -9,12 +14,12 @@ public class HealthLevel {
         this.healthLevel = healthLevel;
     }
 
-    public void decreaseHealth(int percentage){
-        this.healthLevel -= percentage;
+    public void decreaseHealth(int unitNum){
+        this.healthLevel -= unitNum * healthUnit;
     }
 
-    public void increaseHealth(int percentage){
-        this.healthLevel += percentage;
+    public void increaseHealth(int unitNum){
+        this.healthLevel += unitNum * healthUnit;
     }
 
 }

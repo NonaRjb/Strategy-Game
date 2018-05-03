@@ -1,9 +1,15 @@
 public class Hopper extends Invader implements InvaderAttack{
-    private int shootPower;
-    private Time attackRateTime;
+    final int shootPower;
+    final Time attackRateTime;
 
-    Hopper(){
-
+    //constructor
+    Hopper(Coordinate init_coordinate){
+        this.shootPower = 3; //Medium shoot power
+        this.attackRateTime = new Time(2); //attacks every 2 time units
+        super.coordinate = init_coordinate;
+        super.healthDegree = new HealthLevel(3); //Low degree of health
+        super.movementSpeed = 2; //moves every 2 time units
+        super.range = 3; //Medium range
     }
 
     public int getShootPower() {
@@ -12,14 +18,6 @@ public class Hopper extends Invader implements InvaderAttack{
 
     public Time getAttackRateTime() {
         return attackRateTime;
-    }
-
-    public void setShootPower(int shootPower) {
-        this.shootPower = shootPower;
-    }
-
-    public void setAttackRateTime(Time attackRateTime) {
-        this.attackRateTime = attackRateTime;
     }
 
     public void accelerate(){
