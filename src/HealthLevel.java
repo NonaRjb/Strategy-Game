@@ -16,5 +16,6 @@ public class HealthLevel {
     public void increaseHealth(int percentage){
         this.healthLevel += percentage;
     }
+
 }
 
