@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Excalibur extends Armory implements Weapon,DetailShow{
+public class Excalibur extends Armory implements Weapon{
 
     private Time attackRateTime;
     private Time lastAttack;

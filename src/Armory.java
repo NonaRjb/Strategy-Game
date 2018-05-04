@@ -1,6 +1,6 @@
-import org.omg.IOP.CodecFactoryOperations;
+//import org.omg.IOP.CodecFactoryOperations;
 
-abstract class Armory {
+abstract class Armory implements DetailShow {
 
     protected Coordinate coordinate;
     protected int id;

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Laser extends Armory implements Weapon, DetailShow{
+public class Laser extends Armory implements Weapon{
 
     private boolean onAttack;
     private int shotPower;

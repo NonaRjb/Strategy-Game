@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class MachineGun extends Armory implements Weapon, DetailShow{
+public class MachineGun extends Armory implements Weapon{
 
     private Time attackRateTime;
     private Time lastAttack;

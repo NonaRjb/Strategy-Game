@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Beehive extends Armory implements Weapon,DetailShow{
+public class Beehive extends Armory implements Weapon{
 
     private Time attackRateTime;
     private Time lastAttack;

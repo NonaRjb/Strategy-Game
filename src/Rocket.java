@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Rocket extends Armory implements Weapon, DetailShow{
+public class Rocket extends Armory implements Weapon{
 
     private Time attackRateTime;
     private Time lastAttack;

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Hellgate extends Armory implements Weapon, DetailShow{
+public class Hellgate extends Armory implements Weapon{
 
     private int shotPower;
 
