@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Sauron extends Armory implements Weapon{
 
     private Time attackRateTime;
@@ -8,12 +10,13 @@ public class Sauron extends Armory implements Weapon{
     public Sauron( int id, Coordinate coordinate) {
         super.id = id;
         super.coordinate = coordinate;
-        super.level = 1;
-        super.range = 2 * super.rangeUnit; //Medium Range
-        this.attackRateTime = new Time(1 * super.attackTimeUnit); //Low Attack Speed
-        super.healthDegree = new HealthLevel(2);
-        super.price = 3 * super.priceUnit;
+        super.level = 1; //Beginning
+        super.range = 10 * super.rangeUnit; //Infinity Range
+        this.attackRateTime = new Time(2 * super.attackTimeUnit); //Medium Attack Speed
+        super.healthDegree = new HealthLevel(2); //Medium Health Level
+        super.price = 3 * super.priceUnit; //High Price
         super.setTargetPriority("MinimumHealth");
+        this.shotPower = 1 * super.shotPowerUnit;  //Low Shot power
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);
     }
@@ -30,8 +33,11 @@ public class Sauron extends Armory implements Weapon{
     }
 
     @Override
-    public void attack() {
-
+    public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
+        if( currentTime.getTime()-this.lastAttack.getTime() >= this.attackRateTime.getTime() ){
+            gameShots.add( new Bullet(super.coordinate, targetInvader, shotPower) );
+            this.setLastAttack(currentTime);
+        }
     }
 
     @Override
@@ -44,3 +50,4 @@ public class Sauron extends Armory implements Weapon{
     }
 
 }
+

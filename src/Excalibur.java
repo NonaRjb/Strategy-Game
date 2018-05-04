@@ -1,25 +1,47 @@
+import java.util.ArrayList;
+
 public class Excalibur extends Armory implements Weapon{
 
     private Time attackRateTime;
     private Time lastAttack;
+    private Time creationTime;
     private int shotPower;
+    private boolean isActive;
 
+    final Time activationLatency = new Time(30);
     //Constructor
-    public Excalibur( int id, Coordinate coordinate) {
+    public Excalibur( int id, Coordinate coordinate, Time currentTime) {
         super.id = id;
         super.coordinate = coordinate;
-        super.level = 1;
-        super.range = 2 * super.rangeUnit; //Medium Range
-        this.attackRateTime = new Time(1 * super.attackTimeUnit); //Low Attack Speed
-        super.healthDegree = new HealthLevel(2);
-        super.price = 3 * super.priceUnit;
+        super.level = 1; //Beginning
+        super.range = 10 * super.rangeUnit; //Infinity Range
+        this.attackRateTime = new Time( (int)(0.5 * (double)super.attackTimeUnit) ); //Very Low Attack Speed
+        super.healthDegree = new HealthLevel(3); //High Health Level
+        super.price = 4 * super.priceUnit; //Very High Price
         super.setTargetPriority("MinimumHealth");
+        this.shotPower = 4 * super.shotPowerUnit;  //Very High Shot power
+        this.creationTime = currentTime;
+        this.isActive = false;
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);
     }
 
-    // Other Methods
 
+    // Setters
+    public void setActive() { isActive = true; }
+
+    // Getters
+    public boolean isExcaliburActive() { return isActive; }
+
+
+    // Other Methods
+    public void Activate(Time currentTime){
+        if( !this.isActive ) {
+            if (currentTime.getTime() - this.creationTime.getTime() > this.activationLatency.getTime())
+                this.setActive();
+        }
+
+    }
 
     @Override
     public void levelUp() {
@@ -30,8 +52,11 @@ public class Excalibur extends Armory implements Weapon{
     }
 
     @Override
-    public void attack() {
-
+    public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
+        if( currentTime.getTime()-this.lastAttack.getTime() >= this.attackRateTime.getTime() ){
+            gameShots.add( new Bullet(super.coordinate, targetInvader, shotPower) );
+            this.setLastAttack(currentTime);
+        }
     }
 
     @Override
@@ -44,3 +69,4 @@ public class Excalibur extends Armory implements Weapon{
     }
 
 }
+
