@@ -1,4 +1,4 @@
-abstract class Invader {
+abstract class Invader implements DetailShow {
     protected Coordinate coordinate;
     protected HealthLevel healthDegree;
     protected int movementSpeed;

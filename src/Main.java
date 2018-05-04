@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Armory> gameArmories= new ArrayList<>();
+        ArrayList<Invader> gameInvaders = new ArrayList<>();
         Coordinate[] armoryCoordinates = new Coordinate[10];
         for(int i=0; i<10; i++){
             armoryCoordinates[i] = new Coordinate(i,i);
@@ -19,6 +20,7 @@ public class Main {
 
 	        if( command.equals("add") ){
 	            command = scan.next();
+
 	            if( command.equals("Freezer") ){
                     command = scan.next();
                     if( command.equals("in") ){
@@ -99,6 +101,32 @@ public class Main {
                             gameArmories.add( new Sauron( intCommand, armoryCoordinates[intCommand] ) );
                         }
                     }
+                } else if(  command.equals("Henchman") ){
+	                gameInvaders.add( new Henchman( armoryCoordinates[0] ) );
+                } else if(  command.equals("Skipper") ){
+                    gameInvaders.add( new Skipper( armoryCoordinates[0] ) );
+                } else if(  command.equals("Bane") ){
+                    gameInvaders.add( new Bane( armoryCoordinates[0] ) );
+                } else if(  command.equals("Sparrow") ){
+                    gameInvaders.add( new Sparrow( armoryCoordinates[0] ) );
+                } else if(  command.equals("Boomer") ){
+                    gameInvaders.add( new Boomer( armoryCoordinates[0] ) );
+                } else if(  command.equals("Healer") ){
+                    gameInvaders.add( new Healer( armoryCoordinates[0] ) );
+                } else if(  command.equals("Motivator") ){
+                    gameInvaders.add( new Motivator( armoryCoordinates[0] ) );
+                } else if(  command.equals("Icer") ){
+                    gameInvaders.add( new Icer( armoryCoordinates[0] ) );
+                } else if(  command.equals("Miner") ){
+                    gameInvaders.add( new Miner( armoryCoordinates[0] ) );
+                } else if(  command.equals("Smelly") ){
+                    gameInvaders.add( new Smelly( armoryCoordinates[0] ) );
+                } else if(  command.equals("Hopper") ){
+                    gameInvaders.add( new Hopper( armoryCoordinates[0] ) );
+                } else if(  command.equals("ExG") ){
+                    gameInvaders.add( new ExG( armoryCoordinates[0] ) );
+                } else if(  command.equals("HockeyMaskMan") ){
+                    gameInvaders.add( new HockeyMaskMan( armoryCoordinates[0] ) );
                 }
 
 
@@ -109,6 +137,10 @@ public class Main {
 	                if( command.equals("weapons") ){
 	                    for( Armory currentArmory : gameArmories ){
 	                        currentArmory.showDetail();
+                        }
+                    } else if ( command.equals("enemy") ){
+                        for( Invader currentInvader : gameInvaders ){
+                            currentInvader.showDetail();
                         }
                     }
                 }
