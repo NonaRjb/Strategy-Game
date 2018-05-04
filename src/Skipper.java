@@ -1,4 +1,4 @@
-public class Skipper extends Invader implements InvaderAttack{
+public class Skipper extends Invader implements InvaderAttack, DetailShow{
     final int shootPower;
     final Time attackRateTime;
 
@@ -21,5 +21,16 @@ public class Skipper extends Invader implements InvaderAttack{
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Skipper:");
+        System.out.println("Visibility Range: High");
+        System.out.println("Movement Speed: Low");
+        System.out.println("Health Degree: Low");
+        System.out.println("Attack Rate: High");
+        System.out.println("Shoot Power: High");
+        System.out.println("Additional Abilities: None");
     }
 }

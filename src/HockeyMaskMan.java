@@ -1,4 +1,4 @@
-public class HockeyMaskMan extends Invader implements InvaderAttack{
+public class HockeyMaskMan extends Invader implements InvaderAttack, DetailShow{
     final int shootPower;
     final Time attackRateTime;
 
@@ -23,5 +23,17 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("HockeyMaskMan:");
+        System.out.println("Visibility Range: Medium");
+        System.out.println("Movement Speed: Low");
+        System.out.println("Health Degree: High");
+        System.out.println("Attack Rate: Medium");
+        System.out.println("Shoot Power: Medium");
+        System.out.println("Additional Abilities: When it gets to a building, starts shooting it until the building" +
+                           "collapses or it dies itself");
     }
 }

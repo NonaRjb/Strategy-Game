@@ -1,4 +1,4 @@
-public class Hopper extends Invader implements InvaderAttack{
+public class Hopper extends Invader implements InvaderAttack, DetailShow{
     final int shootPower;
     final Time attackRateTime;
 
@@ -27,5 +27,17 @@ public class Hopper extends Invader implements InvaderAttack{
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Hopper:");
+        System.out.println("Visibility Range: Medium");
+        System.out.println("Movement Speed: Medium");
+        System.out.println("Health Degree: Low");
+        System.out.println("Attack Rate: Medium");
+        System.out.println("Shoot Power: Medium");
+        System.out.println("Additional Abilities: When it gets to the hero or a soldier for the first time, it moves 2" +
+                           "times of its traveled distance in a sec");
     }
 }

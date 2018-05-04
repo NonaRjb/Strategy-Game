@@ -1,4 +1,4 @@
-public class Icer extends Invader implements InvaderAttack {
+public class Icer extends Invader implements InvaderAttack, DetailShow {
     final Time attackRateTime;
 
     Icer(Coordinate init_coordinate){
@@ -12,5 +12,16 @@ public class Icer extends Invader implements InvaderAttack {
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Icer:");
+        System.out.println("Visibility Range: Medium");
+        System.out.println("Movement Speed: Very Low");
+        System.out.println("Health Degree: High");
+        System.out.println("Attack Rate: Very Low");
+        System.out.println("Shoot Power: None");
+        System.out.println("Additional Abilities: Only attacks buildings and causes them to stop working for 10 secs");
     }
 }

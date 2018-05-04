@@ -1,4 +1,4 @@
-public class Sparrow extends Invader implements InvaderAttack{
+public class Sparrow extends Invader implements InvaderAttack, DetailShow{
     final int shootPower;
     final Time attackRateTime;
 
@@ -23,5 +23,16 @@ public class Sparrow extends Invader implements InvaderAttack{
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Sparrow:");
+        System.out.println("Visibility Range: Medium");
+        System.out.println("Movement Speed: Medium");
+        System.out.println("Health Degree: Medium");
+        System.out.println("Attack Rate: Medium");
+        System.out.println("Shoot Power: Low");
+        System.out.println("Additional Abilities: Sparrow flies so it can only be attacked by armories");
     }
 }

@@ -1,4 +1,4 @@
-public class Bane extends Invader implements InvaderAttack{
+public class Bane extends Invader implements InvaderAttack, DetailShow{
     final int shootPower;
     final Time attackRateTime;
 
@@ -21,5 +21,16 @@ public class Bane extends Invader implements InvaderAttack{
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Bane:");
+        System.out.println("Visibility Range: Low");
+        System.out.println("Movement Speed: Very Low");
+        System.out.println("Health Degree: High");
+        System.out.println("Attack Rate: Low");
+        System.out.println("Shoot Power: High");
+        System.out.println("Additional Abilities: None");
     }
 }

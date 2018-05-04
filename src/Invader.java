@@ -73,8 +73,4 @@ abstract class Invader {
     public void setPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
     }
-
-    public void showDetails(){
-        ////// code goes here
-    }
 }

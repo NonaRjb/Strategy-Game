@@ -1,4 +1,4 @@
-public class Healer extends Invader implements InvaderAttack {
+public class Healer extends Invader implements InvaderAttack, DetailShow {
     final int healPower;
     final int healRate;
 
@@ -23,5 +23,16 @@ public class Healer extends Invader implements InvaderAttack {
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Healer:");
+        System.out.println("Visibility Range: Low");
+        System.out.println("Movement Speed: Low");
+        System.out.println("Health Degree: Low");
+        System.out.println("Heal Rate: Medium");
+        System.out.println("Heal Power: Low");
+        System.out.println("Additional Abilities: Instead of attacking, heals other Invaders but it can't heals itself");
     }
 }

@@ -1,4 +1,4 @@
-public class Motivator extends Invader implements InvaderAttack {
+public class Motivator extends Invader implements InvaderAttack, DetailShow {
     final int motivePower;
     final int motiveRate;
 
@@ -23,5 +23,16 @@ public class Motivator extends Invader implements InvaderAttack {
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Motivator:");
+        System.out.println("Visibility Range: Low");
+        System.out.println("Movement Speed: Low");
+        System.out.println("Health Degree: Medium");
+        System.out.println("Motivation Rate: Medium");
+        System.out.println("Motivation Power: Low");
+        System.out.println("Additional Abilities: Causes every Invaders in it's range, have more shoot power");
     }
 }

@@ -1,4 +1,4 @@
-public class Smelly extends Invader implements InvaderAttack{
+public class Smelly extends Invader implements InvaderAttack, DetailShow{
     final int shootPower;
     final Time attackRateTime;
     //private Poison poisonPlume;
@@ -24,5 +24,17 @@ public class Smelly extends Invader implements InvaderAttack{
     @Override
     public void attack() {
 
+    }
+
+    @Override
+    public void showDetail(){
+        System.out.println("Smelly:");
+        System.out.println("Visibility Range: Medium");
+        System.out.println("Movement Speed: Medium");
+        System.out.println("Health Degree: Low");
+        System.out.println("Attack Rate: Low");
+        System.out.println("Shoot Power: Medium");
+        System.out.println("Additional Abilities: When it dies it remains a poisonous cloud around itself, if the Hero" +
+                           "any of the soldiers smell that, their health degree decreases for some secs");
     }
 }
