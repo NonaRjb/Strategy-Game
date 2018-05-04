@@ -10,6 +10,11 @@ abstract class Invader {
     private int graphicalSize;
     private int numberOfKillings;
 
+    //constructor
+    Invader(){
+        numberOfKillings = 0;
+    }
+
     public boolean isBurning() {
         return isBurning;
     }
