@@ -1,18 +1,17 @@
-public class Henchman extends Invader implements InvaderAttack, DetailShow{
+public class ExG extends Invader implements InvaderAttack, DetailShow{
     final int shootPower;
     final Time attackRateTime;
 
-    //constructor
-    Henchman(Coordinate init_coordinate){
+    /////// constructor
+    ExG(Coordinate init_coordinate){
         this.shootPower = 2; //Low shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
-        super.healthDegree = new HealthLevel(2); //Medium healthLevel
-        super.movementSpeed = 1; //moves each time unit
-        super.range = 3; //Medium Range
+        super.healthDegree = new HealthLevel(2); //Medium degree of health
+        super.movementSpeed = 3; //moves every 3 time units
+        super.range = 3; //Medium range
     }
 
-    //getters
     public int getShootPower() {
         return shootPower;
     }
@@ -21,9 +20,8 @@ public class Henchman extends Invader implements InvaderAttack, DetailShow{
         return attackRateTime;
     }
 
-    ////// attack method
     @Override
-    public void attack(){
+    public void attack() {
 
     }
 
@@ -31,10 +29,10 @@ public class Henchman extends Invader implements InvaderAttack, DetailShow{
     public void showDetail(){
         System.out.println("Henchman:");
         System.out.println("Visibility Range: Medium");
-        System.out.println("Movement Speed: High");
+        System.out.println("Movement Speed: Low");
         System.out.println("Health Degree: Medium");
         System.out.println("Attack Rate: Medium");
         System.out.println("Shoot Power: Low");
-        System.out.println("Additional Abilities: None");
+        System.out.println("Additional Abilities: Only attacks Hero");
     }
 }
