@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class MachineGun extends Armory implements Weapon{
+public class MachineGun extends Armory implements Weapon, DetailShow{
 
     private Time attackRateTime;
     private Time lastAttack;
@@ -47,6 +47,17 @@ public class MachineGun extends Armory implements Weapon{
 
     public void setLastAttack(Time t){
         this.lastAttack = t;
+    }
+
+    @Override
+    public void showDetail() {
+        System.out.println("MachineGun:");
+        System.out.println("Attack Range: Medium");
+        System.out.println("Attack Speed: Medium");
+        System.out.println("Health Level: Medium");
+        System.out.println("Price: Medium");
+        System.out.println("Target Priority: Minimum Health Level");
+        System.out.println("Additional Characteristics: Whatever Medium!");
     }
 
 }

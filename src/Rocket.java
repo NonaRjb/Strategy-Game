@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Rocket extends Armory implements Weapon{
+public class Rocket extends Armory implements Weapon, DetailShow{
 
     private Time attackRateTime;
     private Time lastAttack;
@@ -47,6 +47,17 @@ public class Rocket extends Armory implements Weapon{
 
     public void setLastAttack(Time t){
         this.lastAttack = t;
+    }
+
+    @Override
+    public void showDetail() {
+        System.out.println("Rocket:");
+        System.out.println("Attack Range: Medium");
+        System.out.println("Attack Speed: Low");
+        System.out.println("Health Level: Medium");
+        System.out.println("Price: High");
+        System.out.println("Target Priority: All In Range");
+        System.out.println("Additional Characteristics: Shoot Everybody in Range");
     }
 
 }

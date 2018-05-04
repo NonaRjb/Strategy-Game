@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Freezer extends Armory implements Weapon {
+public class Freezer extends Armory implements Weapon, DetailShow {
 
     private Time attackRateTime;
     private Time lastAttack;
@@ -47,5 +47,16 @@ public class Freezer extends Armory implements Weapon {
 
     public void setLastAttack(Time t){
         this.lastAttack = t;
+    }
+
+    @Override
+    public void showDetail() {
+        System.out.println("Freezer:");
+        System.out.println("Attack Range: Medium");
+        System.out.println("Attack Speed: Low");
+        System.out.println("Health Level: Medium");
+        System.out.println("Price: Medium to High");
+        System.out.println("Target Priority: Minimum Health Level");
+        System.out.println("Additional Characteristics: Make an Invader Freezed");
     }
 }

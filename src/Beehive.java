@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Beehive extends Armory implements Weapon{
+public class Beehive extends Armory implements Weapon,DetailShow{
 
     private Time attackRateTime;
     private Time lastAttack;
@@ -46,5 +46,15 @@ public class Beehive extends Armory implements Weapon{
         this.lastAttack = t;
     }
 
+    @Override
+    public void showDetail() {
+        System.out.println("Beehive:");
+        System.out.println("Attack Range: Medium");
+        System.out.println("Attack Speed: Low");
+        System.out.println("Health Level: Medium");
+        System.out.println("Price: Medium");
+        System.out.println("Target Priority: All In Range");
+        System.out.println("Additional Characteristics: Make a cloud of Poison around");
+    }
 }
 

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Laser extends Armory implements Weapon{
+public class Laser extends Armory implements Weapon, DetailShow{
 
     private boolean onAttack;
     private int shotPower;
@@ -46,5 +46,15 @@ public class Laser extends Armory implements Weapon{
 
     @Override
     public void setLastAttack(Time t) {}
+
+    @Override
+    public void showDetail() {
+        System.out.println("Laser:");
+        System.out.println("Attack Range: Medium");
+        System.out.println("Health Level: Medium");
+        System.out.println("Price: Medium to High");
+        System.out.println("Target Priority: Minimum Health Level");
+        System.out.println("Additional Characteristics: Shoot Continues LaserShot ");
+    }
 }
 

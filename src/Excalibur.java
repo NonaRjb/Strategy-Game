@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Excalibur extends Armory implements Weapon{
+public class Excalibur extends Armory implements Weapon,DetailShow{
 
     private Time attackRateTime;
     private Time lastAttack;
@@ -66,6 +66,17 @@ public class Excalibur extends Armory implements Weapon{
 
     public void setLastAttack(Time t){
         this.lastAttack = t;
+    }
+
+    @Override
+    public void showDetail() {
+        System.out.println("Excalibur:");
+        System.out.println("Attack Range: Infinity");
+        System.out.println("Attack Speed: Very Low");
+        System.out.println("Health Level: High");
+        System.out.println("Price: Very High");
+        System.out.println("Target Priority: Minimum Health Degree");
+        System.out.println("Additional Characteristics: Only One Times could be Produced, with 30 seconds Latency");
     }
 
 }

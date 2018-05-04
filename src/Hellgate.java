@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Hellgate extends Armory implements Weapon{
+public class Hellgate extends Armory implements Weapon, DetailShow{
 
     private int shotPower;
 
@@ -38,6 +38,16 @@ public class Hellgate extends Armory implements Weapon{
     }
 
     public void setLastAttack(Time t){}
+
+    @Override
+    public void showDetail() {
+        System.out.println("Hellgate:");
+        System.out.println("Attack Range: Medium");
+        System.out.println("Health Level: Low");
+        System.out.println("Price: High");
+        System.out.println("Target Priority: All In Range");
+        System.out.println("Additional Characteristics: Burns Every Invader in Range");
+    }
 
 }
 
