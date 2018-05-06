@@ -10,6 +10,8 @@ abstract class Invader implements DetailShow {
     private int graphicalSize;
     private int numberOfKillings;
 
+    final int invaderKindNumbers = 13;
+
     //constructor
     Invader(){
         numberOfKillings = 0;
