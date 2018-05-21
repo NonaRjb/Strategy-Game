@@ -1,4 +1,4 @@
-public class Motivator extends Invader implements InvaderAttack, DetailShow {
+public class Motivator extends Invader implements InvaderAttack {
     final int motivePower;
     final int motiveRate;
 

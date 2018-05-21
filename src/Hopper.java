@@ -1,4 +1,4 @@
-public class Hopper extends Invader implements InvaderAttack, DetailShow{
+public class Hopper extends Invader implements InvaderAttack{
     final int shootPower;
     final Time attackRateTime;
 

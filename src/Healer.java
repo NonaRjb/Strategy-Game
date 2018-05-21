@@ -1,4 +1,4 @@
-public class Healer extends Invader implements InvaderAttack, DetailShow {
+public class Healer extends Invader implements InvaderAttack {
     final int healPower;
     final int healRate;
 

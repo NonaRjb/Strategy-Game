@@ -1,4 +1,4 @@
-public class Sparrow extends Invader implements InvaderAttack, DetailShow{
+public class Sparrow extends Invader implements InvaderAttack{
     final int shootPower;
     final Time attackRateTime;
 

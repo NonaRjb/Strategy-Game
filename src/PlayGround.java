@@ -3,7 +3,7 @@ import java.util.Random;
 public class PlayGround {
     final int numberOfPlaces = 3;
     final int numberOfOrigins = 2;
-    Map map = new Map();
+    final Map map = new Map();
 
     Coordinate[] placeOfArmories = {new Coordinate(1,1),
                                     new Coordinate(2,2),

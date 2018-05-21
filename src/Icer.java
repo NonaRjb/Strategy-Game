@@ -1,4 +1,4 @@
-public class Icer extends Invader implements InvaderAttack, DetailShow {
+public class Icer extends Invader implements InvaderAttack{
     final Time attackRateTime;
 
     Icer(Coordinate init_coordinate){

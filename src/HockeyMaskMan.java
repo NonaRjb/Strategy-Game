@@ -1,4 +1,4 @@
-public class HockeyMaskMan extends Invader implements InvaderAttack, DetailShow{
+public class HockeyMaskMan extends Invader implements InvaderAttack{
     final int shootPower;
     final Time attackRateTime;
 

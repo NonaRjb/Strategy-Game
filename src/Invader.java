@@ -1,4 +1,4 @@
-abstract class Invader {
+abstract class Invader implements DetailShow{
     protected Coordinate coordinate;
     protected HealthLevel healthDegree;
     protected int movementSpeed;
@@ -47,6 +47,10 @@ abstract class Invader {
         return numberOfKillings;
     }
 
+    public int getMovementSpeed() {
+        return movementSpeed;
+    }
+
     public void setHealthDegree(HealthLevel healthDegree) {
         this.healthDegree = healthDegree;
     }
@@ -78,4 +82,5 @@ abstract class Invader {
     public void setPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
     }
+
 }

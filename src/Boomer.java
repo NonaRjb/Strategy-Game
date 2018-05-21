@@ -1,4 +1,4 @@
-public class Boomer extends Invader implements InvaderAttack, DetailShow {
+public class Boomer extends Invader implements InvaderAttack {
 
     //constructor
     Boomer(Coordinate init_coordinate){

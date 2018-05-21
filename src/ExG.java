@@ -1,4 +1,4 @@
-public class ExG extends Invader implements InvaderAttack, DetailShow{
+public class ExG extends Invader implements InvaderAttack{
     final int shootPower;
     final Time attackRateTime;
 
