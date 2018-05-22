@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Map {
     String[][] tileId;
     ArrayList<Integer>[] tileNo;
-    ArrayList<Path> paths;
+    ArrayList<Path> paths = new ArrayList<>();
     int offset = 10;
 
 
@@ -19,23 +19,14 @@ public class Map {
 
 
         Path path0 = new Path();
-        paths.add(path0);
         Path path1 = new Path();
-        paths.add(path1);
         Path path2 = new Path();
-        paths.add(path2);
         Path path3 = new Path();
-        paths.add(path3);
         Path path4 = new Path();
-        paths.add(path4);
         Path path5 = new Path();
-        paths.add(path5);
         Path path6 = new Path();
-        paths.add(path6);
         Path path7 = new Path();
-        paths.add(path7);
         Path path8 = new Path();
-        paths.add(path8);
 
 
 
@@ -376,13 +367,22 @@ public class Map {
         tileId[570][690] = "#";
         tileId[570][700] = "#";
         tileId[570][710] = "#";*/
+
+        paths.add(path0);
+        paths.add(path1);
+        paths.add(path2);
+        paths.add(path3);
+        paths.add(path4);
+        paths.add(path5);
+        paths.add(path6);
+        paths.add(path7);
+        paths.add(path8);
     }
 
     // returns the next coordinate of a given coordinate
     // if the given coordinate is the last coordinate of the path the method returns (450,1599)
     public Coordinate nextCoordinate(Coordinate currentCoordinate){
-        for (Path path : paths
-             ) {
+        for (Path path : paths ) {
             if(path.isInWay(currentCoordinate)){
                 return path.nextCoordinate(currentCoordinate);
             }

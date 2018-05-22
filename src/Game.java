@@ -16,7 +16,7 @@ public class Game {
         this.armories = new ArrayList<>();
         this.invaders = new ArrayList<>();
         this.gameTime = new Time(0);
-        this.invaderRate = new Time(20);
+        this.invaderRate = new Time(2);
         this.lastInvaderTime = new Time(0);
     }
 
@@ -102,6 +102,7 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void increaseTime(){
+        this.moveInvader();
         this.gameTime.increaseTime();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,9 +126,11 @@ public class Game {
         switch( enemyKindNumber ){
             case 0:
                 newInvader = new Henchman( invaderEnteringCoordinate );
+
                 break;
             case 1:
                 newInvader = new Skipper( invaderEnteringCoordinate );
+
                 break;
             case 2:
                 newInvader = new Bane( invaderEnteringCoordinate );
@@ -182,7 +185,7 @@ public class Game {
         for (Invader invader: invaders ) {
             Coordinate nextCoordinate;
             for (int i = 1; i <= invader.getMovementSpeed(); i++) {
-                nextCoordinate = playGround.map.nextCoordinate(invader.getCoordinate());
+                nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
                 invader.setCoordinate(nextCoordinate);
             }
         }

@@ -8,7 +8,7 @@ public class Henchman extends Invader implements InvaderAttack{
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2); //Medium healthLevel
-        super.movementSpeed = 1; //moves each time unit
+        super.movementSpeed = 4; //moves 4 pixels in each time unit
         super.range = 3; //Medium Range
     }
 
@@ -36,5 +36,6 @@ public class Henchman extends Invader implements InvaderAttack{
         System.out.println("Attack Rate: Medium");
         System.out.println("Shoot Power: Low");
         System.out.println("Additional Abilities: None");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

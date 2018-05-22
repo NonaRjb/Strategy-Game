@@ -5,7 +5,7 @@ public class Icer extends Invader implements InvaderAttack{
         this.attackRateTime = new Time(4); //attacks every 4 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
-        super.movementSpeed = 4; //moves every 4 time units
+        super.movementSpeed = 1; //moves 1 pixels in each time unit
         super.range = 3; //Medium range
     }
 
@@ -23,5 +23,6 @@ public class Icer extends Invader implements InvaderAttack{
         System.out.println("Attack Rate: Very Low");
         System.out.println("Shoot Power: None");
         System.out.println("Additional Abilities: Only attacks buildings and causes them to stop working for 10 secs");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

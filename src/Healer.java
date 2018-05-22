@@ -8,7 +8,7 @@ public class Healer extends Invader implements InvaderAttack {
         this.healPower = 1; //low power of each heal
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 3; //moves every 3 time units
+        super.movementSpeed = 2; //moves 2 pixels in each time unit
         super.range = 2; //low range
     }
 
@@ -34,5 +34,6 @@ public class Healer extends Invader implements InvaderAttack {
         System.out.println("Heal Rate: Medium");
         System.out.println("Heal Power: Low");
         System.out.println("Additional Abilities: Instead of attacking, heals other Invaders but it can't heals itself");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

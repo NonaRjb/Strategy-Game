@@ -14,13 +14,23 @@ public class Path {
 
     // checks if the path contains the given coordinate
     public Boolean isInWay(Coordinate coordinate){
-        return pathWay.contains(coordinate);
+        for (Coordinate pathCoor : pathWay){
+            if (pathCoor.getX() == coordinate.getX() && pathCoor.getY() == coordinate.getY()){
+                    return true;
+            }
+        }
+        return false;
     }
 
     // gives the next coordinate of a given coordinate of a path
     // if the given coordinate is the last coordinate of the path the method returns (450,1599)
     public Coordinate nextCoordinate(Coordinate coordinate){
-        int index = pathWay.indexOf(coordinate);
+        int index = -2;
+        for (Coordinate pathCoor : pathWay){
+            if(pathCoor.getX() == coordinate.getX() && pathCoor.getY() == coordinate.getY()){
+                index = pathWay.indexOf(pathCoor);
+            }
+        }
         if(pathWay.size()-1 == index){
             Coordinate nextCoordinate = new Coordinate(450, 1599);
             return nextCoordinate;

@@ -8,8 +8,8 @@ public class ExG extends Invader implements InvaderAttack{
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2); //Medium degree of health
-        super.movementSpeed = 3; //moves every 3 time units
-        super.range = 3; //Medium range
+        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.range = 2; //Medium range
     }
 
     public int getShootPower() {
@@ -34,5 +34,6 @@ public class ExG extends Invader implements InvaderAttack{
         System.out.println("Attack Rate: Medium");
         System.out.println("Shoot Power: Low");
         System.out.println("Additional Abilities: Only attacks Hero");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

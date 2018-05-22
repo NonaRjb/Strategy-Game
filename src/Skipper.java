@@ -7,7 +7,7 @@ public class Skipper extends Invader implements InvaderAttack{
         this.attackRateTime = new Time(1); //high attack speed
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 3; //moves every 3 time units
+        super.movementSpeed = 2; //moves 2 pixels in each time unit
         super.range = 4; //High range
     }
     public int getShootPower() {
@@ -32,5 +32,6 @@ public class Skipper extends Invader implements InvaderAttack{
         System.out.println("Attack Rate: High");
         System.out.println("Shoot Power: High");
         System.out.println("Additional Abilities: None");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

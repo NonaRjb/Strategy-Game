@@ -8,7 +8,7 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
-        super.movementSpeed = 3; //moves every 3 time units
+        super.movementSpeed = 2; //moves 2 pixels in each time unit
         super.range = 3; //Medium range
     }
 
@@ -35,5 +35,6 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
         System.out.println("Shoot Power: Medium");
         System.out.println("Additional Abilities: When it gets to a building, starts shooting it until the building" +
                            "collapses or it dies itself");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

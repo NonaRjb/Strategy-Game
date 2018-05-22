@@ -8,7 +8,7 @@ public class Miner extends Invader implements InvaderAttack{
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 3; //moves every 3 time units
+        super.movementSpeed = 2; //moves 2 pixels in each time unit
         super.range = 1; //Very low range
     }
 
@@ -30,5 +30,6 @@ public class Miner extends Invader implements InvaderAttack{
         System.out.println("Attack Rate: Medium");
         System.out.println("Shoot Power: Low");
         System.out.println("Additional Abilities: Moves under the ground and only can be seen by hero");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

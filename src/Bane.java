@@ -8,7 +8,7 @@ public class Bane extends Invader implements InvaderAttack{
         this.attackRateTime = new Time(3); //attacks every 3 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
-        super.movementSpeed = 4; //moves every 4 time units
+        super.movementSpeed = 1; //moves 1 pixels in each time unit
         super.range = 2; //low range
     }
     public int getShootPower() {
@@ -32,5 +32,6 @@ public class Bane extends Invader implements InvaderAttack{
         System.out.println("Attack Rate: Low");
         System.out.println("Shoot Power: High");
         System.out.println("Additional Abilities: None");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }
