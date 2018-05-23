@@ -1,6 +1,11 @@
-public class Hopper extends Invader implements InvaderAttack{
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import java.util.ArrayList;
+
+public class Hopper extends Invader{
     final int shootPower;
     final Time attackRateTime;
+    private Time lastAttack;
 
     //constructor
     Hopper(Coordinate init_coordinate){
@@ -20,13 +25,33 @@ public class Hopper extends Invader implements InvaderAttack{
         return attackRateTime;
     }
 
+    public Time getLastAttack() {
+        return lastAttack;
+    }
+
+    public void setLastAttack(Time lastAttack) {
+        this.lastAttack = lastAttack;
+    }
+
     public void accelerate(){
 
     }
 
     @Override
-    public void attack() {
-
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
+            return false;
+        }
+        else{
+            this.setLastAttack(currentTime);
+            for (Object target : targets){
+                super.setTarget(target);
+            }
+            for (int i = 0; i < super.targetNum(); i++) {
+                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+            }
+            return true;
+        }
     }
 
     @Override

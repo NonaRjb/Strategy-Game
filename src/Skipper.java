@@ -1,6 +1,11 @@
-public class Skipper extends Invader implements InvaderAttack{
+import org.omg.CORBA.TIMEOUT;
+
+import java.util.ArrayList;
+
+public class Skipper extends Invader{
     final int shootPower;
     final Time attackRateTime;
+    private Time lastAttack;
 
     Skipper(Coordinate init_coordinate){
         this.shootPower = 5; //high shoot power
@@ -18,9 +23,29 @@ public class Skipper extends Invader implements InvaderAttack{
         return attackRateTime;
     }
 
-    @Override
-    public void attack() {
+    public void setLastAttack(Time lastAttack) {
+        this.lastAttack = lastAttack;
+    }
 
+    public Time getLastAttack() {
+        return lastAttack;
+    }
+
+    @Override
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
+            return false;
+        }
+        else{
+            this.setLastAttack(currentTime);
+            for (Object target : targets){
+                super.setTarget(target);
+            }
+            for (int i = 0; i < super.targetNum(); i++) {
+                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+            }
+            return true;
+        }
     }
 
     @Override

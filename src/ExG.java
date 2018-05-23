@@ -1,6 +1,9 @@
-public class ExG extends Invader implements InvaderAttack{
+import java.util.ArrayList;
+
+public class ExG extends Invader{
     final int shootPower;
     final Time attackRateTime;
+    private Time lastAttack;
 
     /////// constructor
     ExG(Coordinate init_coordinate){
@@ -16,13 +19,33 @@ public class ExG extends Invader implements InvaderAttack{
         return shootPower;
     }
 
+    public Time getLastAttack() {
+        return lastAttack;
+    }
+
     public Time getAttackRateTime() {
         return attackRateTime;
     }
 
-    @Override
-    public void attack() {
+    public void setLastAttack(Time time){
+        this.lastAttack = time;
+    }
 
+    @Override
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
+            return false;
+        }
+        else {
+            this.lastAttack = currentTime;
+            for (Object target : targets) {
+                super.setTarget(target);
+            }
+            for (int i = 0; i < super.targetNum(); i++) {
+                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+            }
+            return true;
+        }
     }
 
     @Override

@@ -1,6 +1,9 @@
-public class Motivator extends Invader implements InvaderAttack {
+import java.util.ArrayList;
+
+public class Motivator extends Invader {
     final int motivePower;
     final int motiveRate;
+    private Time lastAttack;
 
     //constructor
     Motivator(Coordinate init_coordinate){
@@ -20,9 +23,26 @@ public class Motivator extends Invader implements InvaderAttack {
         return motiveRate;
     }
 
-    @Override
-    public void attack() {
+    public Time getLastAttack() {
+        return lastAttack;
+    }
 
+    public void setLastAttack(Time lastAttack) {
+        this.lastAttack = lastAttack;
+    }
+
+    @Override
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        if((currentTime.getTime() - this.getLastAttack().getTime()) < this.motiveRate){
+            return false;
+        }
+        else{
+            this.setLastAttack(currentTime);
+            for (Object target : targets){
+                super.setTarget(target);
+            }
+            return true;
+        }
     }
 
     @Override

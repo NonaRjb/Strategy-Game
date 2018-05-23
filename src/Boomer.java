@@ -1,4 +1,6 @@
-public class Boomer extends Invader implements InvaderAttack {
+import java.util.ArrayList;
+
+public class Boomer extends Invader{
 
     //constructor
     Boomer(Coordinate init_coordinate){
@@ -9,8 +11,11 @@ public class Boomer extends Invader implements InvaderAttack {
     }
 
     @Override
-    public void attack() {
-
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        for (Object target : targets) {
+            super.setTarget(target);
+        }
+        return true;
     }
 
     @Override

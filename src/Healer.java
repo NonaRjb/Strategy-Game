@@ -1,6 +1,9 @@
-public class Healer extends Invader implements InvaderAttack {
+import java.util.ArrayList;
+
+public class Healer extends Invader {
     final int healPower;
     final int healRate;
+    private Time lastAttack;
 
     //constructor
     Healer(Coordinate init_coordinate){
@@ -20,9 +23,26 @@ public class Healer extends Invader implements InvaderAttack {
         return healRate;
     }
 
-    @Override
-    public void attack() {
+    public Time getLastAttack() {
+        return lastAttack;
+    }
 
+    public void setLastAttack(Time time){
+        lastAttack = time;
+    }
+
+    @Override
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        if((currentTime.getTime() - this.getLastAttack().getTime()) < this.healRate){
+            return false;
+        }
+        else{
+            this.setLastAttack(currentTime);
+            for (Object target : targets){
+                super.setTarget(target);
+            }
+            return true;
+        }
     }
 
     @Override

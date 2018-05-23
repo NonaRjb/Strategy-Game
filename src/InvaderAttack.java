@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public interface InvaderAttack {
-    void attack();
+    Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> target);
 }

@@ -5,9 +5,14 @@ public class PlayGround {
     final int numberOfOrigins = 9;
     final Map map = new Map();
 
-    Coordinate[] placeOfArmories = {new Coordinate(1,1),
-                                    new Coordinate(2,2),
-                                    new Coordinate(3,3)};
+    Coordinate[] placeOfArmories = {new Coordinate(290,499),
+                                    new Coordinate(230,1199),
+                                    new Coordinate(600,300),
+                                    new Coordinate(740,1049),
+                                    new Coordinate(750,1540),
+                                    new Coordinate(690,590),
+                                    new Coordinate(540,680),
+                                    new Coordinate(470,1000)};
 
     Coordinate[] pathOriginCoordinate = {new Coordinate(300,0),
                                          new Coordinate(310,0),
@@ -31,6 +36,14 @@ public class PlayGround {
     // Getters
     public PlaceHolder getPlaceHolder(int id) {
         return placeHolder[id];
+    }
+
+    public PlaceHolder[] getPlaceHolder(){
+        return placeHolder;
+    }
+
+    public Coordinate[] getPlaceOfArmories() {
+        return placeOfArmories;
     }
 
     // Other Methods

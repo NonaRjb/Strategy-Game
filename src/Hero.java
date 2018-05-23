@@ -1,5 +1,5 @@
 public class Hero implements DetailShow {
-    Coordinate coordinate;
+    private Coordinate coordinate;
     HealthLevel healthLevel;
     int level;
     int delayConst;
@@ -30,6 +30,10 @@ public class Hero implements DetailShow {
 
     public int getNumberOfKillings() {
         return numberOfKillings;
+    }
+
+    public Coordinate getCoordinate(){
+        return this.coordinate;
     }
 
     public void levelUp(){
