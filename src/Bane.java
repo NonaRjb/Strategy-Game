@@ -1,6 +1,9 @@
-public class Bane extends Invader implements InvaderAttack, DetailShow{
+import java.util.ArrayList;
+
+public class Bane extends Invader{
     final int shootPower;
     final Time attackRateTime;
+    private Time lastAttack;
 
     // constructor
     Bane(Coordinate init_coordinate){
@@ -8,8 +11,15 @@ public class Bane extends Invader implements InvaderAttack, DetailShow{
         this.attackRateTime = new Time(3); //attacks every 3 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
-        super.movementSpeed = 4; //moves every 4 time units
+        super.movementSpeed = 1; //moves 1 pixels in each time unit
         super.range = 2; //low range
+    }
+
+    public Time getLastAttack(){
+        return this.lastAttack;
+    }
+    public void setLastAttack(Time time){
+        this.lastAttack = time;
     }
     public int getShootPower() {
         return shootPower;
@@ -19,7 +29,20 @@ public class Bane extends Invader implements InvaderAttack, DetailShow{
     }
 
     @Override
-    public void attack() {
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
+            return false;
+        }
+        else{
+            this.setLastAttack(currentTime);
+            for (Object target : targets){
+                super.setTarget(target);
+            }
+            for (int i = 0; i < super.targetNum(); i++) {
+                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+            }
+            return true;
+        }
 
     }
 
@@ -32,5 +55,6 @@ public class Bane extends Invader implements InvaderAttack, DetailShow{
         System.out.println("Attack Rate: Low");
         System.out.println("Shoot Power: High");
         System.out.println("Additional Abilities: None");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

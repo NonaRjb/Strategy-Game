@@ -2,7 +2,11 @@ import java.util.ArrayList;
 
 public class Path {
 
+<<<<<<< HEAD
     ArrayList<Coordinate> pathWay = new ArrayList<>();
+=======
+    private ArrayList<Coordinate> pathWay = new ArrayList<>();
+>>>>>>> Nona/Invader_NR
 
     // Constructor
     public Path() {}
@@ -12,4 +16,34 @@ public class Path {
         pathWay.add( new Coordinate(x,y) );
     }
 
+<<<<<<< HEAD
+=======
+    // checks if the path contains the given coordinate
+    public Boolean isInWay(Coordinate coordinate){
+        for (Coordinate pathCoor : pathWay){
+            if (pathCoor.getX() == coordinate.getX() && pathCoor.getY() == coordinate.getY()){
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    // gives the next coordinate of a given coordinate of a path
+    // if the given coordinate is the last coordinate of the path the method returns (450,1599)
+    public Coordinate nextCoordinate(Coordinate coordinate){
+        int index = -2;
+        for (Coordinate pathCoor : pathWay){
+            if(pathCoor.getX() == coordinate.getX() && pathCoor.getY() == coordinate.getY()){
+                index = pathWay.indexOf(pathCoor);
+            }
+        }
+        if(pathWay.size()-1 == index){
+            Coordinate nextCoordinate = new Coordinate(450, 1599);
+            return nextCoordinate;
+        }
+        else {
+            return pathWay.get(index+1);
+        }
+    }
+>>>>>>> Nona/Invader_NR
 }

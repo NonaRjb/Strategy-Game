@@ -3,9 +3,9 @@ public class Bullet extends Shot{
     private Object target;
 
     // Constuctor
-    public Bullet(Coordinate startCoordinate,Invader targetInvader, int power) {
+    public Bullet(Coordinate startCoordinate,Object target, int power) {
         super.coordinate = startCoordinate;
-        this.target = targetInvader;
+        this.target = target;
         super.power = power;
     }
 

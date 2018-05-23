@@ -1,16 +1,21 @@
-public class Boomer extends Invader implements InvaderAttack, DetailShow {
+import java.util.ArrayList;
+
+public class Boomer extends Invader{
 
     //constructor
     Boomer(Coordinate init_coordinate){
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(4); //Very low degree of health
-        super.movementSpeed = 1; //moves every time units
+        super.movementSpeed = 4; //moves 4 pixels in each time unit
         super.range = 3; //Medium range
     }
 
     @Override
-    public void attack() {
-
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        for (Object target : targets) {
+            super.setTarget(target);
+        }
+        return true;
     }
 
     @Override
@@ -23,5 +28,6 @@ public class Boomer extends Invader implements InvaderAttack, DetailShow {
         System.out.println("Shoot Power: None");
         System.out.println("Additional Abilities: When it get to the first building in its way, it explodes and causes" +
                            "that building stops working for some secs");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }

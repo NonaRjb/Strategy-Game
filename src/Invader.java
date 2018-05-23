@@ -1,4 +1,6 @@
-abstract class Invader implements DetailShow {
+import java.util.ArrayList;
+
+abstract class Invader implements DetailShow, InvaderAttack{
     protected Coordinate coordinate;
     protected HealthLevel healthDegree;
     protected int movementSpeed;
@@ -9,8 +11,7 @@ abstract class Invader implements DetailShow {
     private boolean isPoisoned;
     private int graphicalSize;
     private int numberOfKillings;
-
-    final int invaderKindNumbers = 13;
+    private ArrayList<Object> target;
 
     //constructor
     Invader(){
@@ -41,12 +42,24 @@ abstract class Invader implements DetailShow {
         return healthDegree;
     }
 
+    public Object getTarget(int index) {
+        return target.get(index);
+    }
+
+    public int getRange() {
+        return range;
+    }
+
     public int getInstanceNum() {
         return InstanceNum;
     }
 
     public int getNumberOfKillings() {
         return numberOfKillings;
+    }
+
+    public int getMovementSpeed() {
+        return movementSpeed;
     }
 
     public void setHealthDegree(HealthLevel healthDegree) {
@@ -79,5 +92,17 @@ abstract class Invader implements DetailShow {
 
     public void setPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
+    }
+
+    public void setTarget(Object target) {
+        this.target.add(target);
+    }
+
+    public void clearTarget(){
+        this.target.clear();
+    }
+
+    public int targetNum(){
+        return this.target.size();
     }
 }

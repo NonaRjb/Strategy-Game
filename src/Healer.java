@@ -1,6 +1,9 @@
-public class Healer extends Invader implements InvaderAttack, DetailShow {
+import java.util.ArrayList;
+
+public class Healer extends Invader {
     final int healPower;
     final int healRate;
+    private Time lastAttack;
 
     //constructor
     Healer(Coordinate init_coordinate){
@@ -8,7 +11,7 @@ public class Healer extends Invader implements InvaderAttack, DetailShow {
         this.healPower = 1; //low power of each heal
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 3; //moves every 3 time units
+        super.movementSpeed = 2; //moves 2 pixels in each time unit
         super.range = 2; //low range
     }
 
@@ -20,9 +23,26 @@ public class Healer extends Invader implements InvaderAttack, DetailShow {
         return healRate;
     }
 
-    @Override
-    public void attack() {
+    public Time getLastAttack() {
+        return lastAttack;
+    }
 
+    public void setLastAttack(Time time){
+        lastAttack = time;
+    }
+
+    @Override
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        if((currentTime.getTime() - this.getLastAttack().getTime()) < this.healRate){
+            return false;
+        }
+        else{
+            this.setLastAttack(currentTime);
+            for (Object target : targets){
+                super.setTarget(target);
+            }
+            return true;
+        }
     }
 
     @Override
@@ -34,5 +54,6 @@ public class Healer extends Invader implements InvaderAttack, DetailShow {
         System.out.println("Heal Rate: Medium");
         System.out.println("Heal Power: Low");
         System.out.println("Additional Abilities: Instead of attacking, heals other Invaders but it can't heals itself");
+        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
     }
 }
