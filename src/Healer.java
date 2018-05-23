@@ -9,6 +9,7 @@ public class Healer extends Invader {
     Healer(Coordinate init_coordinate){
         this.healRate = 5; //heals every 5 time units(Medium)
         this.healPower = 1; //low power of each heal
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
         super.movementSpeed = 2; //moves 2 pixels in each time unit

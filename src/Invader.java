@@ -13,9 +13,12 @@ abstract class Invader implements DetailShow, InvaderAttack{
     private int numberOfKillings;
     private ArrayList<Object> target;
 
+    static final int numberOfInvaderKinds = 13;
+
     //constructor
     Invader(){
         numberOfKillings = 0;
+        target = new ArrayList<>();
     }
 
     public boolean isBurning() {

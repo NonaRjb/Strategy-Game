@@ -13,7 +13,7 @@ public class Laser extends Armory implements Weapon{
         super.range = 2 * super.rangeUnit; //Medium Range
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = 2 * super.priceUnit; //Medium Price
-        super.setTargetPriority("MinimumHealth");
+        super.setTargetPriority(TargetPriority.MinimumHealth);
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
     }

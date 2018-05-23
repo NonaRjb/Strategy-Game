@@ -1,4 +1,6 @@
-public class Icer extends Invader implements InvaderAttack{
+import java.util.ArrayList;
+
+public class Icer extends Invader{
     final Time attackRateTime;
 
     Icer(Coordinate init_coordinate){
@@ -10,8 +12,8 @@ public class Icer extends Invader implements InvaderAttack{
     }
 
     @Override
-    public void attack() {
-
+    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> target) {
+        return null;
     }
 
     @Override

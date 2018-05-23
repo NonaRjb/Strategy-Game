@@ -9,6 +9,7 @@ public class Sparrow extends Invader implements InvaderAttack{
     Sparrow(Coordinate init_coordinate){
         this.shootPower = 2; //low shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2); //Medium degree of health
         super.movementSpeed = 3; //moves 3 pixels in each time unit

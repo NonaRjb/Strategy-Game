@@ -9,6 +9,7 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
     HockeyMaskMan(Coordinate init_coordinate){
         this.shootPower = 3; //Medium shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
         super.movementSpeed = 2; //moves 2 pixels in each time unit

@@ -9,7 +9,7 @@ abstract class Armory implements DetailShow {
     protected int price;
     protected int range;
     protected int graphicalSize;
-    private String targetPriority;
+    private TargetPriority targetPriority;
 
     final int priceUnit = 100;
     final int attackTimeUnit = 100;
@@ -17,13 +17,14 @@ abstract class Armory implements DetailShow {
     final int shotPowerUnit = 10;
 
     // Setters
-    public void setTargetPriority(String targetPriority) { this.targetPriority = targetPriority; }
+    public void setTargetPriority(TargetPriority targetPriority) { this.targetPriority = targetPriority; }
 
     // Getters
     public Coordinate getCoordinate(){ return this.coordinate; }
     public int getPrice(){ return this.price; }
     public int getLevel(){ return this.level; }
-    public String getTargetPriority() { return targetPriority; }
+    public int getRange() { return range; }
+    public TargetPriority getTargetPriority() { return targetPriority; }
 
     // Other Methods
     public void levelUp(){}

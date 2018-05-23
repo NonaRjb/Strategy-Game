@@ -15,7 +15,7 @@ public class Freezer extends Armory implements Weapon {
         this.attackRateTime = new Time(1 * super.attackTimeUnit); //Low Attack Speed
         super.healthDegree = new HealthLevel(2);  //Medium Health Level
         super.price = 3 * super.priceUnit; //High Price
-        super.setTargetPriority("MinimumHealth");
+        super.setTargetPriority(TargetPriority.MinimumHealth);
         this.shotPower = 1 * super.shotPowerUnit;  //Low Shot power
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);

@@ -20,9 +20,12 @@ public class Game {
         this.playGround = new PlayGround();
         this.armories = new ArrayList<>();
         this.invaders = new ArrayList<>();
+        this.soldiers = new ArrayList<>();
+        this.gameShots = new ArrayList<>();
         this.gameTime = new Time(0);
         this.invaderRate = new Time(2);
         this.lastInvaderTime = new Time(0);
+        this.hero = null;
     }
 
     // Getters
@@ -110,9 +113,55 @@ public class Game {
         for (Invader invader : invaders){
             invader.clearTarget();
         }
-        this.invaderAttackGame();
-        this.moveInvader();
+        this.moveObjects();
+        this.doAttacks();
         this.gameTime.increaseTime();
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    // Moving all Objects
+    public void moveObjects(){
+
+        for (Invader invader: invaders ) {
+            this.moveInvader(invader );
+        }
+
+        for( Soldier soldier: soldiers){
+            this.moveSoldier( soldier );
+        }
+
+        this.moveHero( this.hero );
+
+        for( Shot shot: gameShots ){
+            this.moveShot( shot );
+        }
+
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // sets invader's coordinate
+    private void moveInvader( Invader invader ) {
+
+        Coordinate nextCoordinate;
+        for (int i = 1; i <= invader.getMovementSpeed(); i++) {
+            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+            invader.setCoordinate(nextCoordinate);
+        }
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // sets soldier's coordinate
+    private void moveSoldier( Soldier soldier ){
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // sets hero's coordinate
+    private void moveHero( Hero hero ){
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // sets Shot's coordinate
+    private void moveShot( Shot shot ){
+
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void showArmoriesDetails(){
@@ -130,7 +179,7 @@ public class Game {
     public void produceInvader(){
         Invader newInvader;
         Random rand = new Random();
-        int enemyKindNumber= rand.nextInt(13);
+        int enemyKindNumber= rand.nextInt( Invader.numberOfInvaderKinds );
         Coordinate invaderEnteringCoordinate = playGround.randomOriginMaker();
         switch( enemyKindNumber ){
             case 0:
@@ -188,88 +237,161 @@ public class Game {
             currentInvader.showDetail();
         }
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    // sets invaders' coordinate
-    public void moveInvader(){
-        for (Invader invader: invaders ) {
-            Coordinate nextCoordinate;
-            for (int i = 1; i <= invader.getMovementSpeed(); i++) {
-                nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
-                invader.setCoordinate(nextCoordinate);
-            }
-        }
-    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    public void doAttacks(){
 
+        for( Armory armory : armories ){
+            armoryAttackGame( armory );
+        }
+
+        for( Invader invader : invaders ){
+            invaderAttackGame( invader );
+        }
+
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    // Armory Attack
+    private void armoryAttackGame( Armory armory ){
+
+        if( armory instanceof Freezer ){
+            Freezer currentFreezer = (Freezer) armory;
+            Invader invader = findInvader( currentFreezer.getCoordinate(), currentFreezer.getRange(), currentFreezer.getTargetPriority() );
+            currentFreezer.attack( this.gameTime, invader, gameShots  );
+        }
+
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    private Invader findInvader( Coordinate origin, int range, TargetPriority priority ){
+
+        ArrayList<Invader> invadersInRange = new ArrayList<>();
+
+        for( Invader invader: invaders ){
+            if ( Coordinate.distance( invader.getCoordinate(), origin ) <= range )
+                invadersInRange.add( invader );
+        }
+
+        if( invadersInRange.size() == 0 )
+            return null;
+        else{
+
+            if( priority == TargetPriority.MinimumHealth ) {
+
+                Invader targetInvader = invadersInRange.get(0);
+                int minHealth = invadersInRange.get(0).healthDegree.getHealthLevel();
+                for (Invader invader : invadersInRange) {
+                    if (invader.healthDegree.getHealthLevel() < minHealth) {
+                        minHealth = invader.healthDegree.getHealthLevel();
+                        targetInvader = invader;
+                    }
+                }
+                return targetInvader;
+
+            } else if ( priority == TargetPriority.MaximumHealth ){
+
+                Invader targetInvader = invadersInRange.get(0);
+                int maxHealth = invadersInRange.get(0).healthDegree.getHealthLevel();
+                for (Invader invader : invadersInRange) {
+                    if (invader.healthDegree.getHealthLevel() > maxHealth) {
+                        maxHealth = invader.healthDegree.getHealthLevel();
+                        targetInvader = invader;
+                    }
+                }
+                return targetInvader;
+
+            } else if ( priority == TargetPriority.Nearest ){
+
+                Invader targetInvader = invadersInRange.get(0);
+                int distance = Coordinate.distance( invadersInRange.get(0).getCoordinate(), origin ) ;
+                for (Invader invader : invadersInRange) {
+                    if ( Coordinate.distance( invader.getCoordinate(), origin ) < distance) {
+                        distance = Coordinate.distance( invader.getCoordinate(), origin );
+                        targetInvader = invader;
+                    }
+                }
+                return targetInvader;
+
+            } else if ( priority == TargetPriority.AllInRange ){
+                return invadersInRange.get(0);
+            } else if( priority == TargetPriority.SpecificTarget ){
+                return invadersInRange.get(0);
+            } else {
+                return null;
+            }
+
+        }
+
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     /// Invader Attack
-    public void invaderAttackGame(){
-        for (Invader invader : invaders){
-            if(invader instanceof Henchman || invader instanceof Skipper || invader instanceof Bane
-                    || invader instanceof Sparrow || invader instanceof Miner || invader instanceof Smelly || invader instanceof Hopper){
-                ArrayList<Object> targets = new ArrayList<>();
-                for (Soldier soldier : soldiers){
-                        if (Math.sqrt(Math.pow((soldier.getCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                                Math.pow((soldier.getCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
-                            targets.add(soldier);
-                    }
-                }
-                if (Math.sqrt(Math.pow((hero.getCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                        Math.pow((hero.getCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
-                    targets.add(hero);
-                }
-                 invader.attack(gameTime, gameShots, targets);
-            }
-            if (invader instanceof ExG){
-                ArrayList<Object> targets = new ArrayList<>();
-                if (Math.sqrt(Math.pow((hero.getCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                        Math.pow((hero.getCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
-                     targets.add(hero);
-                     invader.attack(gameTime, gameShots, targets);
-                }
-            }
-            if (invader instanceof Icer || invader instanceof HockeyMaskMan){
-                ArrayList<Object> targets = new ArrayList<>();
-                for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
-                    if (Math.sqrt(Math.pow((placeHolder.getPlaceCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                            Math.pow((placeHolder.getPlaceCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
-                        targets.add(placeHolder);
-                    }
-                }
-                invader.attack(gameTime, gameShots, targets);
-            }
-            if(invader instanceof Healer || invader instanceof Motivator){
-                ArrayList<Object> targets = new ArrayList<>();
-                for (Invader invader1 : invaders){
-                    if (invaders.indexOf(invader) != invaders.indexOf(invader1)) {
-                        if (Math.sqrt(Math.pow((invader1.getCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                                Math.pow((invader1.getCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
-                            targets.add(invader1);
-                        }
-                    }
-                }
-                invader.attack(gameTime, gameShots, targets);
-            }
-            if(invader instanceof Boomer){
-                ArrayList<Object> targets = new ArrayList<>();
-                for (Soldier soldier : soldiers){
-                    if (Math.sqrt(Math.pow((soldier.getCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                            Math.pow((soldier.getCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
+    private void invaderAttackGame( Invader invader ){
+
+        if(invader instanceof Henchman || invader instanceof Skipper || invader instanceof Bane
+                || invader instanceof Sparrow || invader instanceof Miner || invader instanceof Smelly || invader instanceof Hopper){
+            ArrayList<Object> targets = new ArrayList<>();
+            for (Soldier soldier : soldiers){
+                    if ( Coordinate.distance( invader.getCoordinate(), soldier.getCoordinate() ) <= invader.getRange()) {
                         targets.add(soldier);
-                    }
                 }
-                if (Math.sqrt(Math.pow((hero.getCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                        Math.pow((hero.getCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
+            }
+            if(hero!=null){
+                if ( Coordinate.distance( invader.getCoordinate(), hero.getCoordinate() ) <= invader.getRange()) {
                     targets.add(hero);
                 }
-                for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
-                    if (Math.sqrt(Math.pow((placeHolder.getPlaceCoordinate().getX() - invader.getCoordinate().getX()), 2) +
-                            Math.pow((placeHolder.getPlaceCoordinate().getY() - invader.getCoordinate().getY()), 2)) <= invader.getRange()) {
-                        targets.add(placeHolder);
-                    }
+            }
+             invader.attack(gameTime, gameShots, targets);
+        }
+        if (invader instanceof ExG){
+            ArrayList<Object> targets = new ArrayList<>();
+            if( hero != null ) {
+                if ( Coordinate.distance( invader.getCoordinate(), hero.getCoordinate() ) <= invader.getRange()) {
+                    targets.add(hero);
+                    invader.attack(gameTime, gameShots, targets);
                 }
-                invader.attack(gameTime, gameShots, targets);
             }
         }
+        if (invader instanceof Icer || invader instanceof HockeyMaskMan){
+            ArrayList<Object> targets = new ArrayList<>();
+            for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
+                if ( Coordinate.distance( invader.getCoordinate(), placeHolder.getPlaceCoordinate() ) <= invader.getRange()) {
+                    targets.add(placeHolder);
+                }
+            }
+            invader.attack(gameTime, gameShots, targets);
+        }
+        if(invader instanceof Healer || invader instanceof Motivator){
+            ArrayList<Object> targets = new ArrayList<>();
+            for (Invader invader1 : invaders){
+                if (invaders.indexOf(invader) != invaders.indexOf(invader1)) {
+                    if ( Coordinate.distance( invader.getCoordinate(), invader1.getCoordinate() ) <= invader.getRange()) {
+                        targets.add(invader1);
+                    }
+                }
+            }
+            invader.attack(gameTime, gameShots, targets);
+        }
+        if(invader instanceof Boomer){
+            ArrayList<Object> targets = new ArrayList<>();
+            for (Soldier soldier : soldiers){
+                if ( Coordinate.distance( invader.getCoordinate(), soldier.getCoordinate() ) <= invader.getRange()) {
+                    targets.add(soldier);
+                }
+            }
+            if( hero != null ) {
+                if ( Coordinate.distance( invader.getCoordinate(), hero.getCoordinate() ) <= invader.getRange()) {
+                    targets.add(hero);
+                }
+            }
+            for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
+                if ( Coordinate.distance( invader.getCoordinate(), placeHolder.getPlaceCoordinate() ) <= invader.getRange()) {
+                    targets.add(placeHolder);
+                }
+            }
+            invader.attack(gameTime, gameShots, targets);
+        }
+
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 

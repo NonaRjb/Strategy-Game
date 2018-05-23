@@ -9,6 +9,7 @@ public class Bane extends Invader{
     Bane(Coordinate init_coordinate){
         this.shootPower = 5; //High shoot power
         this.attackRateTime = new Time(3); //attacks every 3 time units
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
         super.movementSpeed = 1; //moves 1 pixels in each time unit

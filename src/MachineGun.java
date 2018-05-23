@@ -15,7 +15,7 @@ public class MachineGun extends Armory implements Weapon{
         this.attackRateTime = new Time(2 * super.attackTimeUnit); //Medium Attack Speed
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = 2 * super.priceUnit; //Medium Price
-        super.setTargetPriority("MinimumHealth");
+        super.setTargetPriority(TargetPriority.MinimumHealth);
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);

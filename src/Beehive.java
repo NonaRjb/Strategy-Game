@@ -14,7 +14,7 @@ public class Beehive extends Armory implements Weapon{
         this.attackRateTime = new Time((int)(0.5 * (double)super.attackTimeUnit)); //Low Attack Speed
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = 3 * super.priceUnit; //Medium Price
-        super.setTargetPriority("AllInRange");
+        super.setTargetPriority(TargetPriority.AllInRange);
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);
     }

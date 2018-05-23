@@ -9,6 +9,7 @@ public class Motivator extends Invader {
     Motivator(Coordinate init_coordinate){
         this.motivePower = 1; //low motive power
         this.motiveRate = 2; //motives every 2 time units
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2); //Medium degree of health
         super.movementSpeed = 2; //moves 2 pixels in each time unit

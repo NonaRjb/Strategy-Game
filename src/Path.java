@@ -2,11 +2,7 @@ import java.util.ArrayList;
 
 public class Path {
 
-<<<<<<< HEAD
-    ArrayList<Coordinate> pathWay = new ArrayList<>();
-=======
     private ArrayList<Coordinate> pathWay = new ArrayList<>();
->>>>>>> Nona/Invader_NR
 
     // Constructor
     public Path() {}
@@ -16,8 +12,6 @@ public class Path {
         pathWay.add( new Coordinate(x,y) );
     }
 
-<<<<<<< HEAD
-=======
     // checks if the path contains the given coordinate
     public Boolean isInWay(Coordinate coordinate){
         for (Coordinate pathCoor : pathWay){
@@ -45,5 +39,4 @@ public class Path {
             return pathWay.get(index+1);
         }
     }
->>>>>>> Nona/Invader_NR
 }
