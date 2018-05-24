@@ -13,6 +13,7 @@ public class Game {
     private Time invaderRate;
     private Time lastInvaderTime;
     private final int placeHolderNum = 8;
+    static Time burningTimeConst = new Time(10);
 
 
     // Constructor
@@ -285,16 +286,29 @@ public class Game {
         if( armory instanceof Freezer ){
             Freezer currentFreezer = (Freezer) armory;
             Invader targetInvader;
-            if( currentFreezer.getTargetPriority() == TargetPriority.SpecificTarget )
-                targetInvader = currentFreezer.getSpecificTargetInvader();
-            else
-                targetInvader = findInvader( currentFreezer.getCoordinate(), currentFreezer.getRange(), currentFreezer.getTargetPriority() );
-            currentFreezer.attack( this.gameTime, targetInvader, gameShots  );
+            ArrayList<Invader> invadersInRange = findInvaders( currentFreezer.getCoordinate(), currentFreezer.getRange(), currentFreezer.getTargetPriority() );
+            if( invadersInRange != null ) {
+                if (currentFreezer.getTargetPriority() == TargetPriority.SpecificTarget && invadersInRange.contains(currentFreezer.getSpecificTargetInvader()))
+                    targetInvader = currentFreezer.getSpecificTargetInvader();
+                else
+                    targetInvader = invadersInRange.get(0);
+                currentFreezer.attack(this.gameTime, targetInvader, gameShots);
+            }
+        } else if( armory instanceof Hellgate ){
+            Hellgate currentHellgate = (Hellgate)armory;
+            if( currentHellgate.isBurning() == false ){
+                if( findInvaders( armory.getCoordinate(), armory.getRange(), armory.getTargetPriority() ).size() > 0){
+                    currentHellgate.attack(null, null, gameShots);
+                    currentHellgate.setBurning( true );
+                }
+            }
+        } else if( armory instanceof MachineGun ){
+
         }
 
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    private Invader findInvader( Coordinate origin, int range, TargetPriority priority ){
+    private ArrayList<Invader> findInvaders( Coordinate origin, int range, TargetPriority priority ){
 
         ArrayList<Invader> invadersInRange = new ArrayList<>();
 
@@ -317,7 +331,9 @@ public class Game {
                         targetInvader = invader;
                     }
                 }
-                return targetInvader;
+                invadersInRange.clear();
+                invadersInRange.add( targetInvader );
+                return invadersInRange;
 
             } else if ( priority == TargetPriority.MaximumHealth ){
 
@@ -329,7 +345,9 @@ public class Game {
                         targetInvader = invader;
                     }
                 }
-                return targetInvader;
+                invadersInRange.clear();
+                invadersInRange.add( targetInvader );
+                return invadersInRange;
 
             } else if ( priority == TargetPriority.Nearest ){
 
@@ -341,10 +359,12 @@ public class Game {
                         targetInvader = invader;
                     }
                 }
-                return targetInvader;
+                invadersInRange.clear();
+                invadersInRange.add( targetInvader );
+                return invadersInRange;
 
             } else if ( priority == TargetPriority.AllInRange ){
-                return invadersInRange.get(0);
+                return invadersInRange;
             } else {
                 return null;
             }
@@ -424,7 +444,66 @@ public class Game {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void effectShot( Shot shot ){
 
-
+        if( shot instanceof Bullet ){
+            Object target = shot.getTarget();
+            if( target instanceof Invader ) {
+                Invader targetInvader = (Invader)target;
+                if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
+                    if( targetInvader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
+                        System.out.println("Invader got killed !");
+                        invaders.remove( targetInvader );
+                    } else {
+                        targetInvader.getHealthDegree().decreaseHealth( shot.getPower() );
+                    }
+                    gameShots.remove( shot );
+                }
+            }
+        } else if( shot instanceof Ice ){
+            Object target = shot.getTarget();
+            if( target instanceof Invader ) {
+                Invader targetInvader = (Invader)target;
+                if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
+                    targetInvader.setFreezed( true );
+                    gameShots.remove( shot );
+                }
+            }
+        } else if( shot instanceof Fire ){
+            ArrayList<Invader> burningInvaders = findInvaders( shot.getCoordinate(), ((Fire) shot).getRange(), TargetPriority.AllInRange );
+            if( burningInvaders == null ){
+                ((Fire)shot).getOwner().setBurning( false );
+                gameShots.remove( shot );
+            } else {
+                for (Invader invader : burningInvaders) {
+                    invader.setBurning(true);
+                }
+            }
+        } else if( shot instanceof Poison ){
+            ArrayList<Invader> poisonedInvaders = findInvaders( shot.getCoordinate(), ((Poison) shot).getRange(), TargetPriority.AllInRange );
+            for (Invader invader : poisonedInvaders) {
+                invader.setPoisoned( true );
+            }
+            gameShots.remove( shot );
+        } else if( shot instanceof RocketShot ){
+            ArrayList<Invader> shoootedInvaders = findInvaders( shot.getCoordinate(), ((RocketShot) shot).getRange(), TargetPriority.AllInRange );
+            for (Invader invader : shoootedInvaders) {
+                if( invader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
+                    System.out.println("Invader got killed !");
+                    invaders.remove( invader );
+                } else {
+                    invader.getHealthDegree().decreaseHealth( shot.getPower() );
+                }
+                gameShots.remove( shot );
+            }
+        } else if( shot instanceof LaserShot ) {
+            Invader targetInvader = (Invader) shot.getTarget();
+            if( targetInvader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
+                System.out.println("Invader got killed !");
+                invaders.remove( targetInvader );
+                gameShots.remove( shot );
+            } else {
+                targetInvader.getHealthDegree().decreaseHealth( shot.getPower() );
+            }
+        }
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////

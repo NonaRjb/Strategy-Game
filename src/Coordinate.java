@@ -21,6 +21,13 @@ public class Coordinate {
         this.y = y;
     }
 
+    public boolean isEqual( Coordinate C ){
+        if( C.getX()==this.getX() && C.getY()==this.getY() )
+            return true;
+        else
+            return false;
+    }
+
     static int distance( Coordinate C1, Coordinate C2 ){
         double d = Math.sqrt(Math.pow( (C1.getX() - C2.getX()), 2) + Math.pow( (C1.getY() - C2.getY()), 2) ) ;
         return (int)d;

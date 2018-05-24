@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Hellgate extends Armory implements Weapon{
 
     private int shotPower;
+    private boolean isBurning;
 
     //Constructor
     public Hellgate( int id, Coordinate coordinate) {
@@ -16,10 +17,21 @@ public class Hellgate extends Armory implements Weapon{
         super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
+        this.isBurning = false;
     }
 
-    // Other Methods
+    // Getters
+    public boolean isBurning() {
+        return isBurning;
+    }
 
+    // Setters
+    public void setBurning(boolean burning) {
+        isBurning = burning;
+    }
+
+
+    // Other Methods
 
     @Override
     public void levelUp() {
@@ -30,7 +42,7 @@ public class Hellgate extends Armory implements Weapon{
 
     @Override
     public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
-            gameShots.add( new Fire(super.coordinate, shotPower) );
+            gameShots.add( new Fire(super.coordinate, shotPower, this) );
     }
 
     @Override
