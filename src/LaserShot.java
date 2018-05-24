@@ -10,4 +10,9 @@ public class LaserShot extends Shot{
         this.owner = owner;
     }
 
+    // Getters
+    public Laser getOwner() {
+        return owner;
+    }
+
 }

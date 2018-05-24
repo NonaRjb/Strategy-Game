@@ -14,7 +14,7 @@ public class Excalibur extends Armory implements Weapon{
         super.id = id;
         super.coordinate = coordinate;
         super.level = 1; //Beginning
-        super.range = 10 * super.rangeUnit; //Infinity Range
+        super.range = 100 * super.rangeUnit; //Infinity Range
         this.attackRateTime = new Time( (int)(0.5 * (double)super.attackTimeUnit) ); //Very Low Attack Speed
         super.healthDegree = new HealthLevel(3); //High Health Level
         super.price = 4 * super.priceUnit; //Very High Price
@@ -36,7 +36,7 @@ public class Excalibur extends Armory implements Weapon{
 
 
     // Other Methods
-    public void Activate(Time currentTime){
+    private void Activate(Time currentTime){
         if( !this.isActive ) {
             if (currentTime.getTime() - this.creationTime.getTime() > this.activationLatency.getTime())
                 this.setActive();
@@ -54,9 +54,12 @@ public class Excalibur extends Armory implements Weapon{
 
     @Override
     public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
-        if( currentTime.getTime()-this.lastAttack.getTime() >= this.attackRateTime.getTime() ){
-            gameShots.add( new Bullet(super.coordinate, targetInvader, shotPower) );
-            this.setLastAttack(currentTime);
+        this.Activate( currentTime );
+        if( this.isActive ) {
+            if (currentTime.getTime() - this.lastAttack.getTime() >= this.attackRateTime.getTime()) {
+                gameShots.add(new Bullet(super.coordinate, targetInvader, shotPower));
+                this.setLastAttack(currentTime);
+            }
         }
     }
 

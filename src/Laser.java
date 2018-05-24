@@ -4,6 +4,7 @@ public class Laser extends Armory implements Weapon{
 
     private boolean onAttack;
     private int shotPower;
+    private LaserShot attackingLaserShot;
 
     //Constructor
     public Laser( int id, Coordinate coordinate) {
@@ -17,11 +18,25 @@ public class Laser extends Armory implements Weapon{
         super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
+        this.attackingLaserShot = null;
     }
 
+    // Getters
+    public boolean isOnAttack() {
+        return onAttack;
+    }
+    public LaserShot getAttackingLaserShot() { return attackingLaserShot; }
+
     // Setters
-    public void setOnAttack() { this.onAttack = true; }
-    public void EndAttack() { this.onAttack = false; }
+    public void setOnAttack(LaserShot laserShot) {
+        this.attackingLaserShot = laserShot;
+        this.onAttack = true;
+    }
+
+    public void endAttack() {
+        this.onAttack = false;
+        this.attackingLaserShot = null;
+    }
 
 
     // Other Methods
@@ -37,8 +52,9 @@ public class Laser extends Armory implements Weapon{
     @Override
     public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
         if( !onAttack ){
-            gameShots.add( new LaserShot(super.coordinate, targetInvader, shotPower, this) );
-            this.setOnAttack();
+            LaserShot laserShot = new LaserShot(super.coordinate, targetInvader, shotPower, this);
+            gameShots.add( laserShot );
+            this.setOnAttack( laserShot );
         }
     }
 

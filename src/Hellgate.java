@@ -13,7 +13,7 @@ public class Hellgate extends Armory implements Weapon{
         super.range = 2 * super.rangeUnit; //Medium Range
         super.healthDegree = new HealthLevel(1); //Low Health Level
         super.price = 3 * super.priceUnit; //High Price
-        super.setTargetPriority(TargetPriority.MinimumHealth);
+        super.setTargetPriority(TargetPriority.AllInRange);
         super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;

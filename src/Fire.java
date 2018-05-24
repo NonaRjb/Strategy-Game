@@ -2,6 +2,7 @@ public class Fire extends Shot{
 
 
     final int range = 20;
+    static final int healthDecreasingPower = 2;
 
     private Hellgate owner;
 

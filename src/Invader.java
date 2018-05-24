@@ -6,7 +6,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     protected int movementSpeed;
     protected int range;
     private int InstanceNum;
-    private boolean isFreezed;
+    private boolean isFrozen;
     private boolean isBurning;
     private boolean isPoisoned;
     private int graphicalSize;
@@ -26,8 +26,8 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public boolean isBurning() {
         return isBurning;
     }
-    public boolean isFreezed() {
-        return isFreezed;
+    public boolean isFrozen() {
+        return isFrozen;
     }
     public boolean isPoisoned() {
         return isPoisoned;
@@ -58,12 +58,13 @@ abstract class Invader implements DetailShow, InvaderAttack{
     }
 
 
+
     // Setters
     public void setHealthDegree(HealthLevel healthDegree) {
         this.healthDegree = healthDegree;
     }
-    public void setFreezed(boolean freezed) {
-        isFreezed = freezed;
+    public void setFrozen(boolean frozen) {
+        isFrozen = frozen;
     }
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
@@ -89,10 +90,22 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public int targetNum(){
         return this.target.size();
     }
+
+    public void decreaseBurningTime() {
+        if( this.burningTime.getTime() > 0 ) {
+            this.burningTime = new Time(this.burningTime.getTime() - 1);
+            this.healthDegree.decreaseHealth(Fire.healthDecreasingPower);
+        } else {
+            this.isBurning = false;
+        }
+
+    }
+
     public void setBurning(boolean burning) {
         isBurning = burning;
         if( burning ){
             this.burningTime = Game.burningTimeConst;
         }
     }
+
 }

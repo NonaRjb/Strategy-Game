@@ -11,7 +11,7 @@ public class Sauron extends Armory implements Weapon{
         super.id = id;
         super.coordinate = coordinate;
         super.level = 1; //Beginning
-        super.range = 10 * super.rangeUnit; //Infinity Range
+        super.range = 100 * super.rangeUnit; //Infinity Range
         this.attackRateTime = new Time(2 * super.attackTimeUnit); //Medium Attack Speed
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = 3 * super.priceUnit; //High Price
