@@ -459,6 +459,7 @@ public class Game {
             invader.attack(gameTime, gameShots, targets);
         }
         if(invader instanceof Healer || invader instanceof Motivator){
+            //TODO Healer Rescue Toxicants ! :))
             ArrayList<Object> targets = new ArrayList<>();
             for (Invader invader1 : invaders){
                 if (invaders.indexOf(invader) != invaders.indexOf(invader1)) {
