@@ -22,10 +22,19 @@ public class Coordinate {
     }
 
     static int distance( Coordinate C1, Coordinate C2 ){
-
         double d = Math.sqrt(Math.pow( (C1.getX() - C2.getX()), 2) + Math.pow( (C1.getY() - C2.getY()), 2) ) ;
         return (int)d;
+    }
 
+    static Coordinate moveTo( Coordinate currentCoordinate, Coordinate finalCoordinate, int movement ){
+        int d = Coordinate.distance( currentCoordinate, finalCoordinate );
+        if( movement >= d ){
+            return finalCoordinate;
+        } else {
+            int x = currentCoordinate.getX() + (int)( (double)( finalCoordinate.getX() - currentCoordinate.getX() ) * ((double)movement/(double)d ) );
+            int y = currentCoordinate.getY() + (int)( (double)( finalCoordinate.getY() - currentCoordinate.getY() ) * ((double)movement/(double)d ) );
+            return new Coordinate(x,y);
+        }
     }
 
 }

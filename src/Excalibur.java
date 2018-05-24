@@ -19,6 +19,7 @@ public class Excalibur extends Armory implements Weapon{
         super.healthDegree = new HealthLevel(3); //High Health Level
         super.price = 4 * super.priceUnit; //Very High Price
         super.setTargetPriority(TargetPriority.MinimumHealth);
+        super.specificTargetInvader = null;
         this.shotPower = 4 * super.shotPowerUnit;  //Very High Shot power
         this.creationTime = currentTime;
         this.isActive = false;

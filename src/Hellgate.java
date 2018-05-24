@@ -13,6 +13,7 @@ public class Hellgate extends Armory implements Weapon{
         super.healthDegree = new HealthLevel(1); //Low Health Level
         super.price = 3 * super.priceUnit; //High Price
         super.setTargetPriority(TargetPriority.MinimumHealth);
+        super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
     }
@@ -29,7 +30,7 @@ public class Hellgate extends Armory implements Weapon{
 
     @Override
     public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
-            gameShots.add( new Fire(super.coordinate, targetInvader, shotPower) );
+            gameShots.add( new Fire(super.coordinate, shotPower) );
     }
 
     @Override

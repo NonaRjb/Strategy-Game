@@ -162,6 +162,31 @@ public class Game {
     // sets Shot's coordinate
     private void moveShot( Shot shot ){
 
+        Coordinate currentCoordinate = shot.getCoordinate();
+        Object targetObject = shot.getTarget();
+
+        if( shot instanceof Bullet || shot instanceof Ice ){
+            if( targetObject instanceof Invader ) {
+                Invader target = (Invader) targetObject;
+                Coordinate finalCoordinate = target.getCoordinate();
+                shot.setCoordinate( Coordinate.moveTo( currentCoordinate, finalCoordinate, shot.getBulletSpeed() ) );
+            }
+            else if ( targetObject instanceof Soldier ) {
+                Soldier target = (Soldier) targetObject;
+                Coordinate finalCoordinate = target.getCoordinate();
+                shot.setCoordinate( Coordinate.moveTo( currentCoordinate, finalCoordinate, shot.getBulletSpeed() ) );
+            }
+            else if ( targetObject instanceof Hero ) {
+                Hero target = (Hero) targetObject;
+                Coordinate finalCoordinate = target.getCoordinate();
+                shot.setCoordinate( Coordinate.moveTo( currentCoordinate, finalCoordinate, shot.getBulletSpeed() ) );
+            }
+        }/* else if( shot instanceof Fire || shot instanceof Poison || shot instanceof RocketShot ){
+            // Nothing to do :))
+        } else if( shot instanceof LaserShot ) {
+            // Nothing to do :))
+        }*/
+
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void showArmoriesDetails(){
@@ -248,6 +273,10 @@ public class Game {
             invaderAttackGame( invader );
         }
 
+        for( Shot shot: gameShots ){
+            effectShot( shot );
+        }
+
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // Armory Attack
@@ -255,8 +284,12 @@ public class Game {
 
         if( armory instanceof Freezer ){
             Freezer currentFreezer = (Freezer) armory;
-            Invader invader = findInvader( currentFreezer.getCoordinate(), currentFreezer.getRange(), currentFreezer.getTargetPriority() );
-            currentFreezer.attack( this.gameTime, invader, gameShots  );
+            Invader targetInvader;
+            if( currentFreezer.getTargetPriority() == TargetPriority.SpecificTarget )
+                targetInvader = currentFreezer.getSpecificTargetInvader();
+            else
+                targetInvader = findInvader( currentFreezer.getCoordinate(), currentFreezer.getRange(), currentFreezer.getTargetPriority() );
+            currentFreezer.attack( this.gameTime, targetInvader, gameShots  );
         }
 
     }
@@ -311,8 +344,6 @@ public class Game {
                 return targetInvader;
 
             } else if ( priority == TargetPriority.AllInRange ){
-                return invadersInRange.get(0);
-            } else if( priority == TargetPriority.SpecificTarget ){
                 return invadersInRange.get(0);
             } else {
                 return null;
@@ -388,6 +419,12 @@ public class Game {
             }
             invader.attack(gameTime, gameShots, targets);
         }
+
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void effectShot( Shot shot ){
+
+
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////

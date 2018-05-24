@@ -10,6 +10,7 @@ abstract class Armory implements DetailShow {
     protected int range;
     protected int graphicalSize;
     private TargetPriority targetPriority;
+    protected Invader specificTargetInvader;
 
     final int priceUnit = 100;
     final int attackTimeUnit = 100;
@@ -25,6 +26,9 @@ abstract class Armory implements DetailShow {
     public int getLevel(){ return this.level; }
     public int getRange() { return range; }
     public TargetPriority getTargetPriority() { return targetPriority; }
+    public Invader getSpecificTargetInvader() {
+        return specificTargetInvader;
+    }
 
     // Other Methods
     public void levelUp(){}

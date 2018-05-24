@@ -15,7 +15,8 @@ public class Rocket extends Armory implements Weapon{
         this.attackRateTime = new Time(1 * super.attackTimeUnit); //Low Attack Speed
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = 3 * super.priceUnit; //High Price
-        super.setTargetPriority(TargetPriority.MinimumHealth);
+        super.setTargetPriority(TargetPriority.AllInRange);
+        super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);

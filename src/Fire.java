@@ -1,12 +1,18 @@
 public class Fire extends Shot{
 
-    Invader targetInvader;
 
-    // Constuctor
-    public Fire(Coordinate startCoordinate,Invader targetInvader, int power) {
+    final int range = 20;
+
+    // Constructor
+    public Fire(Coordinate startCoordinate, int power) {
         super.coordinate = startCoordinate;
-        this.targetInvader = targetInvader;
         super.power = power;
+        super.target = null;
+    }
+
+    // Getter
+    public int getRange() {
+        return range;
     }
 
 }
