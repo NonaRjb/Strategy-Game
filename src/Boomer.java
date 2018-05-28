@@ -6,7 +6,7 @@ public class Boomer extends Invader{
     Boomer(Coordinate init_coordinate){
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(4); //Very low degree of health
-        super.movementSpeed = 4; //moves 4 pixels in each time unit
+        super.movementSpeed = 4 * super.speedConst; //moves 4 pixels in each time unit
         super.range = 3; //Medium range
     }
 

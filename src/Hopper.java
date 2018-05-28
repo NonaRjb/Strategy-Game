@@ -13,7 +13,7 @@ public class Hopper extends Invader{
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 3; //moves 3 pixels in each time unit
+        super.movementSpeed = 3 * super.speedConst; //moves 3 pixels in each time unit
         super.range = 3; //Medium range
     }
 

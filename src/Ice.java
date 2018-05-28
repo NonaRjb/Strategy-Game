@@ -1,9 +1,9 @@
 public class Ice extends Shot{
 
     // Constructor
-    public Ice(Coordinate startCoordinate,Invader targetInvader, int power) {
+    public Ice(Coordinate startCoordinate,Object target, int power) {
         super.coordinate = startCoordinate;
-        super.target = targetInvader;
+        super.target = target;
         super.power = power;
     }
 

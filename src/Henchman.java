@@ -12,7 +12,7 @@ public class Henchman extends Invader{
         super.coordinate = init_coordinate;
         this.lastAttack = new Time(0);
         super.healthDegree = new HealthLevel(2); //Medium healthLevel
-        super.movementSpeed = 4; //moves 4 pixels in each time unit
+        super.movementSpeed = 4 * super.speedConst; //moves 4 pixels in each time unit
         super.range = 3; //Medium Range
     }
 

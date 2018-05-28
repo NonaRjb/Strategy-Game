@@ -4,6 +4,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     protected Coordinate coordinate;
     protected HealthLevel healthDegree;
     protected int movementSpeed;
+    protected int speedConst;
     protected int range;
     private int InstanceNum;
     private boolean isFrozen;
@@ -13,12 +14,15 @@ abstract class Invader implements DetailShow, InvaderAttack{
     private int numberOfKillings;
     private ArrayList<Object> target;
     private Time burningTime;
+    private Time freezingTime;
+    private int icePower = 0;
 
     static final int numberOfInvaderKinds = 13;
 
     //constructor
     Invader(){
         numberOfKillings = 0;
+        speedConst = 2;
         target = new ArrayList<>();
     }
 
@@ -63,7 +67,9 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public void setHealthDegree(HealthLevel healthDegree) {
         this.healthDegree = healthDegree;
     }
-    public void setFrozen(boolean frozen) {
+    public void setFrozen(boolean frozen , int power, Time currentTime) {
+        icePower += power;
+        freezingTime = currentTime;
         isFrozen = frozen;
     }
     public void setCoordinate(Coordinate coordinate) {
@@ -84,6 +90,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public void setTarget(Object target) {
         this.target.add(target);
     }
+    public boolean getFrozen(){ return isFrozen; }
     public void clearTarget(){
         this.target.clear();
     }

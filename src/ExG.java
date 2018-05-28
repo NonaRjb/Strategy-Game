@@ -11,7 +11,7 @@ public class ExG extends Invader{
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2); //Medium degree of health
-        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 2; //Medium range
     }
 

@@ -12,7 +12,7 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
-        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 3; //Medium range
     }
 

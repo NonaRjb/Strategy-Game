@@ -12,7 +12,7 @@ public class Miner extends Invader{
         super.coordinate = init_coordinate;
         this.lastAttack = new Time( 0 );
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 1; //Very low range
     }
 

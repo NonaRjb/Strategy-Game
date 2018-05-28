@@ -12,7 +12,7 @@ public class Sparrow extends Invader implements InvaderAttack{
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2); //Medium degree of health
-        super.movementSpeed = 3; //moves 3 pixels in each time unit
+        super.movementSpeed = 3 * super.speedConst; //moves 3 pixels in each time unit
         super.range = 3; //Medium range
     }
 

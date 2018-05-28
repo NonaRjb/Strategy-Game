@@ -12,7 +12,7 @@ public class Skipper extends Invader{
         this.attackRateTime = new Time(1); //high attack speed
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 4; //High range
     }
     public int getShootPower() {

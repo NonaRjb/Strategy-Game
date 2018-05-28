@@ -143,8 +143,16 @@ public class Game {
     private void moveInvader( Invader invader ) {
 
         //TODO: Slower Move if Frozen
+        int currentSpeed;
+        final int freezeConst = 1;
+        if(invader.getFrozen()){
+            currentSpeed = invader.getMovementSpeed() - freezeConst;
+        }else {
+            currentSpeed = invader.getMovementSpeed();
+        }
+        //
         Coordinate nextCoordinate;
-        for (int i = 1; i <= invader.getMovementSpeed(); i++) {
+        for (int i = 1; i <= currentSpeed ; i++) {
             nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
             invader.setCoordinate(nextCoordinate);
         }
@@ -513,7 +521,7 @@ public class Game {
             if( target instanceof Invader ) {
                 Invader targetInvader = (Invader)target;
                 if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
-                    targetInvader.setFrozen( true );
+                    targetInvader.setFrozen( true , shot.getPower(), gameTime);
                     gameShots.remove( shot );
                 }
             }
