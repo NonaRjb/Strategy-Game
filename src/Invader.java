@@ -98,6 +98,11 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return this.target.size();
     }
 
+    //TODO checkFrozen should be completed
+    /*public boolean checkFrozen(Time currenTime){
+
+    }*/
+    //
     public void decreaseBurningTime() {
         if( this.burningTime.getTime() > 0 ) {
             this.burningTime = new Time(this.burningTime.getTime() - 1);

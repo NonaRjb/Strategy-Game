@@ -142,7 +142,7 @@ public class Game {
     // sets invader's coordinate
     private void moveInvader( Invader invader ) {
 
-        //TODO: Slower Move if Frozen
+        //TODO: Slower Move if Frozen --> DONE
         int currentSpeed;
         final int freezeConst = 1;
         if(invader.getFrozen()){
@@ -296,6 +296,15 @@ public class Game {
     private void armoryAttackGame( Armory armory ){
 
         ArrayList<Invader> invadersInRange = findInvaders( armory.getCoordinate(), armory.getRange(), armory.getTargetPriority() );
+
+        // If Miner is in invadersInRange it should be removed because it cannot be seen by anybody except hero
+        for (Invader invader : invadersInRange){
+            if (invader instanceof Miner){
+                invadersInRange.remove(invader);
+            }
+        }
+        //
+
         Invader targetInvader;
         if( invadersInRange != null ) {
             if (armory.getTargetPriority() == TargetPriority.SpecificTarget && invadersInRange.contains(armory.getSpecificTargetInvader()))
@@ -467,7 +476,7 @@ public class Game {
             invader.attack(gameTime, gameShots, targets);
         }
         if(invader instanceof Healer || invader instanceof Motivator){
-            //TODO Healer Rescue Toxicants ! :))
+            //TODO Healer Rescue Toxicants ! :)) --> DONE (in Healer attack method)
             ArrayList<Object> targets = new ArrayList<>();
             for (Invader invader1 : invaders){
                 if (invaders.indexOf(invader) != invaders.indexOf(invader1)) {
