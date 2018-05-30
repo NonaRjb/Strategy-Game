@@ -1,19 +1,30 @@
+import java.util.ArrayList;
+
 public class Hero implements DetailShow {
     private Coordinate coordinate;
-    HealthLevel healthLevel;
-    int level;
-    int delayConst;
-    int speedLevel;
-    int range;
-    int xpCnt;
-    int graphicalSize;
-    int numberOfKillings;
-    Invader targetInvader;
+    private HealthLevel healthLevel;
+    private int level;
+    private final int maxLevel = 5;
+    private int delayConst;
+    private int speedLevel;
+    private int range;
+    private int xpCnt;
+    private int graphicalSize;
+    private int numberOfKillings;
+    private Invader targetInvader;
+    private Time attackRate;
+    private Time lastAttack;
+    private final int attackConst = 4;
+    private int shootPower;
+    private final int shootConst = 10;
 
     //constructor
     Hero(Coordinate init_coordinate, int xpCnt){
         coordinate = init_coordinate;
         level = 1;
+        attackRate = new Time((maxLevel+1-level) * attackConst);
+        lastAttack = new Time(0);
+        shootPower = level * shootConst;
         healthLevel = new HealthLevel(1); //Hero's health unit is one
         delayConst = 10; //Just to be here! should be changed
         speedLevel = 1; // High Speed
@@ -36,21 +47,36 @@ public class Hero implements DetailShow {
         return this.coordinate;
     }
 
-    public void levelUp(){
-        this.level++;
-        delayConst--; //delayConst must be decreased with each level upgrade
+    public Time getLastAttack() {
+        return lastAttack;
     }
 
-    public boolean freezeGsme(){ //Notice! FreezeGame return value is boolean now!
+    public int getRange() {
+        return range;
+    }
+
+    public void setTarget(Invader invader){ this.targetInvader = invader; }
+
+    public void setLastAttack(Time currentTime){ this.lastAttack = currentTime; }
+
+    public void levelUp(){
+        if(this.level < maxLevel) {
+            this.level++;
+            delayConst--; //delayConst must be decreased with each level upgrade
+        }
+    }
+
+    public boolean freezeGame(){ //Notice! FreezeGame return value is boolean now!
         if(this.level >= 3){
             return true;
         }
         else return false;
     }
 
-    public void goAfterInvader(Invader invader){
+    //ToDo go after Invader!
+    /*public void goAfterInvader(Invader invader){
         this.targetInvader = invader;
-    }
+    }*/
 
     public void moveTo(Coordinate coordinate){
         this.coordinate = coordinate;
@@ -64,5 +90,25 @@ public class Hero implements DetailShow {
         System.out.println("XP count: " + xpCnt);
         System.out.println("Delay after getting killed: " + delayConst);
         // Speed and range are assumed to be constant
+    }
+
+    public boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Invader> targetInvaders){
+        if((currentTime.getTime() - this.lastAttack.getTime()) < attackRate.getTime()){
+            return false;
+        }
+        else {
+           this.setLastAttack(currentTime);
+           Invader target = targetInvaders.get(0);
+           int distance = Coordinate.distance(  target.getCoordinate(), this.coordinate ) ;
+           for (Invader invader : targetInvaders){
+               if ( Coordinate.distance( invader.getCoordinate(), this.coordinate ) < distance) {
+                   distance = Coordinate.distance( invader.getCoordinate(), this.coordinate );
+                   target = invader;
+               }
+           }
+           this.setTarget(target);
+           gameShots.add(new Bullet(this.getCoordinate(), this.targetInvader, this.shootPower));
+           return true;
+        }
     }
 }

@@ -6,6 +6,7 @@ public class Icer extends Invader{
 
     Icer(Coordinate init_coordinate){
         this.attackRateTime = new Time(4); //attacks every 4 time units
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
         super.movementSpeed = 1 * super.speedConst; //moves 1 pixels in each time unit

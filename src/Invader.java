@@ -30,9 +30,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public boolean isBurning() {
         return isBurning;
     }
-    public boolean isFrozen() {
-        return isFrozen;
-    }
+    public boolean getFrozen(){ return isFrozen; }
     public boolean isPoisoned() {
         return isPoisoned;
     }
@@ -90,7 +88,6 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public void setTarget(Object target) {
         this.target.add(target);
     }
-    public boolean getFrozen(){ return isFrozen; }
     public void clearTarget(){
         this.target.clear();
     }
@@ -98,10 +95,14 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return this.target.size();
     }
 
-    //TODO checkFrozen should be completed
-    /*public boolean checkFrozen(Time currenTime){
-
-    }*/
+    //TODO checkFrozen should be completed --> DONE
+    public boolean checkFrozen(Time currentTime){
+        if (this.getFrozen()){
+            if((currentTime.getTime() - this.freezingTime.getTime()) < this.icePower)    return true;
+            else return false;
+        }
+        return false;
+    }
     //
     public void decreaseBurningTime() {
         if( this.burningTime.getTime() > 0 ) {

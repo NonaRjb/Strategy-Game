@@ -166,7 +166,7 @@ public class Game {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets hero's coordinate
     private void moveHero( Hero hero ){
-
+        
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets Shot's coordinate
@@ -507,6 +507,19 @@ public class Game {
             invader.attack(gameTime, gameShots, targets);
         }
 
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void heroAttackGame(){
+        if(hero != null) {
+            ArrayList<Invader> targets = findInvaders(hero.getCoordinate(), hero.getRange(), TargetPriority.Nearest);
+            for (Invader invader : targets){
+                if (invader instanceof Sparrow){
+                    targets.remove(invader);
+                }
+            }
+            hero.attack(gameTime, gameShots, targets);
+        }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void effectShot( Shot shot ){
