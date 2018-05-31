@@ -14,6 +14,7 @@ public class Hero implements DetailShow {
     private int xpCnt;
     private int graphicalSize;
     private int numberOfKillings;
+    private int deathNum;
     private Invader targetInvader;
     private Time attackRate;
     private Time lastAttack;
@@ -37,6 +38,7 @@ public class Hero implements DetailShow {
         range = 4; // High Range
         this.xpCnt = xpCnt;
         numberOfKillings = 0;
+        deathNum = 0;
     }
 
     //setter & getters
@@ -98,6 +100,8 @@ public class Hero implements DetailShow {
         System.out.println("Health Level: " + healthLevel.getHealthLevel());
         System.out.println("XP count: " + xpCnt);
         System.out.println("Delay after getting killed: " + delayConst);
+        System.out.println("Number of killed ivaders by Hero: " + numberOfKillings);
+        System.out.println("Number of times that hero has been killed: " + deathNum);
         System.out.println("Current Coordinate: " + this.coordinate.getX() + "," + this.coordinate.getY());
         // Speed and range are assumed to be constant
     }

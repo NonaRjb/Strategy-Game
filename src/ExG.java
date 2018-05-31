@@ -59,5 +59,7 @@ public class ExG extends Invader{
         System.out.println("Shoot Power: Low");
         System.out.println("Additional Abilities: Only attacks Hero");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

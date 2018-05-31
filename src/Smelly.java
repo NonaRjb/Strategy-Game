@@ -61,5 +61,7 @@ public class Smelly extends Invader {
         System.out.println("Additional Abilities: When it dies it remains a poisonous cloud around itself, if the Hero" +
                            "any of the soldiers smell that, their health degree decreases for some secs");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

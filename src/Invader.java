@@ -12,7 +12,8 @@ abstract class Invader implements DetailShow, InvaderAttack{
     private boolean isPoisoned;
     private boolean isFighting;
     private int graphicalSize;
-    private int numberOfKillings;
+    protected int numberOfKilledSoldiers;
+    protected int numberOfHeroKill;
     private ArrayList<Object> target;
     private Time burningTime;
     private Time freezingTime;
@@ -22,7 +23,8 @@ abstract class Invader implements DetailShow, InvaderAttack{
 
     //constructor
     Invader(){
-        numberOfKillings = 0;
+        numberOfKilledSoldiers = 0;
+        numberOfHeroKill = 0;
         speedConst = 2;
         target = new ArrayList<>();
     }
@@ -54,7 +56,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return InstanceNum;
     }
     public int getNumberOfKillings() {
-        return numberOfKillings;
+        return numberOfKilledSoldiers;
     }
     public int getMovementSpeed() {
         return movementSpeed;
@@ -83,7 +85,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
         InstanceNum = instanceNum;
     }
     public void setNumberOfKillings(int numberOfKillings) {
-        this.numberOfKillings = numberOfKillings;
+        this.numberOfKilledSoldiers = numberOfKillings;
     }
     public void setPoisoned(boolean poisoned) {
         isPoisoned = poisoned;

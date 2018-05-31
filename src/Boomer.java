@@ -29,5 +29,7 @@ public class Boomer extends Invader{
         System.out.println("Additional Abilities: When it get to the first building in its way, it explodes and causes" +
                            "that building stops working for some secs");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

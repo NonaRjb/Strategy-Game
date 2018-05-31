@@ -65,5 +65,7 @@ public class Hopper extends Invader{
         System.out.println("Additional Abilities: When it gets to the hero or a soldier for the first time, it moves 2" +
                            "times of its traveled distance in a sec");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

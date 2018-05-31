@@ -67,7 +67,10 @@ public class Soldier implements DetailShow{
     //ToDo
     @Override
     public void showDetail(){
-
+        System.out.println("Soldier");
+        System.out.println("HealthLevel: " + health);
+        System.out.println("Number of killed invaders by this soldier: " + numberOfKillings);
+        System.out.println("Current coordinate: " + this.getCoordinate().getX() + "," + this.getCoordinate().getY());
     }
 
     //ToDo go after invader! --> Done
