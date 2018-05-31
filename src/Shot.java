@@ -19,4 +19,6 @@ abstract class Shot {
     // Setters
     public void setCoordinate(Coordinate coordinate) { this.coordinate = coordinate; }
 
+    // ToDo each shot's owner
+
 }

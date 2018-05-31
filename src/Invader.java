@@ -10,6 +10,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     private boolean isFrozen;
     private boolean isBurning;
     private boolean isPoisoned;
+    private boolean isFighting;
     private int graphicalSize;
     private int numberOfKillings;
     private ArrayList<Object> target;
@@ -59,7 +60,9 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return movementSpeed;
     }
 
-
+    public boolean isFighting() {
+        return isFighting;
+    }
 
     // Setters
     public void setHealthDegree(HealthLevel healthDegree) {
@@ -91,6 +94,11 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public void clearTarget(){
         this.target.clear();
     }
+
+    public void setFighting(boolean fighting) {
+        isFighting = fighting;
+    }
+
     public int targetNum(){
         return this.target.size();
     }
@@ -99,7 +107,10 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public boolean checkFrozen(Time currentTime){
         if (this.getFrozen()){
             if((currentTime.getTime() - this.freezingTime.getTime()) < this.icePower)    return true;
-            else return false;
+            else{
+                isFrozen = false;
+                return false;
+                }
         }
         return false;
     }

@@ -1,3 +1,6 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 
 public class Hero implements DetailShow {
@@ -17,6 +20,9 @@ public class Hero implements DetailShow {
     private final int attackConst = 4;
     private int shootPower;
     private final int shootConst = 10;
+    private boolean isStopped;
+    private boolean isFighting;
+    //private Boolean isBoomed;
 
     //constructor
     Hero(Coordinate init_coordinate, int xpCnt){
@@ -73,12 +79,15 @@ public class Hero implements DetailShow {
         else return false;
     }
 
-    //ToDo go after Invader!
-    /*public void goAfterInvader(Invader invader){
+    //ToDo go after Invader! --> Done
+    public void goAfterInvader(Invader invader, Coordinate coordinate){
+        this.isFighting = true;
         this.targetInvader = invader;
-    }*/
+        this.moveTo(coordinate);
+    }
 
     public void moveTo(Coordinate coordinate){
+
         this.coordinate = coordinate;
     }
 
@@ -89,6 +98,7 @@ public class Hero implements DetailShow {
         System.out.println("Health Level: " + healthLevel.getHealthLevel());
         System.out.println("XP count: " + xpCnt);
         System.out.println("Delay after getting killed: " + delayConst);
+        System.out.println("Current Coordinate: " + this.coordinate.getX() + "," + this.coordinate.getY());
         // Speed and range are assumed to be constant
     }
 

@@ -56,8 +56,12 @@ public class PlayGround {
     // returns the next coordinate of a given coordinate
     // if the given coordinate is the last coordinate of the path the method returns (450,1599)
     public Coordinate nextCoordinate (Coordinate currentCoordinate){
-
         return map.nextCoordinate(currentCoordinate);
+    }
+
+    // Just to see if a specific Coordinate is in a path
+    public Boolean isInWay(Coordinate coordinate){
+        return map.isInWay(coordinate);
     }
 
 }

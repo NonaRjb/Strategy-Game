@@ -12,6 +12,9 @@ public class Soldier implements DetailShow{
     private int numberOfKillings;
     private Time lastAttack;
     private Time attackRate;
+    private boolean isStopped;
+    private boolean isFighting;
+    //private Boolean isBoomed;
 
     Soldier(Coordinate init_coordinate, String barrackID, int healthLevel){
         this.coordinate = init_coordinate;
@@ -57,19 +60,22 @@ public class Soldier implements DetailShow{
         this.lastAttack = lastAttack;
     }
 
+    public void moveGame(Coordinate coordinate){
+        this.coordinate = coordinate;
+    }
+
     //ToDo
     @Override
     public void showDetail(){
 
     }
 
-    //ToDo go after invader!
-    /*public void goAfterInvader(Invader target){
+    //ToDo go after invader! --> Done
+    public void goAfterInvader(Invader target, Coordinate nextCoordinate){
+        isFighting = true;
         targetInvader = target;
-        if (!this.getCoordinate().isEqual(target.getCoordinate())){
-
-        }
-    }*/
+        this.moveGame(nextCoordinate);
+    }
 
     public boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Invader> targetInvaders){
         if ((currentTime.getTime() - this.lastAttack.getTime()) < this.attackRate.getTime()){

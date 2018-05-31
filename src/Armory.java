@@ -31,6 +31,7 @@ abstract class Armory implements DetailShow {
     }
 
     // Other Methods
+    //ToDo levelUp
     public void levelUp(){}
 
     public int getLevelUpPrice(){
