@@ -16,6 +16,7 @@ public class Game {
     private final int placeHolderNum = 8;
     private final int boomerStopConst = 10;
     static Time burningTimeConst = new Time(10);
+    private int thisRoundNumberOfInvaders;
 
 
     // Constructor
@@ -35,6 +36,20 @@ public class Game {
     public ArrayList<Armory> getArmories() {
         return this.armories;
     }
+
+    public int getThisRoundNnumberOfInvaders() {
+        return thisRoundNumberOfInvaders;
+    }
+
+    // Setters
+    public void setInvaderRate(Time invaderRate) {
+        this.invaderRate = invaderRate;
+    }
+
+    public void setThisRoundNnumberOfInvaders(int thisRoundNnumberOfInvaders) {
+        this.thisRoundNumberOfInvaders = thisRoundNnumberOfInvaders;
+    }
+
 
     // Other Methods
     public void createArmory(String armoryType, int id) {
@@ -121,6 +136,8 @@ public class Game {
         hero.checkIdle(gameTime);
         hero.checkStopped(boomerStopConst, gameTime);
         this.moveObjects();
+        this.botherBurnings();
+        this.botherToxicants();
         this.doAttacks();
         this.gameTime.increaseTime();
 
@@ -750,9 +767,14 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+    public boolean isEnded(){
+        if( thisRoundNumberOfInvaders==0 && invaders.size()==0 )
+            return true;
+        else
+            return false;
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 
