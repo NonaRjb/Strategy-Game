@@ -14,6 +14,7 @@ public class Game {
     private Time invaderRate;
     private Time lastInvaderTime;
     private final int placeHolderNum = 8;
+    private final int boomerStopConst = 10;
     static Time burningTimeConst = new Time(10);
 
 
@@ -112,13 +113,17 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void increaseTime(){
-        //Todo check frozen, Stop, Idle and etc.
+        //Todo check frozen, Stop, Idle and etc. --> needs to be rechecked
         for (Invader invader : invaders){
             invader.clearTarget();
+            invader.checkFrozen(gameTime);
         }
+        hero.checkIdle(gameTime);
+        hero.checkStopped(boomerStopConst, gameTime);
         this.moveObjects();
         this.doAttacks();
         this.gameTime.increaseTime();
+
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // Moving all Objects
@@ -488,7 +493,9 @@ public class Game {
                     targets.add(hero);
                 }
             }
-             invader.attack(gameTime, gameShots, targets);
+            if (targets.size() != 0) {
+                invader.attack(gameTime, gameShots, targets);
+            }
         }
         if (invader instanceof ExG){
             ArrayList<Object> targets = new ArrayList<>();
@@ -506,7 +513,9 @@ public class Game {
                     targets.add(armory);
                 }
             }
-            invader.attack(gameTime, gameShots, targets);
+            if (targets.size() != 0) {
+                invader.attack(gameTime, gameShots, targets);
+            }
         }
         if(invader instanceof Healer || invader instanceof Motivator){
             //TODO Healer Rescue Toxicants ! :)) --> DONE (in Healer attack method)
@@ -518,7 +527,9 @@ public class Game {
                     }
                 }
             }
-            invader.attack(gameTime, gameShots, targets);
+            if (targets.size() != 0) {
+                invader.attack(gameTime, gameShots, targets);
+            }
         }
         if(invader instanceof Boomer){
             ArrayList<Object> targets = new ArrayList<>();
@@ -537,8 +548,10 @@ public class Game {
                     targets.add(armory);
                 }
             }
-            invader.attack(gameTime, gameShots, targets);
-            invaders.remove(invader);
+            if (targets.size() != 0) {
+                invader.attack(gameTime, gameShots, targets);
+                invaders.remove(invader);
+            }
         }
 
     }
@@ -546,30 +559,67 @@ public class Game {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void heroAttackGame(){
         if(hero != null) {
-            ArrayList<Invader> targets = findInvaders(hero.getCoordinate(), hero.getRange(), TargetPriority.Nearest);
+            ArrayList<Invader> targets = new ArrayList<>();
             //Todo is in mission mix with go after Invader
-            for (Invader invader : targets){
-                if (invader instanceof Sparrow){
-                    targets.remove(invader);
+            if (!hero.isInMission()) {
+                targets = findInvaders(hero.getCoordinate(), hero.getRange(), TargetPriority.AllInRange);
+                for (Invader invader : targets) {
+                    if (invader instanceof Sparrow) {
+                        targets.remove(invader);
+                    }
+                }
+                if (targets.size() != 0) {
+                    hero.attack(gameTime, gameShots, targets);
+                }
+            }else {
+                if (hero.getTargetInvader() != null) {
+                    targets.add(hero.getTargetInvader());
+                    hero.attack(gameTime, gameShots, targets);
                 }
             }
-            hero.attack(gameTime, gameShots, targets);
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void goAfterInvaderHero(Invader invader){
+        Coordinate nextCoordinate = null;
+        while (Coordinate.distance(hero.getCoordinate(), invader.getCoordinate()) != hero.getRange()){
+            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+        }
+        if(nextCoordinate != null) {
+            hero.goAfterInvader(invader, nextCoordinate);
+            invader.setFighting(true);
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void soldierAttackGame(Soldier soldier){
-        ArrayList<Invader> targets = findInvaders(soldier.getCoordinate(), soldier.getRange(), TargetPriority.Nearest);
+        ArrayList<Invader> targets = findInvaders(soldier.getCoordinate(), soldier.getRange(), TargetPriority.AllInRange);
         //Todo is in mission mix with go after Invader
-        for (Invader invader : targets){
-            if (invader instanceof Sparrow){
-                targets.remove(invader);
+        if (!soldier.isInMission()) {
+            for (Invader invader : targets) {
+                if (invader instanceof Sparrow) {
+                    targets.remove(invader);
+                }
+            }
+            if (targets.size() != 0) {
+                soldier.attack(gameTime, gameShots, targets);
             }
         }
-        soldier.attack(gameTime, gameShots, targets);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void goAfterInvaderSoldier(Soldier soldier, Invader invader){
+        Coordinate nextCoordinate = null;
+        while (Coordinate.distance(soldier.getCoordinate(), invader.getCoordinate()) > soldier.getRange()){
+            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+        }
+        if(nextCoordinate != null) {
+            soldier.goAfterInvader(invader, nextCoordinate);
+            invader.setFighting(true);
+        }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void effectShot( Shot shot ){
-        // ToDO if target is not Invader
+        // ToDO if target is not Invader --> Done
         if( shot instanceof Bullet ){
             Object target = shot.getTarget();
             if( target instanceof Invader ) {
@@ -617,7 +667,7 @@ public class Game {
                 }
             }
         }
-        // ToDO if target is not Invader
+        // ToDO if target is not Invader --> Done
         else if( shot instanceof Ice ){
             Object target = shot.getTarget();
             if( target instanceof Invader ) {
@@ -700,27 +750,8 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void goAfterInvaderHero(Invader invader){
-        Coordinate nextCoordinate = null;
-        while (Coordinate.distance(hero.getCoordinate(), invader.getCoordinate()) > hero.getRange()){
-            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
-        }
-        if(nextCoordinate != null) {
-            hero.goAfterInvader(invader, nextCoordinate);
-            invader.setFighting(true);
-        }
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void goAfterInvaderSoldier(Soldier soldier, Invader invader){
-        Coordinate nextCoordinate = null;
-        while (Coordinate.distance(soldier.getCoordinate(), invader.getCoordinate()) > soldier.getRange()){
-            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
-        }
-        if(nextCoordinate != null) {
-            soldier.goAfterInvader(invader, nextCoordinate);
-            invader.setFighting(true);
-        }
-    }
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
