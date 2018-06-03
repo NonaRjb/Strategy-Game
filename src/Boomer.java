@@ -13,6 +13,13 @@ public class Boomer extends Invader{
     @Override
     public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
         for (Object target : targets) {
+            if (target instanceof Armory){
+                ((Armory) target).setStopped(true);
+            }else if (target instanceof Soldier){
+                ((Soldier) target).setStopped(true);
+            }else if (target instanceof Hero){
+                ((Hero) target).setStopped(true);
+            }
             super.setTarget(target);
         }
         return true;

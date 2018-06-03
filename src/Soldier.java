@@ -52,12 +52,24 @@ public class Soldier implements DetailShow{
         return lastAttack;
     }
 
+    public boolean isFighting() {
+        return isFighting;
+    }
+
+    public boolean isStopped() {
+        return isStopped;
+    }
+
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
 
     public void setLastAttack(Time lastAttack) {
         this.lastAttack = lastAttack;
+    }
+
+    public void setStopped(boolean stopped) {
+        isStopped = stopped;
     }
 
     public void moveGame(Coordinate coordinate){

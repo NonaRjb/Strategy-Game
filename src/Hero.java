@@ -21,6 +21,8 @@ public class Hero implements DetailShow {
     private final int attackConst = 4;
     private int shootPower;
     private final int shootConst = 10;
+    private boolean isIdle;
+    private Time idleStartTime;
     private boolean isStopped;
     private boolean isFighting;
     //private Boolean isBoomed;
@@ -39,12 +41,18 @@ public class Hero implements DetailShow {
         this.xpCnt = xpCnt;
         numberOfKillings = 0;
         deathNum = 0;
+        isIdle = false;
+        idleStartTime = new Time(0);
     }
 
     //setter & getters
 
     public void setNumberOfKillings(int numberOfKillings) {
         this.numberOfKillings = numberOfKillings;
+    }
+
+    public void setStopped(boolean stopped) {
+        isStopped = stopped;
     }
 
     public int getNumberOfKillings() {
@@ -63,9 +71,36 @@ public class Hero implements DetailShow {
         return range;
     }
 
+    public HealthLevel getHealthLevel() {
+        return healthLevel;
+    }
+
+    public int getDelayConst() {
+        return delayConst;
+    }
+
+    public boolean isStopped() {
+        return isStopped;
+    }
+
     public void setTarget(Invader invader){ this.targetInvader = invader; }
 
     public void setLastAttack(Time currentTime){ this.lastAttack = currentTime; }
+
+    public void setIdle(Time currentTime){
+        this.isIdle = true;
+        this.idleStartTime = currentTime;
+    }
+
+    public boolean checkIdle(Time currentTime){
+       if ((currentTime.getTime() - this.idleStartTime.getTime()) > delayConst){
+           this.isIdle = false;
+           return false;
+       }
+       else {
+           return true;
+       }
+    }
 
     public void levelUp(){
         if(this.level < maxLevel) {
