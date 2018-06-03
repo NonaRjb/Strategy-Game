@@ -15,7 +15,7 @@ public class Game {
     private Time lastInvaderTime;
     private final int placeHolderNum = 8;
     static Time burningTimeConst = new Time(10);
-
+    private int thisRoundNumberOfInvaders;
 
     // Constructor
     public Game() {
@@ -25,7 +25,6 @@ public class Game {
         this.soldiers = new ArrayList<>();
         this.gameShots = new ArrayList<>();
         this.gameTime = new Time(0);
-        this.invaderRate = new Time(2);
         this.lastInvaderTime = new Time(0);
         this.hero = null;
     }
@@ -33,6 +32,17 @@ public class Game {
     // Getters
     public ArrayList<Armory> getArmories() {
         return this.armories;
+    }
+    public int getThisRoundNnumberOfInvaders() {
+        return thisRoundNumberOfInvaders;
+    }
+
+    // Setters
+    public void setInvaderRate(Time invaderRate) {
+        this.invaderRate = invaderRate;
+    }
+    public void setThisRoundNnumberOfInvaders(int thisRoundNnumberOfInvaders) {
+        this.thisRoundNumberOfInvaders = thisRoundNnumberOfInvaders;
     }
 
     // Other Methods
@@ -116,9 +126,12 @@ public class Game {
         for (Invader invader : invaders){
             invader.clearTarget();
         }
-        this.moveObjects();
+        this.botherBurnings();
+        this.botherToxicants();
         this.doAttacks();
+        this.moveObjects();
         this.gameTime.increaseTime();
+        this.invaderMaker();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // Moving all Objects
@@ -236,8 +249,11 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void invaderMaker(){
-        if( this.gameTime.getTime() - this.lastInvaderTime.getTime() >= this.invaderRate.getTime() ){
-            produceInvader();
+        if( thisRoundNumberOfInvaders > 0 ) {
+            if (this.gameTime.getTime() - this.lastInvaderTime.getTime() >= this.invaderRate.getTime()) {
+                this.produceInvader();
+                thisRoundNumberOfInvaders--;
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -720,6 +736,13 @@ public class Game {
             soldier.goAfterInvader(invader, nextCoordinate);
             invader.setFighting(true);
         }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public boolean isEnded(){
+        if( thisRoundNumberOfInvaders==0 && invaders.size()==0 )
+            return true;
+        else
+            return false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
