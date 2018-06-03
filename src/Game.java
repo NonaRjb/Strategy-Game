@@ -1,3 +1,4 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -111,6 +112,7 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void increaseTime(){
+        //Todo check frozen, Stop, Idle and etc.
         for (Invader invader : invaders){
             invader.clearTarget();
         }
@@ -122,15 +124,17 @@ public class Game {
     // Moving all Objects
     public void moveObjects(){
 
+        //Todo move Soldier and Hero with direct command from the player
+
         for (Invader invader: invaders ) {
             this.moveInvader(invader );
         }
 
-        for( Soldier soldier: soldiers){
+        /*for( Soldier soldier: soldiers){
             this.moveSoldier( soldier );
         }
 
-        this.moveHero( this.hero );
+        this.moveHero( this.hero );*/
 
         for( Shot shot: gameShots ){
             this.moveShot( shot );
@@ -142,23 +146,55 @@ public class Game {
     // sets invader's coordinate
     private void moveInvader( Invader invader ) {
 
-        //TODO: Slower Move if Frozen
-        Coordinate nextCoordinate;
-        for (int i = 1; i <= invader.getMovementSpeed(); i++) {
-            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
-            invader.setCoordinate(nextCoordinate);
+        int currentSpeed;
+        final int freezeConst = 1;
+        // if the invader faces hero or soldiers it stops to fight
+        if ((Coordinate.distance(invader.getCoordinate(), hero.getCoordinate()) <= invader.getRange())
+                && !(invader instanceof Sparrow) && !(invader instanceof HockeyMaskMan)){
+            invader.setFighting(true);
+        }
+        else {
+            for (Soldier soldier : soldiers) {
+                if ((Coordinate.distance(invader.getCoordinate(), soldier.getCoordinate()) <= invader.getRange())
+                        && !(invader instanceof Miner) && !(invader instanceof Sparrow) && !(invader instanceof HockeyMaskMan)) {
+                    invader.setFighting(true);
+                }
+            }
+        }
+        if (!invader.isFighting()) {
+            //TODO: Slower Move if Frozen --> DONE
+            if (invader.getFrozen()) {
+                currentSpeed = invader.getMovementSpeed() - freezeConst;
+            } else {
+                currentSpeed = invader.getMovementSpeed();
+            }
+            Coordinate nextCoordinate;
+            for (int i = 1; i <= currentSpeed; i++) {
+                nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+                invader.setCoordinate(nextCoordinate);
+            }
         }
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets soldier's coordinate
-    private void moveSoldier( Soldier soldier ){
-
+    private void moveSoldier( Soldier soldier, Coordinate coordinate){
+        if (playGround.isInWay(coordinate)){
+            soldier.moveGame(coordinate);
+        }
+        else {
+            System.out.println("Moving to the this coordinate is not allowed");
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets hero's coordinate
-    private void moveHero( Hero hero ){
-
+    private void moveHero( Hero hero, Coordinate coordinate){
+        if (playGround.isInWay(coordinate)){
+            hero.moveTo(coordinate);
+        }
+        else {
+            System.out.println("Moving to the this coordinate is not allowed");
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets Shot's coordinate
@@ -166,7 +202,6 @@ public class Game {
 
         Coordinate currentCoordinate = shot.getCoordinate();
         Object targetObject = shot.getTarget();
-
         if( shot instanceof Bullet || shot instanceof Ice ){
             if( targetObject instanceof Invader ) {
                 Invader target = (Invader) targetObject;
@@ -278,6 +313,12 @@ public class Game {
             invaderAttackGame( invader );
         }
 
+        heroAttackGame();
+
+        for (Soldier soldier : soldiers){
+            soldierAttackGame(soldier);
+        }
+
         for( Shot shot: gameShots ){
             effectShot( shot );
         }
@@ -288,6 +329,15 @@ public class Game {
     private void armoryAttackGame( Armory armory ){
 
         ArrayList<Invader> invadersInRange = findInvaders( armory.getCoordinate(), armory.getRange(), armory.getTargetPriority() );
+
+        // If Miner is in invadersInRange it should be removed because it cannot be seen by anybody except hero
+        for (Invader invader : invadersInRange){
+            if (invader instanceof Miner){
+                invadersInRange.remove(invader);
+            }
+        }
+        //
+
         Invader targetInvader;
         if( invadersInRange != null ) {
             if (armory.getTargetPriority() == TargetPriority.SpecificTarget && invadersInRange.contains(armory.getSpecificTargetInvader()))
@@ -451,15 +501,15 @@ public class Game {
         }
         if (invader instanceof Icer || invader instanceof HockeyMaskMan){
             ArrayList<Object> targets = new ArrayList<>();
-            for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
-                if ( Coordinate.distance( invader.getCoordinate(), placeHolder.getPlaceCoordinate() ) <= invader.getRange()) {
-                    targets.add(placeHolder);
+            for (Armory armory : armories){
+                if ( Coordinate.distance( invader.getCoordinate(), armory.getCoordinate() ) <= invader.getRange()) {
+                    targets.add(armory);
                 }
             }
             invader.attack(gameTime, gameShots, targets);
         }
         if(invader instanceof Healer || invader instanceof Motivator){
-            //TODO Healer Rescue Toxicants ! :))
+            //TODO Healer Rescue Toxicants ! :)) --> DONE (in Healer attack method)
             ArrayList<Object> targets = new ArrayList<>();
             for (Invader invader1 : invaders){
                 if (invaders.indexOf(invader) != invaders.indexOf(invader1)) {
@@ -482,18 +532,44 @@ public class Game {
                     targets.add(hero);
                 }
             }
-            for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
-                if ( Coordinate.distance( invader.getCoordinate(), placeHolder.getPlaceCoordinate() ) <= invader.getRange()) {
-                    targets.add(placeHolder);
+            for (Armory armory : armories){
+                if ( Coordinate.distance( invader.getCoordinate(), armory.getCoordinate() ) <= invader.getRange()) {
+                    targets.add(armory);
                 }
             }
             invader.attack(gameTime, gameShots, targets);
+            invaders.remove(invader);
         }
 
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void heroAttackGame(){
+        if(hero != null) {
+            ArrayList<Invader> targets = findInvaders(hero.getCoordinate(), hero.getRange(), TargetPriority.Nearest);
+            //Todo is in mission mix with go after Invader
+            for (Invader invader : targets){
+                if (invader instanceof Sparrow){
+                    targets.remove(invader);
+                }
+            }
+            hero.attack(gameTime, gameShots, targets);
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void soldierAttackGame(Soldier soldier){
+        ArrayList<Invader> targets = findInvaders(soldier.getCoordinate(), soldier.getRange(), TargetPriority.Nearest);
+        //Todo is in mission mix with go after Invader
+        for (Invader invader : targets){
+            if (invader instanceof Sparrow){
+                targets.remove(invader);
+            }
+        }
+        soldier.attack(gameTime, gameShots, targets);
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void effectShot( Shot shot ){
-
+        // ToDO if target is not Invader
         if( shot instanceof Bullet ){
             Object target = shot.getTarget();
             if( target instanceof Invader ) {
@@ -502,19 +578,63 @@ public class Game {
                     if( targetInvader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
                         System.out.println("Invader got killed !");
                         invaders.remove( targetInvader );
+                        // Todo Coin & XP
                     } else {
                         targetInvader.getHealthDegree().decreaseHealth( shot.getPower() );
                     }
                     gameShots.remove( shot );
                 }
             }
-        } else if( shot instanceof Ice ){
+            if (target instanceof Soldier){
+                Soldier targetSoldier = (Soldier) target;
+                if(shot.getCoordinate().isEqual(targetSoldier.getCoordinate())){
+                    if (targetSoldier.getHealth().getHealthLevel() <= shot.getPower()){
+                        System.out.println("Soldier got killed!");
+                        soldiers.remove(targetSoldier);
+                        // ToDo when barrack class is ready the soldier should be removed from its barrack too
+                    }else {
+                        targetSoldier.getHealth().decreaseHealth(shot.getPower());
+                    }
+                }
+            }
+            if (target instanceof Hero){
+                Hero targetHero = (Hero) target;
+                if (shot.getCoordinate().isEqual(targetHero.getCoordinate())) {
+                    if (targetHero.getHealthLevel().getHealthLevel() <= shot.getPower()){
+                        System.out.println("Hero will be idle for " + hero.getDelayConst() + " seconds");
+                        hero.setIdle(gameTime);
+                    }
+                }
+            }
+            if (target instanceof Armory){
+                Armory targetArmory = (Armory) target;
+                if (shot.getCoordinate().isEqual(targetArmory.getCoordinate())){
+                    if (targetArmory.getHealthDegree().getHealthLevel() <= shot.getPower()){
+                        System.out.println("The Armory got ruined! Place " + targetArmory.getId() + " is now empty!");
+                        playGround.getPlaceHolder(targetArmory.getId()).setOwner(null);
+                        armories.remove(targetArmory);
+                    }
+                }
+            }
+        }
+        // ToDO if target is not Invader
+        else if( shot instanceof Ice ){
             Object target = shot.getTarget();
             if( target instanceof Invader ) {
                 Invader targetInvader = (Invader)target;
                 if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
-                    targetInvader.setFrozen( true );
+                    targetInvader.setFrozen( true , shot.getPower(), gameTime);
                     gameShots.remove( shot );
+                }
+            }
+            if (target instanceof Armory) {
+                Armory targetArmory = (Armory) target;
+                if (shot.getCoordinate().isEqual(targetArmory.getCoordinate())) {
+                    if (targetArmory.getHealthDegree().getHealthLevel() <= shot.getPower()) {
+                        System.out.println("The Armory got ruined! Place " + targetArmory.getId() + " is now empty!");
+                        playGround.getPlaceHolder(targetArmory.getId()).setOwner(null);
+                        armories.remove(targetArmory);
+                    }
                 }
             }
         } else if( shot instanceof Fire ){
@@ -577,6 +697,28 @@ public class Game {
             if( invader.isPoisoned() ){
                 invader.getHealthDegree().decreaseHealth( Poison.healthDecreasingPower );
             }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void goAfterInvaderHero(Invader invader){
+        Coordinate nextCoordinate = null;
+        while (Coordinate.distance(hero.getCoordinate(), invader.getCoordinate()) > hero.getRange()){
+            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+        }
+        if(nextCoordinate != null) {
+            hero.goAfterInvader(invader, nextCoordinate);
+            invader.setFighting(true);
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void goAfterInvaderSoldier(Soldier soldier, Invader invader){
+        Coordinate nextCoordinate = null;
+        while (Coordinate.distance(soldier.getCoordinate(), invader.getCoordinate()) > soldier.getRange()){
+            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+        }
+        if(nextCoordinate != null) {
+            soldier.goAfterInvader(invader, nextCoordinate);
+            invader.setFighting(true);
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////

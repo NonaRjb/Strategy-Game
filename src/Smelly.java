@@ -10,9 +10,10 @@ public class Smelly extends Invader {
     Smelly(Coordinate init_coordinate){
         this.shootPower = 2; //Medium shoot power
         this.attackRateTime = new Time(3); //attacks every 3 time units
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 3; //moves 3 pixels in each time unit
+        super.movementSpeed = 3 * super.speedConst; //moves 3 pixels in each time unit
         super.range = 3; //Medium range
     }
 
@@ -60,5 +61,7 @@ public class Smelly extends Invader {
         System.out.println("Additional Abilities: When it dies it remains a poisonous cloud around itself, if the Hero" +
                            "any of the soldiers smell that, their health degree decreases for some secs");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

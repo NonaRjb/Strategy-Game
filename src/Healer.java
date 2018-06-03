@@ -4,15 +4,16 @@ public class Healer extends Invader {
     final int healPower;
     final int healRate;
     private Time lastAttack;
+    private final int healConst = 10;
 
     //constructor
     Healer(Coordinate init_coordinate){
         this.healRate = 5; //heals every 5 time units(Medium)
-        this.healPower = 1; //low power of each heal
+        this.healPower = 1 * healConst; //low power of each heal
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 2; //low range
     }
 
@@ -41,6 +42,13 @@ public class Healer extends Invader {
             this.setLastAttack(currentTime);
             for (Object target : targets){
                 super.setTarget(target);
+            }
+            for (Object invader : targets){
+                if (((Invader) invader).isPoisoned()) {
+                    ((Invader) invader).setPoisoned(false);
+                }else {
+                    ((Invader) invader).setHealthDegree(new HealthLevel(this.healPower));
+                }
             }
             return true;
         }

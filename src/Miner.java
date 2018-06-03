@@ -12,7 +12,7 @@ public class Miner extends Invader{
         super.coordinate = init_coordinate;
         this.lastAttack = new Time( 0 );
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 1; //Very low range
     }
 
@@ -59,5 +59,7 @@ public class Miner extends Invader{
         System.out.println("Shoot Power: Low");
         System.out.println("Additional Abilities: Moves under the ground and only can be seen by hero");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

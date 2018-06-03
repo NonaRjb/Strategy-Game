@@ -11,14 +11,21 @@ abstract class Armory implements DetailShow {
     protected int graphicalSize;
     private TargetPriority targetPriority;
     protected Invader specificTargetInvader;
+    private boolean isStopped = false;
 
     final int priceUnit = 100;
     final int attackTimeUnit = 100;
     final int rangeUnit = 10;
     final int shotPowerUnit = 10;
 
+    //Todo Barrack class
+
     // Setters
     public void setTargetPriority(TargetPriority targetPriority) { this.targetPriority = targetPriority; }
+
+    public void setStopped(boolean stopped) {
+        isStopped = stopped;
+    }
 
     // Getters
     public Coordinate getCoordinate(){ return this.coordinate; }
@@ -30,7 +37,20 @@ abstract class Armory implements DetailShow {
         return specificTargetInvader;
     }
 
+    public HealthLevel getHealthDegree() {
+        return healthDegree;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public boolean isStopped() {
+        return isStopped;
+    }
+
     // Other Methods
+    //ToDo levelUp
     public void levelUp(){}
 
     public int getLevelUpPrice(){

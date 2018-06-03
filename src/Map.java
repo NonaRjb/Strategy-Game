@@ -390,5 +390,15 @@ public class Map {
         return null;
     }
 
+    // Just to see if a specific Coordinate is in a path
+    public Boolean isInWay(Coordinate coordinate){
+        for (Path path : paths){
+           if (path.isInWay(coordinate)){
+               return true;
+           }
+        }
+        return false;
+    }
+
 
 }

@@ -12,7 +12,7 @@ public class Bane extends Invader{
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1); //High degree of health
-        super.movementSpeed = 1; //moves 1 pixels in each time unit
+        super.movementSpeed = 1 * super.speedConst; //moves 1 pixels in each time unit
         super.range = 2; //low range
     }
 
@@ -57,5 +57,7 @@ public class Bane extends Invader{
         System.out.println("Shoot Power: High");
         System.out.println("Additional Abilities: None");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

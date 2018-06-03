@@ -4,21 +4,28 @@ abstract class Invader implements DetailShow, InvaderAttack{
     protected Coordinate coordinate;
     protected HealthLevel healthDegree;
     protected int movementSpeed;
+    protected int speedConst;
     protected int range;
     private int InstanceNum;
     private boolean isFrozen;
     private boolean isBurning;
     private boolean isPoisoned;
+    private boolean isFighting;
     private int graphicalSize;
-    private int numberOfKillings;
+    protected int numberOfKilledSoldiers;
+    protected int numberOfHeroKill;
     private ArrayList<Object> target;
     private Time burningTime;
+    private Time freezingTime;
+    private int icePower = 0;
 
     static final int numberOfInvaderKinds = 13;
 
     //constructor
     Invader(){
-        numberOfKillings = 0;
+        numberOfKilledSoldiers = 0;
+        numberOfHeroKill = 0;
+        speedConst = 2;
         target = new ArrayList<>();
     }
 
@@ -26,9 +33,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public boolean isBurning() {
         return isBurning;
     }
-    public boolean isFrozen() {
-        return isFrozen;
-    }
+    public boolean getFrozen(){ return isFrozen; }
     public boolean isPoisoned() {
         return isPoisoned;
     }
@@ -51,19 +56,23 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return InstanceNum;
     }
     public int getNumberOfKillings() {
-        return numberOfKillings;
+        return numberOfKilledSoldiers;
     }
     public int getMovementSpeed() {
         return movementSpeed;
     }
 
-
+    public boolean isFighting() {
+        return isFighting;
+    }
 
     // Setters
     public void setHealthDegree(HealthLevel healthDegree) {
         this.healthDegree = healthDegree;
     }
-    public void setFrozen(boolean frozen) {
+    public void setFrozen(boolean frozen , int power, Time currentTime) {
+        icePower += power;
+        freezingTime = currentTime;
         isFrozen = frozen;
     }
     public void setCoordinate(Coordinate coordinate) {
@@ -76,7 +85,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
         InstanceNum = instanceNum;
     }
     public void setNumberOfKillings(int numberOfKillings) {
-        this.numberOfKillings = numberOfKillings;
+        this.numberOfKilledSoldiers = numberOfKillings;
     }
     public void setPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
@@ -87,10 +96,27 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public void clearTarget(){
         this.target.clear();
     }
+
+    public void setFighting(boolean fighting) {
+        isFighting = fighting;
+    }
+
     public int targetNum(){
         return this.target.size();
     }
 
+    //TODO checkFrozen should be completed --> DONE
+    public boolean checkFrozen(Time currentTime){
+        if (this.getFrozen()){
+            if((currentTime.getTime() - this.freezingTime.getTime()) < this.icePower)    return true;
+            else{
+                isFrozen = false;
+                return false;
+                }
+        }
+        return false;
+    }
+    //
     public void decreaseBurningTime() {
         if( this.burningTime.getTime() > 0 ) {
             this.burningTime = new Time(this.burningTime.getTime() - 1);

@@ -13,7 +13,7 @@ public class Hopper extends Invader{
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 3; //moves 3 pixels in each time unit
+        super.movementSpeed = 3 * super.speedConst; //moves 3 pixels in each time unit
         super.range = 3; //Medium range
     }
 
@@ -65,5 +65,7 @@ public class Hopper extends Invader{
         System.out.println("Additional Abilities: When it gets to the hero or a soldier for the first time, it moves 2" +
                            "times of its traveled distance in a sec");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

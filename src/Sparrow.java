@@ -12,7 +12,7 @@ public class Sparrow extends Invader implements InvaderAttack{
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2); //Medium degree of health
-        super.movementSpeed = 3; //moves 3 pixels in each time unit
+        super.movementSpeed = 3 * super.speedConst; //moves 3 pixels in each time unit
         super.range = 3; //Medium range
     }
 
@@ -59,5 +59,7 @@ public class Sparrow extends Invader implements InvaderAttack{
         System.out.println("Shoot Power: Low");
         System.out.println("Additional Abilities: Sparrow flies so it can only be attacked by armories");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }

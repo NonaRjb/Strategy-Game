@@ -1,7 +1,7 @@
 public class HealthLevel {
     private int healthLevel;
 
-    public HealthLevel(int healthLevel) {
+    HealthLevel(int healthLevel) {
         this.healthLevel = healthLevel;
     }
 

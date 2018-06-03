@@ -10,9 +10,10 @@ public class Skipper extends Invader{
     Skipper(Coordinate init_coordinate){
         this.shootPower = 5; //high shoot power
         this.attackRateTime = new Time(1); //high attack speed
+        this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3); //Low degree of health
-        super.movementSpeed = 2; //moves 2 pixels in each time unit
+        super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 4; //High range
     }
     public int getShootPower() {
@@ -58,5 +59,7 @@ public class Skipper extends Invader{
         System.out.println("Shoot Power: High");
         System.out.println("Additional Abilities: None");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
+        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
     }
 }
