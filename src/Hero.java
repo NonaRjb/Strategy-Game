@@ -24,7 +24,9 @@ public class Hero implements DetailShow {
     private boolean isIdle;
     private Time idleStartTime;
     private boolean isStopped;
+    private Time stopStartTime;
     private boolean isFighting;
+    private boolean isInMission;
     //private Boolean isBoomed;
 
     //constructor
@@ -41,8 +43,10 @@ public class Hero implements DetailShow {
         this.xpCnt = xpCnt;
         numberOfKillings = 0;
         deathNum = 0;
-        isIdle = false;
         idleStartTime = new Time(0);
+        isInMission = false;
+        isIdle = false;
+        isStopped = false;
     }
 
     //setter & getters
@@ -53,6 +57,14 @@ public class Hero implements DetailShow {
 
     public void setStopped(boolean stopped) {
         isStopped = stopped;
+    }
+
+    public boolean isInMission() {
+        return isInMission;
+    }
+
+    public boolean isIdle() {
+        return isIdle;
     }
 
     public int getNumberOfKillings() {
@@ -79,6 +91,10 @@ public class Hero implements DetailShow {
         return delayConst;
     }
 
+    public Invader getTargetInvader() {
+        return targetInvader;
+    }
+
     public boolean isStopped() {
         return isStopped;
     }
@@ -92,14 +108,27 @@ public class Hero implements DetailShow {
         this.idleStartTime = currentTime;
     }
 
+    public void setInMission(boolean inMission) {
+        isInMission = inMission;
+    }
+
     public boolean checkIdle(Time currentTime){
-       if ((currentTime.getTime() - this.idleStartTime.getTime()) > delayConst){
+       if ((currentTime.getTime() - this.idleStartTime.getTime()) < delayConst && isIdle){
+           return true;
+       }
+       else {
            this.isIdle = false;
            return false;
        }
-       else {
-           return true;
-       }
+    }
+
+    public boolean checkStopped(int stopConst, Time currentTime){
+        if((currentTime.getTime() - stopStartTime.getTime()) < stopConst && isStopped){
+            return true;
+        } else {
+            isStopped = false;
+            return false;
+        }
     }
 
     public void levelUp(){
@@ -118,7 +147,8 @@ public class Hero implements DetailShow {
 
     //ToDo go after Invader! --> Done
     public void goAfterInvader(Invader invader, Coordinate coordinate){
-        this.isFighting = true;
+        //this.isFighting = true;
+        this.isInMission = true;
         this.targetInvader = invader;
         this.moveTo(coordinate);
     }

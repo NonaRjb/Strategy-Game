@@ -14,6 +14,7 @@ public class Soldier implements DetailShow{
     private Time attackRate;
     private boolean isStopped;
     private boolean isFighting;
+    private boolean isInMission;
     //private Boolean isBoomed;
 
     Soldier(Coordinate init_coordinate, String barrackID, int healthLevel){
@@ -26,6 +27,9 @@ public class Soldier implements DetailShow{
         this.range = 2; // low Range
         this.barrackID = barrackID;
         this.numberOfKillings = 0;
+        this.isInMission = false;
+        this.isFighting = false;
+        this.isStopped = false;
     }
 
     public int getRange() {
@@ -50,6 +54,10 @@ public class Soldier implements DetailShow{
 
     public Time getLastAttack() {
         return lastAttack;
+    }
+
+    public boolean isInMission() {
+        return isInMission;
     }
 
     public boolean isFighting() {
@@ -87,7 +95,8 @@ public class Soldier implements DetailShow{
 
     //ToDo go after invader! --> Done
     public void goAfterInvader(Invader target, Coordinate nextCoordinate){
-        isFighting = true;
+        //isFighting = true;
+        isInMission = true;
         targetInvader = target;
         this.moveGame(nextCoordinate);
     }

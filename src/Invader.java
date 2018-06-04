@@ -108,7 +108,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     //TODO checkFrozen should be completed --> DONE
     public boolean checkFrozen(Time currentTime){
         if (this.getFrozen()){
-            if((currentTime.getTime() - this.freezingTime.getTime()) < this.icePower)    return true;
+            if((currentTime.getTime() - this.freezingTime.getTime()) < this.icePower && isFrozen)    return true;
             else{
                 isFrozen = false;
                 return false;
