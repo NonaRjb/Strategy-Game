@@ -19,6 +19,7 @@ abstract class Armory implements DetailShow {
     final int shotPowerUnit = 10;
 
     //Todo Barrack class
+    //Todo Stop when Icer and Boomer attack
 
     // Setters
     public void setTargetPriority(TargetPriority targetPriority) { this.targetPriority = targetPriority; }
