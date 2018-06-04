@@ -6,7 +6,7 @@ public class Soldier implements DetailShow{
     private int speed;
     private int shootPower;
     private HealthLevel health;
-    private String barrackID;
+    private int barrackID;
     private Invader targetInvader;
     private int graphicalSize;
     private int numberOfKillings;
@@ -15,9 +15,10 @@ public class Soldier implements DetailShow{
     private boolean isStopped;
     private boolean isFighting;
     private boolean isInMission;
+    private int soldierID;
     //private Boolean isBoomed;
 
-    Soldier(Coordinate init_coordinate, String barrackID, int healthLevel){
+    Soldier(Coordinate init_coordinate, int barrackID, int soldierID,int healthLevel){
         this.coordinate = init_coordinate;
         this.health = new HealthLevel(healthLevel);
         this.lastAttack = new Time(0);
@@ -26,62 +27,65 @@ public class Soldier implements DetailShow{
         this.shootPower = 10;
         this.range = 2; // low Range
         this.barrackID = barrackID;
+        this.soldierID = soldierID;
         this.numberOfKillings = 0;
         this.isInMission = false;
         this.isFighting = false;
         this.isStopped = false;
     }
 
+
+    // Getters
     public int getRange() {
         return range;
     }
-
     public int getSpeed() {
         return speed;
     }
-
     public void setTargetInvader(Invader targetInvader) {
         this.targetInvader = targetInvader;
     }
-
     public Coordinate getCoordinate() {
         return coordinate;
     }
-
     public HealthLevel getHealth() {
         return health;
     }
-
     public Time getLastAttack() {
         return lastAttack;
     }
-
+    public int getBarrackID() {
+        return barrackID;
+    }
     public boolean isInMission() {
         return isInMission;
     }
-
     public boolean isFighting() {
         return isFighting;
     }
-
     public boolean isStopped() {
         return isStopped;
     }
+    public int getSoldierID() {
+        return soldierID;
+    }
 
+    // Setters
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
-
     public void setLastAttack(Time lastAttack) {
         this.lastAttack = lastAttack;
     }
-
     public void setStopped(boolean stopped) {
         isStopped = stopped;
     }
-
     public void moveGame(Coordinate coordinate){
-        this.coordinate = coordinate;
+        if( this.barrackID == PlayGround.numberOfPlaces )
+            this.coordinate = coordinate;
+        else {
+            //TODO: barracksID --> Barraks
+        }
     }
 
     //ToDo

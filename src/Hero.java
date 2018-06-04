@@ -1,6 +1,3 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 
 public class Hero implements DetailShow {

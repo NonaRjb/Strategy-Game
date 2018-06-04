@@ -13,7 +13,7 @@ public class Laser extends Armory implements Weapon{
         super.level = 1; //Beginning
         super.range = 2 * super.rangeUnit; //Medium Range
         super.healthDegree = new HealthLevel(2); //Medium Health Level
-        super.price = 2 * super.priceUnit; //Medium Price
+        super.price = new Price(Price.medPrice); //Medium Price
         super.setTargetPriority(TargetPriority.MinimumHealth);
         super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
@@ -43,10 +43,14 @@ public class Laser extends Armory implements Weapon{
 
 
     @Override
-    public void levelUp() {
-        super.level++;
-        super.range = (int)((double)super.range * 1.15);
-        this.shotPower = (int)((double)this.shotPower * 1.15);
+    public void levelUp(Price gamePrice) {
+        if( gamePrice.getPrice() >= super.getLevelUpPrice().getPrice() ) {
+            super.level++;
+            gamePrice.decreasePrice(this.getLevelUpPrice());
+            super.range = (int)((double)super.range * 1.15);
+            this.shotPower = (int)((double)this.shotPower * 1.15);
+            System.out.println("Laser id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
+        }
     }
 
     @Override
@@ -66,12 +70,14 @@ public class Laser extends Armory implements Weapon{
 
     @Override
     public void showDetail() {
-        System.out.println("Laser:");
-        System.out.println("Attack Range: Medium");
-        System.out.println("Health Level: Medium");
-        System.out.println("Price: Medium to High");
-        System.out.println("Target Priority: Minimum Health Level");
+        System.out.println("Laser id: "+super.id);
         System.out.println("Additional Characteristics: Shoot Continues LaserShot ");
+        System.out.println("Attack Range: "+super.range+" pixels!");
+        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
+        System.out.println("Price: "+super.price.getPrice()+" Coins");
+        System.out.println("Target Priority: "+super.getTargetPriority());
+        System.out.println("//////////////////////////////////////");
+
     }
 }
 
