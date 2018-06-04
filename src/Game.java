@@ -200,17 +200,18 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets soldier's coordinate
-    private void moveSoldier( Soldier soldier, Coordinate coordinate){
+    /*public void moveSoldier( Soldier soldier, Coordinate coordinate){
         if (playGround.isInWay(coordinate)){
             soldier.moveGame(coordinate);
         }
         else {
             System.out.println("Moving to the this coordinate is not allowed");
         }
-    }
+    }*/
+    public void moveSoldier(int N, int id, Coordinate coordinate){}
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets hero's coordinate
-    private void moveHero( Hero hero, Coordinate coordinate){
+    public void moveHero(Coordinate coordinate){
         if (playGround.isInWay(coordinate)){
             hero.moveTo(coordinate);
         }
@@ -322,6 +323,22 @@ public class Game {
     public void showInvadersDetails(){
         for( Invader currentInvader : this.invaders ){
             currentInvader.showDetail();
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void showHeroDetails(){
+        hero.showDetail();
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void showSoldiersDetails(){
+        for ( Soldier soldier : soldiers){
+            soldier.showDetail();
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void showSlotsDetails(){
+        for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
+            placeHolder.showDetail();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////

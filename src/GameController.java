@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Scanner;
 
 public class GameController {
@@ -143,7 +144,61 @@ public class GameController {
     }
 
     public void playBreak(){
+        command = scanner.nextLine();
+        while (!command.equals("begin next round")){
+            if (command.equals("show details weapons")){
+                game.showArmoriesDetails();
+            }
+            if (command.equals("show details hero")){
+                game.showHeroDetails();
+            }
+            if (command.equals("show details infantry")){
+                game.showSoldiersDetails();
+            }
+            if (command.equals("show details slots")){
+                game.showSlotsDetails();
+            }
+            if (command.contains("add")){
+                String[] tmp = command.split(" ");
+                if(tmp.length == 5) {
+                    game.createArmory(tmp[1], Integer.parseInt(tmp[4]));
+                }
+            }
+            if (command.contains("upgrade")){
+                String[] tmp = command.split(" ");
+                if (tmp.length == 5){
 
+                }
+            }
+            if (command.contains("sell")){
+                String[] tmp = command.split(" ");
+                if (tmp.length == 5){
+
+                }
+            }
+            if (command.contains("move hero to")){
+                String[] tmp = command.split("");
+                if (tmp.length == 4){
+                    String[] XY = tmp[3].split("[(),]");
+                    Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
+                    game.moveHero(coordinate);
+                }
+            }
+            if (command.contains("set infantry")){ ////set infantry [0 1 2] of barracks in place N to go to (X,Y)
+                String[] tmp = command.split(" ");
+                if (tmp.length == 12){
+                    String[] XY = tmp[11].split("[(),]");
+                    Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
+                    game.moveSoldier(Integer.parseInt(tmp[7]), Integer.parseInt(tmp[2]), coordinate);
+                }else if(tmp.length == 9){
+                    String[] XY = tmp[7].split("[(),]");
+                    Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
+                    game.moveSoldier(10 , Integer.parseInt(tmp[2]), coordinate);
+                }
+            }
+
+
+        }
     }
 
     public void playPause(){

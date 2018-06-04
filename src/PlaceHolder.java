@@ -1,4 +1,4 @@
-public class PlaceHolder {
+public class PlaceHolder implements DetailShow{
 
     private Coordinate placeCoordinate;
     private int id;
@@ -18,4 +18,15 @@ public class PlaceHolder {
     // Setters
     public void setOwner(Armory owner) { this.owner = owner; }
 
+    @Override
+    public void showDetail() {
+        System.out.println("Slot id: " + id);
+        System.out.println("Slot Coordinate: " + "(" + this.getPlaceCoordinate().getX() + "," + this.getPlaceCoordinate().getY() + ")");
+        if (this.owner == null){
+            System.out.println("This Place Is Empty");
+        }
+        else{
+            owner.showDetail();
+        }
+    }
 }
