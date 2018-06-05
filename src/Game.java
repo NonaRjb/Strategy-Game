@@ -19,6 +19,7 @@ public class Game {
     static Time burningTimeConst = new Time(10);
     private int thisRoundNumberOfInvaders;
     private Price property;
+    private boolean gameSoldierIsUsed = false;
 
 
     // Constructor
@@ -138,6 +139,22 @@ public class Game {
 
         }
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void setArmoryTargetPriority(int id, TargetPriority targetPriority){
+        if (id == PlayGround.numberOfPlaces){
+            for (Armory armory : armories){
+                armory.setTargetPriority(targetPriority);
+            }
+        }else {
+            for (Armory armory : armories){
+                if (armory.getId() == id){
+                    armory.setTargetPriority(targetPriority);
+                    break;
+                }
+            }
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void increaseTime(){
         //Todo check frozen, Stop, Idle and etc. --> needs to be rechecked
@@ -659,13 +676,25 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void goAfterInvaderHero(Invader invader){
-        Coordinate nextCoordinate = null;
-        while (Coordinate.distance(hero.getCoordinate(), invader.getCoordinate()) != hero.getRange()){
-            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+    public void goAfterInvaderHero(int invaderID){
+        boolean invaderFound = false;
+        Invader target = null;
+        for (Invader invader : invaders){
+            if (invader.getInstanceNum() == invaderID){
+                invaderFound = true;
+                target = invader;
+            }
         }
-        if(nextCoordinate != null) {
-            hero.goAfterInvader(invader, nextCoordinate);
+        if (invaderFound) {
+            Coordinate nextCoordinate = hero.getCoordinate();
+            while (Coordinate.distance(hero.getCoordinate(), target.getCoordinate()) != hero.getRange()) {
+                nextCoordinate = playGround.nextCoordinate(target.getCoordinate());
+            }
+            if (nextCoordinate != null) {
+                hero.goAfterInvader(target, nextCoordinate);
+            }
+        }else {
+            System.out.println("Invader not found!");
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -681,19 +710,58 @@ public class Game {
             if (targets.size() != 0) {
                 soldier.attack(gameTime, gameShots, targets);
             }
+        }else {
+            if (soldier.getTargetInvader() != null) {
+                targets.add(soldier.getTargetInvader());
+                soldier.attack(gameTime, gameShots, targets);
+            }
         }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void goAfterInvaderSoldier(Soldier soldier, Invader invader){
-        Coordinate nextCoordinate = null;
-        while (Coordinate.distance(soldier.getCoordinate(), invader.getCoordinate()) > soldier.getRange()){
-            nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+    public void goAfterInvaderSoldier(int soldierId, int barracksId, int invaderId){
+        boolean soldierFound = false;
+        Soldier targetSoldier = null;
+        for (Soldier soldier : soldiers){
+            if ((soldier.getBarracksOwner().getId() == barracksId && soldier.getSoldierID() == soldierId)
+               || (soldier.getBarracksOwner() == null && soldier.getSoldierID() == soldierId && barracksId == PlayGround.numberOfPlaces)){
+                soldierFound = true;
+                targetSoldier = soldier;
+                break;
+            }
         }
-        if(nextCoordinate != null) {
-            soldier.goAfterInvader(invader, nextCoordinate);
+
+        boolean invaderFound = false;
+        Invader targetInvader = null;
+        if (soldierFound){
+            for (Invader invader : invaders){
+                if(invader.getInstanceNum() == invaderId){
+                    invaderFound = true;
+                    targetInvader = invader;
+                    break;
+                }
+            }
+            if(invaderFound){
+                Coordinate nextCoordinate = targetSoldier.getCoordinate();
+                while (Coordinate.distance(targetSoldier.getCoordinate(), targetInvader.getCoordinate()) != targetSoldier.getRange()){
+                    nextCoordinate = playGround.nextCoordinate(targetInvader.getCoordinate());
+                }
+                if(nextCoordinate != null) {
+                    if (targetSoldier.getBarracksOwner() != null){
+                        if (Coordinate.distance(nextCoordinate, targetSoldier.getBarracksOwner().getCoordinate()) <= targetSoldier.getBarracksOwner().getRange()) {
+                            targetSoldier.goAfterInvader(targetInvader, nextCoordinate);
+                        }
+                    }else {
+                        targetSoldier.goAfterInvader(targetInvader, nextCoordinate);
+                    }
+                }
+            } else {
+                System.out.println("Invader not found!");
+            }
+        }else {
+            System.out.println("Soldier not found!");
         }
-        // TODO: Nona check her
+
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void effectShot( Shot shot ){
@@ -865,7 +933,7 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void setTargetForArmory( String armoryType, int armoryID, int invaderID ) {
+    public void setTargetForArmory( int armoryID, int invaderID ) {
 
         Armory whichArmory = null;
         Invader targetInvader = null;
@@ -913,7 +981,9 @@ public class Game {
             return false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    public void buildGameSoldier(){
+        
+    }
 }
 
 

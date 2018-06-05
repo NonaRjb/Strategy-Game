@@ -59,22 +59,22 @@ public class GameController {
 
             if (command.matches("set target of [a-zA-Z]{5,10} in place [0-9]{1,2} to be invader [0-9]{1,2}")){ // set target of Armory
                 String[] tmp = command.split(" ");
-                //
+                game.setTargetForArmory(Integer.parseInt(tmp[6]),Integer.parseInt(tmp[10]));
             }
 
             if (command.matches("set target of infantry [0-2] of barracks [0-9]{1,2} to be invader [0-9]{1,2}")){ // set target of barracks' infantry
                 String[] tmp = command.split(" ");
-                //game.goAfterInvaderSoldier( tmp[4], tmp[7], tmp[11] );
+                game.goAfterInvaderSoldier( Integer.parseInt(tmp[4]), Integer.parseInt(tmp[7]), Integer.parseInt(tmp[11]) );
             }
 
             if (command.matches("set target of infantry [0-2] of game to be invader [0-9]{1,2}")){ // set target of game infantry
                 String[] tmp = command.split(" ");
-                //game.goAfterInvaderSoldier( tmp[4], PlayGround.numberOfPlaces, tmp[10] );
+                game.goAfterInvaderSoldier( Integer.parseInt(tmp[4]), PlayGround.numberOfPlaces, Integer.parseInt(tmp[10]));
             }
 
             if (command.matches("set target of hero to be invader [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
-                //game.goAfterInvaderHero(tmp[7]);
+                game.goAfterInvaderHero(Integer.parseInt(tmp[7]));
             }
 
             if (command.matches("upgrade [a-zA-Z]{5,10} in place [0-9]{1,2}")){
@@ -89,13 +89,19 @@ public class GameController {
 
             if (command.matches("set priority of [a-zA-Z]{5,10} in place [0-9]{1,2} [a-zA-Z]{7,14}")){
                 String[] tmp = command.split(" ");
-                //game.
+                game.setArmoryTargetPriority(Integer.parseInt(tmp[6]), TargetPriority.valueOf(tmp[7]));
+            }
+
+            if (command.matches("set priority of all [a-zA-Z]{7,14}")){
+                String[] tmp = command.split(" ");
+                game.setArmoryTargetPriority(PlayGround.numberOfPlaces, TargetPriority.valueOf(tmp[4]));
             }
 
             if (command.equals("let hero stop time")){
                 //method
             }
 
+            //Todo game speed
             if (command.matches("speed x[0-9]{1,2}")){
                 String[] tmp = command.split(" ");
                 String[] speed = tmp[1].split("[x]");
@@ -176,7 +182,7 @@ public class GameController {
 
         command = scanner.next();
         while (!command.equals("OK")){
-
+            command = scanner.nextLine();
         }
 
     }
@@ -185,7 +191,7 @@ public class GameController {
 
         command = scanner.next();
         while (!command.equals("OK")){
-
+            command = scanner.nextLine();
         }
         playBreak();
     }

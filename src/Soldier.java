@@ -64,6 +64,7 @@ public class Soldier implements DetailShow{
     public int getSoldierID() {
         return soldierID;
     }
+    public Invader getTargetInvader() { return targetInvader; }
 
     // Setters
     public void setCoordinate(Coordinate coordinate) {
