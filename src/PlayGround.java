@@ -1,11 +1,11 @@
 import java.util.Random;
 
 public class PlayGround {
-    final int numberOfPlaces = 3;
-    final int numberOfOrigins = 9;
+    static final int numberOfPlaces = 8;
+    static final int numberOfOrigins = 9;
     final Map map = new Map();
 
-    Coordinate[] placeOfArmories = {new Coordinate(290,499),
+    private final Coordinate[] placeOfArmories = {new Coordinate(290,499),
                                     new Coordinate(230,1199),
                                     new Coordinate(600,300),
                                     new Coordinate(740,1049),
@@ -14,7 +14,7 @@ public class PlayGround {
                                     new Coordinate(540,680),
                                     new Coordinate(470,1000)};
 
-    Coordinate[] pathOriginCoordinate = {new Coordinate(300,0),
+    private final Coordinate[] pathOriginCoordinate = {new Coordinate(300,0),
                                          new Coordinate(310,0),
                                          new Coordinate(320,0),
                                          new Coordinate(600,0),
@@ -35,7 +35,7 @@ public class PlayGround {
 
     // Getters
     public PlaceHolder getPlaceHolder(int id) {
-        return placeHolder[id];
+        return placeHolder[id-1];
     }
 
     public PlaceHolder[] getPlaceHolder(){

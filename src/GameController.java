@@ -18,7 +18,7 @@ public class GameController {
     public void playRound(int round){
 
         game.setInvaderRate( new Time(20-round) );
-        game.setThisRoundNnumberOfInvaders(round*10);
+        game.setThisRoundNumberOfInvaders(round*10);
 
         command = scanner.next();
         int intCommand;

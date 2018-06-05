@@ -14,7 +14,7 @@ public class Rocket extends Armory implements Weapon{
         super.range = 2 * super.rangeUnit; //Medium Range
         this.attackRateTime = new Time(1 * super.attackTimeUnit); //Low Attack Speed
         super.healthDegree = new HealthLevel(2); //Medium Health Level
-        super.price = 3 * super.priceUnit; //High Price
+        super.price = new Price(Price.highPrice); //High Price
         super.setTargetPriority(TargetPriority.AllInRange);
         super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
@@ -26,11 +26,15 @@ public class Rocket extends Armory implements Weapon{
 
 
     @Override
-    public void levelUp() {
-        super.level++;
-        super.range = (int)((double)super.range * 1.15);
-        this.attackRateTime = new Time( (int)( (double)this.attackRateTime.getTime()*1.15) );
-        this.shotPower = (int)((double)this.shotPower * 1.15);
+    public void levelUp(Price gamePrice) {
+        if( gamePrice.getPrice() >= super.getLevelUpPrice().getPrice() ) {
+            super.level++;
+            gamePrice.decreasePrice(this.getLevelUpPrice());
+            super.range = (int)((double)super.range * 1.15);
+            this.shotPower = (int)((double)this.shotPower * 1.15);
+            this.attackRateTime = new Time( (int)( (double)this.attackRateTime.getTime()*1.15) );
+            System.out.println("Rocket id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
+        }
     }
 
     @Override
@@ -52,13 +56,15 @@ public class Rocket extends Armory implements Weapon{
 
     @Override
     public void showDetail() {
-        System.out.println("Rocket:");
-        System.out.println("Attack Range: Medium");
-        System.out.println("Attack Speed: Low");
-        System.out.println("Health Level: Medium");
-        System.out.println("Price: High");
-        System.out.println("Target Priority: All In Range");
+
+        System.out.println("Rocket id: "+super.id);
         System.out.println("Additional Characteristics: Shoot Everybody in Range");
+        System.out.println("Attack Range: "+super.range+" pixels!");
+        System.out.println("Attack Speed: Every "+this.attackRateTime.getTime()+" Seconds");
+        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
+        System.out.println("Price: "+super.price.getPrice()+" Coins");
+        System.out.println("Target Priority: "+super.getTargetPriority());
+        System.out.println("//////////////////////////////////////");
     }
 
 }

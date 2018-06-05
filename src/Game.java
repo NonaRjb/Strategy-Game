@@ -17,6 +17,7 @@ public class Game {
     private final int boomerStopConst = 10;
     static Time burningTimeConst = new Time(10);
     private int thisRoundNumberOfInvaders;
+    private Price property;
 
 
     // Constructor
@@ -30,13 +31,13 @@ public class Game {
         this.invaderRate = new Time(2);
         this.lastInvaderTime = new Time(0);
         this.hero = null;
+        this.property = new Price(10);
     }
 
     // Getters
     public ArrayList<Armory> getArmories() {
         return this.armories;
     }
-
     public int getThisRoundNnumberOfInvaders() {
         return thisRoundNumberOfInvaders;
     }
@@ -45,15 +46,25 @@ public class Game {
     public void setInvaderRate(Time invaderRate) {
         this.invaderRate = invaderRate;
     }
-
-    public void setThisRoundNnumberOfInvaders(int thisRoundNnumberOfInvaders) {
-        this.thisRoundNumberOfInvaders = thisRoundNnumberOfInvaders;
+    public void setThisRoundNumberOfInvaders(int thisRoundNumberOfInvaders) {
+        this.thisRoundNumberOfInvaders = thisRoundNumberOfInvaders;
     }
 
 
     // Other Methods
     public void createArmory(String armoryType, int id) {
-        if (armoryType.equals("Freezer")) {
+
+        if( armoryType.equals("Barracks") ) {
+
+            if( playGround.getPlaceHolder(id).getOwner() != null ){
+                System.out.println("Place ID "+id+" is Full!");
+            } else {
+                this.armories.add( new Barracks(id, playGround.getPlaceHolder(id).getPlaceCoordinate(), soldiers) );
+                this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+            }
+
+        } else if( armoryType.equals("Freezer") ){
+
             if( playGround.getPlaceHolder(id).getOwner() != null ){
                 System.out.println("Place ID "+id+" is Full!");
             } else {
@@ -139,8 +150,10 @@ public class Game {
         this.botherBurnings();
         this.botherToxicants();
         this.doAttacks();
+        this.moveObjects();
         this.gameTime.increaseTime();
 
+        this.invaderMaker();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // Moving all Objects
@@ -200,15 +213,27 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets soldier's coordinate
-    /*public void moveSoldier( Soldier soldier, Coordinate coordinate){
+    public void moveSoldier( int barracksID, int soldierId, Coordinate coordinate){
+        boolean flag = false;
+        for( Soldier soldier: soldiers ){
+            if( soldier.getBarrackID()==barracksID && soldier.getSoldierID()==soldierId ){
+                goSoldier( soldier, coordinate );
+                flag = true;
+            }
+        }
+        if( !flag ){
+            System.out.println("No Soldier With this Features");
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void goSoldier( Soldier soldier, Coordinate coordinate){
         if (playGround.isInWay(coordinate)){
             soldier.moveGame(coordinate);
         }
         else {
             System.out.println("Moving to the this coordinate is not allowed");
         }
-    }*/
-    public void moveSoldier(int N, int id, Coordinate coordinate){}
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets hero's coordinate
     public void moveHero(Coordinate coordinate){
@@ -259,8 +284,11 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void invaderMaker(){
-        if( this.gameTime.getTime() - this.lastInvaderTime.getTime() >= this.invaderRate.getTime() ){
-            produceInvader();
+        if( thisRoundNumberOfInvaders > 0 ) {
+            if (this.gameTime.getTime() - this.lastInvaderTime.getTime() >= this.invaderRate.getTime()) {
+                this.produceInvader();
+                thisRoundNumberOfInvaders--;
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -679,6 +707,7 @@ public class Game {
                     }else {
                         targetSoldier.getHealth().decreaseHealth(shot.getPower());
                     }
+                    gameShots.remove( shot );
                 }
             }
             if (target instanceof Hero){
@@ -688,6 +717,7 @@ public class Game {
                         System.out.println("Hero will be idle for " + hero.getDelayConst() + " seconds");
                         hero.setIdle(gameTime);
                     }
+                    gameShots.remove( shot );
                 }
             }
             if (target instanceof Armory){
@@ -718,6 +748,7 @@ public class Game {
                         System.out.println("The Armory got ruined! Place " + targetArmory.getId() + " is now empty!");
                         playGround.getPlaceHolder(targetArmory.getId()).setOwner(null);
                         armories.remove(targetArmory);
+                        //TODO: My Darling Nona, This is ICE :)) Ruined :))
                     }
                 }
             }
@@ -780,6 +811,30 @@ public class Game {
         for( Invader invader: invaders ){
             if( invader.isPoisoned() ){
                 invader.getHealthDegree().decreaseHealth( Poison.healthDecreasingPower );
+            }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void upgradeArmory(int id){
+        for( Armory armory: armories ){
+            if( armory.getId() == id )
+                armory.levelUp(property);
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void sellArmory(int id){
+        for( Armory armory: armories ){
+            if( armory.getId() == id ) {
+                property.increasePrice( armory.getPrice() );
+                this.playGround.getPlaceHolder(id).setOwner(null);
+                System.out.println("Armory id: "+id+" got sold");
+                if( armory instanceof Barracks ){
+                    for( Soldier soldier: soldiers  ){
+                        if( soldier.getBarrackID() == id )
+                            soldiers.remove(soldier);
+                    }
+                }
+                armories.remove(armory);
             }
         }
     }

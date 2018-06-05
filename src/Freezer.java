@@ -14,7 +14,7 @@ public class Freezer extends Armory implements Weapon {
         super.range = 2 * super.rangeUnit; //Medium Range
         this.attackRateTime = new Time(1 * super.attackTimeUnit); //Low Attack Speed
         super.healthDegree = new HealthLevel(2);  //Medium Health Level
-        super.price = 3 * super.priceUnit; //High Price
+        super.price = new Price(Price.highPrice); //High Price
         super.setTargetPriority(TargetPriority.MinimumHealth);
         super.specificTargetInvader = null;
         this.shotPower = 1 * super.shotPowerUnit;  //Low Shot power
@@ -26,11 +26,15 @@ public class Freezer extends Armory implements Weapon {
 
 
     @Override
-    public void levelUp() {
-        super.level++;
-        super.range = (int)((double)super.range * 1.15);
-        this.attackRateTime = new Time( (int)( (double)this.attackRateTime.getTime()*1.15) );
-        this.shotPower = (int)((double)this.shotPower * 1.15);
+    public void levelUp(Price gamePrice) {
+        if( gamePrice.getPrice() >= super.getLevelUpPrice().getPrice() ) {
+            super.level++;
+            gamePrice.decreasePrice(this.getLevelUpPrice());
+            super.range = (int)((double)super.range * 1.15);
+            this.shotPower = (int)((double)this.shotPower * 1.15);
+            this.attackRateTime = new Time( (int)( (double)this.attackRateTime.getTime()*1.15) );
+            System.out.println("Freezer id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
+        }
     }
 
     @Override
@@ -52,12 +56,14 @@ public class Freezer extends Armory implements Weapon {
 
     @Override
     public void showDetail() {
-        System.out.println("Freezer:");
-        System.out.println("Attack Range: Medium");
-        System.out.println("Attack Speed: Low");
-        System.out.println("Health Level: Medium");
-        System.out.println("Price: Medium to High");
-        System.out.println("Target Priority: Minimum Health Level");
-        System.out.println("Additional Characteristics: Make an Invader Freezed");
+
+        System.out.println("Freezer id: "+super.id);
+        System.out.println("Additional Characteristics: Make an Invader Frozen");
+        System.out.println("Attack Range: "+super.range+" pixels!");
+        System.out.println("Attack Speed: Every "+this.attackRateTime.getTime()+" Seconds");
+        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
+        System.out.println("Price: "+super.price.getPrice()+" Coins");
+        System.out.println("Target Priority: "+super.getTargetPriority());
+        System.out.println("//////////////////////////////////////");
     }
 }
