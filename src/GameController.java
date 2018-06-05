@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameController {
@@ -7,12 +8,23 @@ public class GameController {
     private Game game;
     private String command;
     private int currentRound;
+    private Time plagueTime;
+    private int plagueRound;
+    private Time naturalEventTime;
+    private int naturalEventRound;
+
+    private final int numberOfRounds = 5;
 
     // Constructor
     public GameController() {
         this.game = new Game();
         this.currentRound = 0;
         playRound(0);
+        Random rand = new Random();
+        this.plagueRound = rand.nextInt( this.numberOfRounds );
+        this.plagueTime = new Time( rand.nextInt( 100 ) );
+        this.naturalEventRound = rand.nextInt( this.numberOfRounds );
+        this.naturalEventTime = new Time( rand.nextInt( 100 ) );
     }
 
     public void playRound(int round){
@@ -96,6 +108,22 @@ public class GameController {
                 game.setArmoryTargetPriority(PlayGround.numberOfPlaces, TargetPriority.valueOf(tmp[4]));
             }
 
+            if( command.contains("add tesla in point") ){
+                String[] tmp = command.split(" ");
+                String coordinateString = tmp[4]; // (x,y)
+                int x = coordinateString.charAt(1);
+                int y = coordinateString.charAt(3);
+                game.useTesla( new Coordinate(x,y) );
+            }
+
+            if( command.contains("move hero to") ){
+                String[] tmp = command.split(" ");  // (x,y)
+                String coordinateString = tmp[3];
+                int x = coordinateString.charAt(1);
+                int y = coordinateString.charAt(3);
+                game.moveHero( new Coordinate(x,y) );
+            }
+
             if (command.equals("let hero stop time")){
                 //method
             }
@@ -115,12 +143,24 @@ public class GameController {
                 game.makeGameSoldiers();
             }
 
+            if( round == this.plagueRound && game.getGameTime().getTime()==this.plagueTime.getTime() ){
+                game.spreadPlague();
+            }
+
+            if( round == this.naturalEventRound && game.getGameTime().getTime()==this.naturalEventTime.getTime() ){
+                game.naturalEventHappening();
+            }
+
             command = scanner.nextLine();
 
         }
 
         round++;
-        playEndRound();
+        if( round <= this.numberOfRounds )
+            playEndRound();
+        else
+            playWinnerEnd();
+
 
     }
 
@@ -193,6 +233,10 @@ public class GameController {
             command = scanner.nextLine();
         }
         playBreak();
+    }
+
+    public void playWinnerEnd(){
+        System.out.println("Congratulation :)) You are Wined the game ...");
     }
 
 }

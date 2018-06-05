@@ -21,6 +21,8 @@ public class Game {
     private Price property;
     private boolean gameSoldierIsUsed;
     private boolean interventionUsed;
+    private int remainedTeslas;
+    private final int teslaRange = 20;
 
 
     // Constructor
@@ -37,6 +39,7 @@ public class Game {
         this.property = new Price(10);
         this.gameSoldierIsUsed = false;
         this.interventionUsed = false;
+        this.remainedTeslas = 3;
     }
 
     // Getters
@@ -45,6 +48,9 @@ public class Game {
     }
     public int getThisRoundNnumberOfInvaders() {
         return thisRoundNumberOfInvaders;
+    }
+    public Time getGameTime() {
+        return gameTime;
     }
 
     // Setters
@@ -977,6 +983,36 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void useTesla( Coordinate originCoordinate ){
+        if( this.remainedTeslas > 0 ){
+            ArrayList<Invader> targetInvaders = findInvaders( originCoordinate, this.teslaRange, TargetPriority.AllInRange );
+            for( Invader invader : targetInvaders ) {
+
+                invaders.remove( invader );
+                for( Armory armory : armories ){
+                    if( armory.specificTargetInvader.equals( invader ) ){
+                        armory.setTargetPriority( TargetPriority.MinimumHealth );
+                        armory.specificTargetInvader = null;
+                    }
+                }
+                if( hero.getTargetInvader().equals( invader ) ){
+                    hero.setTarget( null );
+                    hero.setInMission( false );
+                }
+                for( Soldier soldier : soldiers ){
+                    if( soldier.getTargetInvader().equals( invader ) ){
+                        soldier.setTargetInvader( null );
+                        soldier.setInMission( false );
+                    }
+                }
+
+            }
+            this.remainedTeslas--;
+        } else {
+            System.out.println("You Don't have Tesla");
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void interventionKillAll(){
         if( !this.interventionUsed ){
             hero.setInMission(false);
@@ -984,6 +1020,7 @@ public class Game {
                 soldier.setInMission(false);
             }
             for( Armory armory : armories ){
+                armory.setSpecificTargetInvader( null );
                 armory.setTargetPriority(TargetPriority.MinimumHealth);
             }
             invaders.clear();
@@ -1009,6 +1046,7 @@ public class Game {
         for( Invader invader : invaders ){
             if( invader.getTarget(0) instanceof Soldier ){
                 invader.clearTarget();
+                invader.setFighting(false);
             }
         }
         for( Soldier soldier: soldiers ){
@@ -1018,6 +1056,30 @@ public class Game {
         }
         soldiers.clear();
         System.out.println("Plague is Spread! Keep on");
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void naturalEventHappening(){
+        Random rand = new Random();
+        int poorArmoryIndex = rand.nextInt( armories.size() );
+        Armory poorArmory = armories.get( poorArmoryIndex );
+        for( Invader invader : invaders ){
+            if( invader.getTarget(0).equals(poorArmory) ){
+                invader.setFighting(false);
+                invader.clearTarget();
+            }
+        }
+        if( poorArmory instanceof Barracks ){
+            for( Soldier soldier : soldiers ){
+                if( soldier.getBarracksOwner().getId()==poorArmory.getId() ) {
+                    soldiers.remove(soldier);
+                }
+            }
+            ((Barracks)poorArmory).removeSoldier( 0, gameTime );
+            ((Barracks)poorArmory).removeSoldier( 1, gameTime );
+            ((Barracks)poorArmory).removeSoldier( 2, gameTime );
+        }
+        armories.remove(poorArmory);
+        System.out.println("Sorry . It is natural :))");
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean isEnded(){
