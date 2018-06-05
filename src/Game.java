@@ -237,7 +237,7 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets hero's coordinate
-    private void moveHero( Hero hero, Coordinate coordinate){
+    public void moveHero(Coordinate coordinate){
         if (playGround.isInWay(coordinate)){
             hero.moveTo(coordinate);
         }
@@ -352,6 +352,22 @@ public class Game {
     public void showInvadersDetails(){
         for( Invader currentInvader : this.invaders ){
             currentInvader.showDetail();
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void showHeroDetails(){
+        hero.showDetail();
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void showSoldiersDetails(){
+        for ( Soldier soldier : soldiers){
+            soldier.showDetail();
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void showSlotsDetails(){
+        for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
+            placeHolder.showDetail();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
