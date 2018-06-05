@@ -39,23 +39,18 @@ public class Soldier implements DetailShow{
     public int getRange() {
         return range;
     }
-
     public int getSpeed() {
         return speed;
     }
-
     public void setTargetInvader(Invader targetInvader) {
         this.targetInvader = targetInvader;
     }
-
     public Coordinate getCoordinate() {
         return coordinate;
     }
-
     public HealthLevel getHealth() {
         return health;
     }
-
     public Time getLastAttack() {
         return lastAttack;
     }
@@ -65,11 +60,9 @@ public class Soldier implements DetailShow{
     public boolean isInMission() {
         return isInMission;
     }
-
     public boolean isFighting() {
         return isFighting;
     }
-
     public boolean isStopped() {
         return isStopped;
     }
@@ -81,15 +74,12 @@ public class Soldier implements DetailShow{
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
-
     public void setLastAttack(Time lastAttack) {
         this.lastAttack = lastAttack;
     }
-
     public void setStopped(boolean stopped) {
         isStopped = stopped;
     }
-
     public void moveGame(Coordinate coordinate){
         if( this.barrackID == PlayGround.numberOfPlaces )
             this.coordinate = coordinate;

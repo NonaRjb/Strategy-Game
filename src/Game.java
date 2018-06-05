@@ -1,4 +1,3 @@
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -147,6 +146,8 @@ public class Game {
         hero.checkIdle(gameTime);
         hero.checkStopped(boomerStopConst, gameTime);
         this.moveObjects();
+        this.botherBurnings();
+        this.botherToxicants();
         this.botherBurnings();
         this.botherToxicants();
         this.doAttacks();
@@ -703,6 +704,7 @@ public class Game {
                     if (targetSoldier.getHealth().getHealthLevel() <= shot.getPower()){
                         System.out.println("Soldier got killed!");
                         soldiers.remove(targetSoldier);
+
                         // ToDo when barrack class is ready the soldier should be removed from its barrack too
                     }else {
                         targetSoldier.getHealth().decreaseHealth(shot.getPower());
