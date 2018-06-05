@@ -8,6 +8,7 @@ public class Laser extends Armory implements Weapon{
 
     //Constructor
     public Laser( int id, Coordinate coordinate) {
+        super();
         super.id = id;
         super.coordinate = coordinate;
         super.level = 1; //Beginning
@@ -15,7 +16,6 @@ public class Laser extends Armory implements Weapon{
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = new Price(Price.medPrice); //Medium Price
         super.setTargetPriority(TargetPriority.MinimumHealth);
-        super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
         this.attackingLaserShot = null;

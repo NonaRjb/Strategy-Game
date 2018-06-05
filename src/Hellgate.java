@@ -7,6 +7,7 @@ public class Hellgate extends Armory implements Weapon{
 
     //Constructor
     public Hellgate( int id, Coordinate coordinate) {
+        super();
         super.id = id;
         super.coordinate = coordinate;
         super.level = 1; //Beginning
@@ -14,7 +15,6 @@ public class Hellgate extends Armory implements Weapon{
         super.healthDegree = new HealthLevel(1); //Low Health Level
         super.price = new Price(Price.highPrice); //High Price
         super.setTargetPriority(TargetPriority.AllInRange);
-        super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
         this.isBurning = false;

@@ -9,7 +9,7 @@ abstract class Armory implements DetailShow {
     protected int graphicalSize;
     private TargetPriority targetPriority;
     protected Invader specificTargetInvader;
-    private boolean isStopped = false;
+    private boolean isStopped;
     private Time freezingTime;
     private int icePower;
 
@@ -17,6 +17,15 @@ abstract class Armory implements DetailShow {
     final int attackTimeUnit = 100;
     final int rangeUnit = 10;
     final int shotPowerUnit = 10;
+
+
+    // Constructor
+    public Armory(){
+        this.specificTargetInvader = null;
+        this.isStopped = false;
+        this.freezingTime = null;
+        this.icePower = 0;
+    }
 
     // Setters
     public void setTargetPriority(TargetPriority targetPriority) {

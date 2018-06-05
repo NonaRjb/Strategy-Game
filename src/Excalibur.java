@@ -12,6 +12,7 @@ public class Excalibur extends Armory implements Weapon{
 
     //Constructor
     public Excalibur( int id, Coordinate coordinate, Time currentTime) {
+        super();
         super.id = id;
         super.coordinate = coordinate;
         super.level = 1; //Beginning
@@ -20,7 +21,6 @@ public class Excalibur extends Armory implements Weapon{
         super.healthDegree = new HealthLevel(3); //High Health Level
         super.price = new Price(Price.veryHighPrice); //Very High Price
         super.setTargetPriority(TargetPriority.MinimumHealth);
-        super.specificTargetInvader = null;
         this.shotPower = 4 * super.shotPowerUnit;  //Very High Shot power
         this.creationTime = currentTime;
         this.isActive = false;

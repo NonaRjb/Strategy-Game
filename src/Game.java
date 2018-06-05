@@ -19,7 +19,8 @@ public class Game {
     static Time burningTimeConst = new Time(10);
     private int thisRoundNumberOfInvaders;
     private Price property;
-    private boolean gameSoldierIsUsed = false;
+    private boolean gameSoldierIsUsed;
+    private boolean interventionUsed;
 
 
     // Constructor
@@ -34,6 +35,8 @@ public class Game {
         this.lastInvaderTime = new Time(0);
         this.hero = new Hero( new Coordinate(10,10) );
         this.property = new Price(10);
+        this.gameSoldierIsUsed = false;
+        this.interventionUsed = false;
     }
 
     // Getters
@@ -974,6 +977,49 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void interventionKillAll(){
+        if( !this.interventionUsed ){
+            hero.setInMission(false);
+            for( Soldier soldier : soldiers ){
+                soldier.setInMission(false);
+            }
+            for( Armory armory : armories ){
+                armory.setTargetPriority(TargetPriority.MinimumHealth);
+            }
+            invaders.clear();
+            this.interventionUsed = true;
+            System.out.println("Ha Ha Ha !!! :)))");
+        } else
+            System.out.println("You have used Intervention!");
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void makeGameSoldiers(){
+        if( !this.gameSoldierIsUsed ){
+            soldiers.add( new Soldier( new Coordinate(10,10), null, 0, new HealthLevel(100) ) );
+            soldiers.add( new Soldier( new Coordinate(10,10), null, 1, new HealthLevel(100) ) );
+            soldiers.add( new Soldier( new Coordinate(10,10), null, 2, new HealthLevel(100) ) );
+            this.gameSoldierIsUsed = true;
+            System.out.println("Game Soldiers are now here to help you! Please move them");
+        } else {
+            System.out.println("You have used Game Soldiers!");
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void spreadPlague(){
+        for( Invader invader : invaders ){
+            if( invader.getTarget(0) instanceof Soldier ){
+                invader.clearTarget();
+            }
+        }
+        for( Soldier soldier: soldiers ){
+            if( soldier.getBarracksOwner() != null ){
+                soldier.getBarracksOwner().removeSoldier( soldier.getSoldierID(), gameTime );
+            }
+        }
+        soldiers.clear();
+        System.out.println("Plague is Spread! Keep on");
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean isEnded(){
         if( thisRoundNumberOfInvaders==0 && invaders.size()==0 )
             return true;
@@ -981,9 +1027,7 @@ public class Game {
             return false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void buildGameSoldier(){
-        
-    }
+
 }
 
 

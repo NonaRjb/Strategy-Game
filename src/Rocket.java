@@ -8,6 +8,7 @@ public class Rocket extends Armory implements Weapon{
 
     //Constructor
     public Rocket( int id, Coordinate coordinate) {
+        super();
         super.id = id;
         super.coordinate = coordinate;
         super.level = 1; //Beginning
@@ -16,7 +17,6 @@ public class Rocket extends Armory implements Weapon{
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = new Price(Price.highPrice); //High Price
         super.setTargetPriority(TargetPriority.AllInRange);
-        super.specificTargetInvader = null;
         this.shotPower = 2 * super.shotPowerUnit;  //Medium Shot power
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);

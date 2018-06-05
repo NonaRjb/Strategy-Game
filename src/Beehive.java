@@ -7,6 +7,7 @@ public class Beehive extends Armory implements Weapon{
 
     //Constructor
     public Beehive( int id, Coordinate coordinate) {
+        super();
         super.id = id;
         super.coordinate = coordinate;
         super.level = 1; //Beginning
@@ -15,7 +16,6 @@ public class Beehive extends Armory implements Weapon{
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = new Price(Price.medPrice); //Medium Price
         super.setTargetPriority(TargetPriority.AllInRange);
-        super.specificTargetInvader = null;
         super.graphicalSize = 5;
         this.lastAttack = new Time(0);
     }

@@ -21,7 +21,6 @@ public class GameController {
         game.setThisRoundNumberOfInvaders(round*10);
 
         command = scanner.nextLine();
-        int intCommand;
 
         while (!game.isEnded()){
 
@@ -109,11 +108,11 @@ public class GameController {
             }
 
             if (command.equals("divine intervention kill all")){
-               /// emdade gheibi
+               game.interventionKillAll();
             }
 
             if (command.equals("divine intervention infantry")){
-                /// sarbaze gheibi
+                game.makeGameSoldiers();
             }
 
             command = scanner.nextLine();
