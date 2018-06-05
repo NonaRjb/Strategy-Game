@@ -1,3 +1,5 @@
+import javafx.scene.layout.Priority;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,7 +31,7 @@ public class Game {
         this.gameTime = new Time(0);
         this.invaderRate = new Time(2);
         this.lastInvaderTime = new Time(0);
-        this.hero = null;
+        this.hero = new Hero( new Coordinate(10,10) );
         this.property = new Price(10);
     }
 
@@ -139,9 +141,13 @@ public class Game {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void increaseTime(){
         //Todo check frozen, Stop, Idle and etc. --> needs to be rechecked
-        for (Invader invader : invaders){
+        for( Invader invader : invaders ){
             invader.clearTarget();
             invader.checkFrozen(gameTime);
+        }
+        for( Armory armory: armories ){
+            if( armory instanceof Barracks )
+                ((Barracks)armory).reviveSoldiers( gameTime, soldiers );
         }
         hero.checkIdle(gameTime);
         hero.checkStopped(boomerStopConst, gameTime);
@@ -150,17 +156,17 @@ public class Game {
         this.botherToxicants();
         this.botherBurnings();
         this.botherToxicants();
+        this.refreshFrozenArmories();
         this.doAttacks();
         this.moveObjects();
         this.gameTime.increaseTime();
-
         this.invaderMaker();
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // Moving all Objects
     public void moveObjects(){
 
-        //Todo move Soldier and Hero with direct command from the player
+        //move Soldier and Hero with direct command from the player
 
         for (Invader invader: invaders ) {
             this.moveInvader(invader );
@@ -198,7 +204,6 @@ public class Game {
             }
         }
         if (!invader.isFighting()) {
-            //TODO: Slower Move if Frozen --> DONE
             if (invader.getFrozen()) {
                 currentSpeed = invader.getMovementSpeed() - freezeConst;
             } else {
@@ -216,10 +221,19 @@ public class Game {
     // sets soldier's coordinate
     public void moveSoldier( int barracksID, int soldierId, Coordinate coordinate){
         boolean flag = false;
-        for( Soldier soldier: soldiers ){
-            if( soldier.getBarrackID()==barracksID && soldier.getSoldierID()==soldierId ){
-                goSoldier( soldier, coordinate );
-                flag = true;
+        if( barracksID==PlayGround.numberOfPlaces ){
+            for (Soldier soldier : soldiers) {
+                if (soldier.getBarracksOwner() == null && soldier.getSoldierID() == soldierId) {
+                    goSoldier(soldier, coordinate);
+                    flag = true;
+                }
+            }
+        } else {
+            for (Soldier soldier : soldiers) {
+                if (soldier.getBarracksOwner().getId() == barracksID && soldier.getSoldierID() == soldierId) {
+                    goSoldier(soldier, coordinate);
+                    flag = true;
+                }
             }
         }
         if( !flag ){
@@ -293,52 +307,52 @@ public class Game {
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void produceInvader(){
+    private void produceInvader(){
         Invader newInvader;
         Random rand = new Random();
         int enemyKindNumber= rand.nextInt( Invader.numberOfInvaderKinds );
         Coordinate invaderEnteringCoordinate = playGround.randomOriginMaker();
         switch( enemyKindNumber ){
             case 0:
-                newInvader = new Henchman( invaderEnteringCoordinate );
+                newInvader = new Henchman( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
 
                 break;
             case 1:
-                newInvader = new Skipper( invaderEnteringCoordinate );
+                newInvader = new Skipper( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
 
                 break;
             case 2:
-                newInvader = new Bane( invaderEnteringCoordinate );
+                newInvader = new Bane( thisRoundNumberOfInvaders ,invaderEnteringCoordinate );
                 break;
             case 3:
-                newInvader = new Sparrow( invaderEnteringCoordinate );
+                newInvader = new Sparrow( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 4:
-                newInvader = new Boomer( invaderEnteringCoordinate );
+                newInvader = new Boomer( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 5:
-                newInvader = new Healer( invaderEnteringCoordinate );
+                newInvader = new Healer( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 6:
-                newInvader = new Motivator( invaderEnteringCoordinate );
+                newInvader = new Motivator( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 7:
-                newInvader = new Icer( invaderEnteringCoordinate );
+                newInvader = new Icer( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 8:
-                newInvader = new Miner( invaderEnteringCoordinate );
+                newInvader = new Miner( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 9:
-                newInvader = new Smelly( invaderEnteringCoordinate );
+                newInvader = new Smelly( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 10:
-                newInvader = new Hopper( invaderEnteringCoordinate );
+                newInvader = new Hopper( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 11:
-                newInvader = new ExG( invaderEnteringCoordinate );
+                newInvader = new ExG( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             case 12:
-                newInvader = new HockeyMaskMan( invaderEnteringCoordinate );
+                newInvader = new HockeyMaskMan( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
                 break;
             default:
                 newInvader = null;
@@ -416,60 +430,63 @@ public class Game {
             targetInvader = null;
         }
 
-        if( armory instanceof Freezer ){
-            Freezer currentFreezer = (Freezer) armory;
-            if( targetInvader != null ) {
-                currentFreezer.attack(this.gameTime, targetInvader, gameShots);
-            }
-        } else if( armory instanceof Hellgate ){
-            Hellgate currentHellgate = (Hellgate)armory;
-            if( ! currentHellgate.isBurning() ){
-                if( targetInvader != null ){
-                    currentHellgate.attack(null, null, gameShots);
-                    currentHellgate.setBurning( true );
+        //TODO: Recheck Laser Stop
+        if( !armory.isStopped() ) {
+            if (armory instanceof Freezer) {
+                Freezer currentFreezer = (Freezer) armory;
+                if (targetInvader != null) {
+                    currentFreezer.attack(this.gameTime, targetInvader, gameShots);
                 }
-            }
-        } else if( armory instanceof MachineGun ){
-            MachineGun currentMachineGun = (MachineGun) armory;
-            if( targetInvader != null ) {
-                currentMachineGun.attack(this.gameTime, targetInvader, gameShots);
-            }
-        } else if( armory instanceof Laser ) {
-            Laser currentLaser = (Laser) armory;
-            if( targetInvader != null ) {
-                if (!currentLaser.isOnAttack()) {
-                    currentLaser.attack(this.gameTime, targetInvader, gameShots);
-                } else {
-                    if (currentLaser.getSpecificTargetInvader() != targetInvader) {
-                        gameShots.remove( currentLaser.getAttackingLaserShot() );
-                        currentLaser.attack(this.gameTime, targetInvader, gameShots);
+            } else if (armory instanceof Hellgate) {
+                Hellgate currentHellgate = (Hellgate) armory;
+                if (!currentHellgate.isBurning()) {
+                    if (targetInvader != null) {
+                        currentHellgate.attack(null, null, gameShots);
+                        currentHellgate.setBurning(true);
                     }
                 }
-            } else {
-                if( currentLaser.isOnAttack() ){
-                    gameShots.remove( currentLaser.getAttackingLaserShot() );
-                    currentLaser.endAttack();
+            } else if (armory instanceof MachineGun) {
+                MachineGun currentMachineGun = (MachineGun) armory;
+                if (targetInvader != null) {
+                    currentMachineGun.attack(this.gameTime, targetInvader, gameShots);
                 }
-            }
-        } else if( armory instanceof Rocket ) {
-            Rocket currentRocket = (Rocket)armory;
-            if( targetInvader != null ){
-                currentRocket.attack(this.gameTime, null, gameShots);
-            }
-        } else if( armory instanceof Excalibur ){
-            Excalibur currentExcalibur = (Excalibur) armory;
-            if( targetInvader != null ){
-                currentExcalibur.attack(this.gameTime, targetInvader, gameShots);
-            }
-        } else if( armory instanceof Beehive ){
-            Beehive currentBeehive = (Beehive)armory;
-            if( targetInvader != null ){
-                currentBeehive.attack(this.gameTime, targetInvader, gameShots);
-            }
-        } else if( armory instanceof Sauron ){
-            Sauron currentSauron = (Sauron)armory;
-            if( targetInvader != null ){
-                currentSauron.attack(this.gameTime, targetInvader, gameShots);
+            } else if (armory instanceof Laser) {
+                Laser currentLaser = (Laser) armory;
+                if (targetInvader != null) {
+                    if (!currentLaser.isOnAttack()) {
+                        currentLaser.attack(this.gameTime, targetInvader, gameShots);
+                    } else {
+                        if (currentLaser.getSpecificTargetInvader() != targetInvader) {
+                            gameShots.remove(currentLaser.getAttackingLaserShot());
+                            currentLaser.attack(this.gameTime, targetInvader, gameShots);
+                        }
+                    }
+                } else {
+                    if (currentLaser.isOnAttack()) {
+                        gameShots.remove(currentLaser.getAttackingLaserShot());
+                        currentLaser.endAttack();
+                    }
+                }
+            } else if (armory instanceof Rocket) {
+                Rocket currentRocket = (Rocket) armory;
+                if (targetInvader != null) {
+                    currentRocket.attack(this.gameTime, null, gameShots);
+                }
+            } else if (armory instanceof Excalibur) {
+                Excalibur currentExcalibur = (Excalibur) armory;
+                if (targetInvader != null) {
+                    currentExcalibur.attack(this.gameTime, targetInvader, gameShots);
+                }
+            } else if (armory instanceof Beehive) {
+                Beehive currentBeehive = (Beehive) armory;
+                if (targetInvader != null) {
+                    currentBeehive.attack(this.gameTime, targetInvader, gameShots);
+                }
+            } else if (armory instanceof Sauron) {
+                Sauron currentSauron = (Sauron) armory;
+                if (targetInvader != null) {
+                    currentSauron.attack(this.gameTime, targetInvader, gameShots);
+                }
             }
         }
 
@@ -581,7 +598,6 @@ public class Game {
             }
         }
         if(invader instanceof Healer || invader instanceof Motivator){
-            //TODO Healer Rescue Toxicants ! :)) --> DONE (in Healer attack method)
             ArrayList<Object> targets = new ArrayList<>();
             for (Invader invader1 : invaders){
                 if (invaders.indexOf(invader) != invaders.indexOf(invader1)) {
@@ -650,7 +666,6 @@ public class Game {
         }
         if(nextCoordinate != null) {
             hero.goAfterInvader(invader, nextCoordinate);
-            invader.setFighting(true);
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -677,47 +692,60 @@ public class Game {
         }
         if(nextCoordinate != null) {
             soldier.goAfterInvader(invader, nextCoordinate);
-            invader.setFighting(true);
         }
+        // TODO: Nona check her
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void effectShot( Shot shot ){
-        // ToDO if target is not Invader --> Done
+
         if( shot instanceof Bullet ){
             Object target = shot.getTarget();
+            Bullet currentBullet = (Bullet)shot;
             if( target instanceof Invader ) {
                 Invader targetInvader = (Invader)target;
                 if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
                     if( targetInvader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
                         System.out.println("Invader got killed !");
                         invaders.remove( targetInvader );
-                        // Todo Coin & XP
+                        if( currentBullet.getOwner() instanceof Hero ){
+                            hero.setInMission(false);
+                            hero.addNumberOfKillings();
+                            hero.addXP(10);
+                        } else if( currentBullet.getOwner() instanceof Soldier ){
+                            ((Soldier)currentBullet.getOwner()).addNumberOfKillings();
+                            ((Soldier)currentBullet.getOwner()).setInMission(false);
+                        }
                     } else {
                         targetInvader.getHealthDegree().decreaseHealth( shot.getPower() );
                     }
                     gameShots.remove( shot );
+                    this.property.increasePrice(new Price(10));
                 }
-            }
-            if (target instanceof Soldier){
+            } else if (target instanceof Soldier){
                 Soldier targetSoldier = (Soldier) target;
                 if(shot.getCoordinate().isEqual(targetSoldier.getCoordinate())){
                     if (targetSoldier.getHealth().getHealthLevel() <= shot.getPower()){
                         System.out.println("Soldier got killed!");
+                        targetSoldier.getBarracksOwner().removeSoldier( targetSoldier.getSoldierID(), gameTime );
                         soldiers.remove(targetSoldier);
-
-                        // ToDo when barrack class is ready the soldier should be removed from its barrack too
-                    }else {
+                        if( currentBullet.getOwner() instanceof Invader ){
+                            ((Invader)currentBullet.getOwner()).addNumberOfKillings();
+                        }
+                    } else {
                         targetSoldier.getHealth().decreaseHealth(shot.getPower());
                     }
                     gameShots.remove( shot );
                 }
-            }
-            if (target instanceof Hero){
+            } else if (target instanceof Hero){
                 Hero targetHero = (Hero) target;
                 if (shot.getCoordinate().isEqual(targetHero.getCoordinate())) {
                     if (targetHero.getHealthLevel().getHealthLevel() <= shot.getPower()){
                         System.out.println("Hero will be idle for " + hero.getDelayConst() + " seconds");
+                        hero.addDeathNum();
                         hero.setIdle(gameTime);
+                        if( currentBullet.getOwner() instanceof Invader ){
+                            ((Invader)currentBullet.getOwner()).addNumberOfHeroKill();
+                        }
                     }
                     gameShots.remove( shot );
                 }
@@ -733,25 +761,21 @@ public class Game {
                 }
             }
         }
-        // ToDO if target is not Invader --> Done
         else if( shot instanceof Ice ){
             Object target = shot.getTarget();
             if( target instanceof Invader ) {
                 Invader targetInvader = (Invader)target;
                 if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
+                    System.out.println("The Invader got Frozen!");
                     targetInvader.setFrozen( true , shot.getPower(), gameTime);
                     gameShots.remove( shot );
                 }
-            }
-            if (target instanceof Armory) {
+            } else if (target instanceof Armory) {
                 Armory targetArmory = (Armory) target;
                 if (shot.getCoordinate().isEqual(targetArmory.getCoordinate())) {
-                    if (targetArmory.getHealthDegree().getHealthLevel() <= shot.getPower()) {
-                        System.out.println("The Armory got ruined! Place " + targetArmory.getId() + " is now empty!");
-                        playGround.getPlaceHolder(targetArmory.getId()).setOwner(null);
-                        armories.remove(targetArmory);
-                        //TODO: My Darling Nona, This is ICE :)) Ruined :))
-                    }
+                    System.out.println("The Armory got Frozen!");
+                    targetArmory.setStopped(true, shot.getPower(), gameTime);
+                    gameShots.remove( shot );
                 }
             }
         } else if( shot instanceof Fire ){
@@ -832,11 +856,52 @@ public class Game {
                 System.out.println("Armory id: "+id+" got sold");
                 if( armory instanceof Barracks ){
                     for( Soldier soldier: soldiers  ){
-                        if( soldier.getBarrackID() == id )
+                        if( soldier.getBarracksOwner().getId() == id )
                             soldiers.remove(soldier);
                     }
                 }
                 armories.remove(armory);
+            }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void setTargetForArmory( String armoryType, int armoryID, int invaderID ) {
+
+        Armory whichArmory = null;
+        Invader targetInvader = null;
+        boolean armoryFounded = false;
+        for( Armory armory: armories ){
+            if( armory.getId() == armoryID ) {
+                whichArmory = armory;
+                armoryFounded = true;
+            }
+        }
+
+        if( armoryFounded ){
+            boolean invaderFounded = false;
+            for( Invader invader: invaders ){
+                if( invader.getInstanceNum()==invaderID ){
+                    targetInvader = invader;
+                    invaderFounded = true;
+                }
+            }
+            if( invaderFounded ){
+                whichArmory.setTargetPriority(TargetPriority.SpecificTarget);
+                whichArmory.setSpecificTargetInvader( targetInvader );
+            } else {
+                System.out.println("No Such Invader in Game");
+            }
+        } else {
+            System.out.println("No Such Armory in Game");
+        }
+
+
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void refreshFrozenArmories(){
+        for( Armory armory : armories ){
+            if( armory.isStopped() ){
+                armory.checkStopped( gameTime );
             }
         }
     }

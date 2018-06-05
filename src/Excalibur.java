@@ -8,7 +8,8 @@ public class Excalibur extends Armory implements Weapon{
     private int shotPower;
     private boolean isActive;
 
-    final Time activationLatency = new Time(30);
+    private final Time activationLatency = new Time(30);
+
     //Constructor
     public Excalibur( int id, Coordinate coordinate, Time currentTime) {
         super.id = id;
@@ -29,10 +30,7 @@ public class Excalibur extends Armory implements Weapon{
 
 
     // Setters
-    public void setActive() { isActive = true; }
-
-    // Getters
-    public boolean isExcaliburActive() { return isActive; }
+    private void setActive() { isActive = true; }
 
 
     // Other Methods
@@ -61,7 +59,7 @@ public class Excalibur extends Armory implements Weapon{
         this.Activate( currentTime );
         if( this.isActive ) {
             if (currentTime.getTime() - this.lastAttack.getTime() >= this.attackRateTime.getTime()) {
-                gameShots.add(new Bullet(super.coordinate, targetInvader, shotPower));
+                gameShots.add(new Bullet(super.coordinate, this, targetInvader, shotPower));
                 this.setLastAttack(currentTime);
             }
         }

@@ -7,7 +7,9 @@ public class Smelly extends Invader {
     private Time lastAttack;
 
     //constructor
-    Smelly(Coordinate init_coordinate){
+    Smelly(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.shootPower = 2; //Medium shoot power
         this.attackRateTime = new Time(3); //attacks every 3 time units
         this.lastAttack = new Time(0);
@@ -44,7 +46,7 @@ public class Smelly extends Invader {
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
             return true;
         }

@@ -8,7 +8,9 @@ public class Hopper extends Invader{
     private Time lastAttack;
 
     //constructor
-    Hopper(Coordinate init_coordinate){
+    Hopper(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.shootPower = 3; //Medium shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
@@ -48,7 +50,7 @@ public class Hopper extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
             return true;
         }

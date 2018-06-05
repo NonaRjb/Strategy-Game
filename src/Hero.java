@@ -22,12 +22,11 @@ public class Hero implements DetailShow {
     private Time idleStartTime;
     private boolean isStopped;
     private Time stopStartTime;
-    private boolean isFighting;
     private boolean isInMission;
     //private Boolean isBoomed;
 
     //constructor
-    Hero(Coordinate init_coordinate, int xpCnt){
+    Hero(Coordinate init_coordinate){
         coordinate = init_coordinate;
         level = 1;
         attackRate = new Time((maxLevel+1-level) * attackConst);
@@ -37,7 +36,7 @@ public class Hero implements DetailShow {
         delayConst = 10; //Just to be here! should be changed
         speedLevel = 1; // High Speed
         range = 4; // High Range
-        this.xpCnt = xpCnt;
+        this.xpCnt = 0;
         numberOfKillings = 0;
         deathNum = 0;
         idleStartTime = new Time(0);
@@ -47,63 +46,55 @@ public class Hero implements DetailShow {
     }
 
     //setter & getters
-
-    public void setNumberOfKillings(int numberOfKillings) {
-        this.numberOfKillings = numberOfKillings;
+    public void addNumberOfKillings() {
+        this.numberOfKillings++;
     }
-
+    public void addDeathNum() {
+        this.deathNum++;
+    }
     public void setStopped(boolean stopped) {
         isStopped = stopped;
     }
-
     public boolean isInMission() {
         return isInMission;
     }
-
     public boolean isIdle() {
         return isIdle;
     }
-
     public int getNumberOfKillings() {
         return numberOfKillings;
     }
-
     public Coordinate getCoordinate(){
         return this.coordinate;
     }
-
     public Time getLastAttack() {
         return lastAttack;
     }
-
     public int getRange() {
         return range;
     }
-
     public HealthLevel getHealthLevel() {
         return healthLevel;
     }
-
     public int getDelayConst() {
         return delayConst;
     }
-
     public Invader getTargetInvader() {
         return targetInvader;
     }
-
     public boolean isStopped() {
         return isStopped;
     }
-
     public void setTarget(Invader invader){ this.targetInvader = invader; }
-
     public void setLastAttack(Time currentTime){ this.lastAttack = currentTime; }
-
     public void setIdle(Time currentTime){
         this.isIdle = true;
         this.idleStartTime = currentTime;
     }
+    public void addXP(int xp){
+        this.xpCnt += xp;
+    }
+
 
     public void setInMission(boolean inMission) {
         isInMission = inMission;
@@ -142,7 +133,6 @@ public class Hero implements DetailShow {
         else return false;
     }
 
-    //ToDo go after Invader! --> Done
     public void goAfterInvader(Invader invader, Coordinate coordinate){
         //this.isFighting = true;
         this.isInMission = true;
@@ -162,7 +152,7 @@ public class Hero implements DetailShow {
         System.out.println("Health Level: " + healthLevel.getHealthLevel());
         System.out.println("XP count: " + xpCnt);
         System.out.println("Delay after getting killed: " + delayConst);
-        System.out.println("Number of killed ivaders by Hero: " + numberOfKillings);
+        System.out.println("Number of killed Invaders by Hero: " + numberOfKillings);
         System.out.println("Number of times that hero has been killed: " + deathNum);
         System.out.println("Current Coordinate: " + this.coordinate.getX() + "," + this.coordinate.getY());
         // Speed and range are assumed to be constant
@@ -183,7 +173,7 @@ public class Hero implements DetailShow {
                }
            }
            this.setTarget(target);
-           gameShots.add(new Bullet(this.getCoordinate(), this.targetInvader, this.shootPower));
+           gameShots.add(new Bullet(this.getCoordinate(), this, this.targetInvader, this.shootPower));
            return true;
         }
     }

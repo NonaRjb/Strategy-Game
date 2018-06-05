@@ -2,8 +2,12 @@ import java.util.ArrayList;
 
 public class Boomer extends Invader{
 
+    static final int boomingTimeConst = 10;
+
     //constructor
-    Boomer(Coordinate init_coordinate){
+    Boomer(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(4); //Very low degree of health
         super.movementSpeed = 4 * super.speedConst; //moves 4 pixels in each time unit
@@ -14,7 +18,7 @@ public class Boomer extends Invader{
     public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
         for (Object target : targets) {
             if (target instanceof Armory){
-                ((Armory) target).setStopped(true);
+                ((Armory) target).setStopped(true, boomingTimeConst ,currentTime);
             }else if (target instanceof Soldier){
                 ((Soldier) target).setStopped(true);
             }else if (target instanceof Hero){

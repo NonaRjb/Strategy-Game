@@ -6,7 +6,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     protected int movementSpeed;
     protected int speedConst;
     protected int range;
-    private int InstanceNum;
+    protected int instanceNum;
     private boolean isFrozen;
     private boolean isBurning;
     private boolean isPoisoned;
@@ -53,7 +53,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return range;
     }
     public int getInstanceNum() {
-        return InstanceNum;
+        return instanceNum;
     }
     public int getNumberOfKillings() {
         return numberOfKilledSoldiers;
@@ -71,7 +71,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
         this.healthDegree = healthDegree;
     }
     public void setFrozen(boolean frozen , int power, Time currentTime) {
-        icePower += power;
+        icePower = power;  // If attacked by two IceShots, the Last one will be applied :))
         freezingTime = currentTime;
         isFrozen = frozen;
     }
@@ -81,11 +81,11 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public void setGraphicalSize(int graphicalSize) {
         this.graphicalSize = graphicalSize;
     }
-    public void setInstanceNum(int instanceNum) {
-        InstanceNum = instanceNum;
+    public void addNumberOfKillings() {
+        this.numberOfKilledSoldiers++;
     }
-    public void setNumberOfKillings(int numberOfKillings) {
-        this.numberOfKilledSoldiers = numberOfKillings;
+    public void addNumberOfHeroKill() {
+        this.numberOfHeroKill++;
     }
     public void setPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
@@ -105,18 +105,18 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return this.target.size();
     }
 
-    //TODO checkFrozen should be completed --> DONE
     public boolean checkFrozen(Time currentTime){
-        if (this.getFrozen()){
-            if((currentTime.getTime() - this.freezingTime.getTime()) < this.icePower && isFrozen)    return true;
-            else{
+        if (this.isFrozen){
+            if( (currentTime.getTime() - this.freezingTime.getTime()) < this.icePower ) {
+                return true;
+            } else {
                 isFrozen = false;
                 return false;
-                }
+            }
         }
         return false;
     }
-    //
+
     public void decreaseBurningTime() {
         if( this.burningTime.getTime() > 0 ) {
             this.burningTime = new Time(this.burningTime.getTime() - 1);

@@ -1,3 +1,5 @@
+import org.omg.PortableServer.THREAD_POLICY_ID;
+
 public class Coordinate {
     private int x;
     private int y;
@@ -26,6 +28,11 @@ public class Coordinate {
             return true;
         else
             return false;
+    }
+
+    public String showCoordinate( ){
+        String s = "("+this.x+","+this.y+")";
+        return s;
     }
 
     static int distance( Coordinate C1, Coordinate C2 ){

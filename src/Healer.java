@@ -7,7 +7,9 @@ public class Healer extends Invader {
     private final int healConst = 10;
 
     //constructor
-    Healer(Coordinate init_coordinate){
+    Healer(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.healRate = 5; //heals every 5 time units(Medium)
         this.healPower = 1 * healConst; //low power of each heal
         this.lastAttack = new Time(0);

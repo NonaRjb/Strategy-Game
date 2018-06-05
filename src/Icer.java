@@ -4,7 +4,9 @@ public class Icer extends Invader{
     final Time attackRateTime;
     private Time lastAttack;
 
-    Icer(Coordinate init_coordinate){
+    Icer(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.attackRateTime = new Time(4); //attacks every 4 time units
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;

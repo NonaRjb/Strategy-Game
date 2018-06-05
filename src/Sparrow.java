@@ -6,7 +6,9 @@ public class Sparrow extends Invader implements InvaderAttack{
     private Time lastAttack;
 
     //constructor
-    Sparrow(Coordinate init_coordinate){
+    Sparrow(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.shootPower = 2; //low shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         this.lastAttack = new Time(0);
@@ -43,7 +45,7 @@ public class Sparrow extends Invader implements InvaderAttack{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
             return true;
         }
