@@ -7,7 +7,9 @@ public class Skipper extends Invader{
     final Time attackRateTime;
     private Time lastAttack;
 
-    Skipper(Coordinate init_coordinate){
+    Skipper(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.shootPower = 5; //high shoot power
         this.attackRateTime = new Time(1); //high attack speed
         this.lastAttack = new Time(0);
@@ -43,7 +45,7 @@ public class Skipper extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
             return true;
         }

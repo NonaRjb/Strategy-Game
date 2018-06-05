@@ -5,6 +5,7 @@ public class Barracks extends Armory{
     private Soldier[] soldiers = new Soldier[3];
     private HealthLevel soldiersInitHealth;
     private Time soldierCompensationTime;
+    private Time[] lastKilledsoldierTime = new Time[3];
 
     //Constructor
     public Barracks(int id, Coordinate coordinate, ArrayList<Soldier> gameSoldiers) {
@@ -19,15 +20,17 @@ public class Barracks extends Armory{
         super.graphicalSize = 5;
         soldiersInitHealth = new HealthLevel(10);
         soldierCompensationTime = new Time(10);
-        soldiers[0] = new Soldier(coordinate, super.id, 0, 10);
-        soldiers[1] = new Soldier(coordinate, super.id, 1, 10);;
-        soldiers[2] = new Soldier(coordinate, super.id, 2, 10);;
+        soldiers[0] = new Soldier(coordinate, this, 0, soldiersInitHealth);
+        soldiers[1] = new Soldier(coordinate, this, 1, soldiersInitHealth);;
+        soldiers[2] = new Soldier(coordinate, this, 2, soldiersInitHealth);;
         gameSoldiers.add(soldiers[0]);
         gameSoldiers.add(soldiers[1]);
         gameSoldiers.add(soldiers[2]);
         System.out.println("Barracks successfully Build");
         System.out.println("Warning: Move the soldiers to an appropriate place");
     }
+
+    public void setSoldierCompensationTime( Time t ){ soldierCompensationTime = t; }
 
     @Override
     public void showDetail() {
@@ -48,6 +51,24 @@ public class Barracks extends Armory{
             this.soldiersInitHealth.increaseHealth( (int)(this.soldiersInitHealth.getHealthLevel()*0.2) );
             this.soldierCompensationTime = new Time( (int)(this.soldierCompensationTime.getTime()*0.9) );
             System.out.println("Barracks id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
+        }
+    }
+
+
+    public void removeSoldier( int soldierID, Time currentTime ){
+        soldiers[soldierID] = null;
+        lastKilledsoldierTime[soldierID] = currentTime;
+    }
+
+    public void reviveSoldiers( Time currentTime, ArrayList<Soldier> gameSoldiers){
+        for( int i=0; i<3; i++ ){
+            if( soldiers[i] == null ){
+                if( currentTime.getTime() - lastKilledsoldierTime[i].getTime() >= soldierCompensationTime.getTime() ){
+                    soldiers[i] = new Soldier(this.coordinate, this, i, this.soldiersInitHealth );
+                    gameSoldiers.add(soldiers[i]);
+                    System.out.println("New Soldier: "+i+" Revived to Barracks: "+this.id);
+                }
+            }
         }
     }
 

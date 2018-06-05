@@ -6,7 +6,9 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
     private Time lastAttack;
 
     //constructor
-    HockeyMaskMan(Coordinate init_coordinate){
+    HockeyMaskMan(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.shootPower = 3; //Medium shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         this.lastAttack = new Time(0);
@@ -41,7 +43,7 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
             return true;
         }

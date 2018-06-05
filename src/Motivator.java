@@ -6,7 +6,9 @@ public class Motivator extends Invader {
     private Time lastAttack;
 
     //constructor
-    Motivator(Coordinate init_coordinate){
+    Motivator(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.motivePower = 1; //low motive power
         this.motiveRate = 2; //motives every 2 time units
         this.lastAttack = new Time(0);

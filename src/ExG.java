@@ -6,7 +6,9 @@ public class ExG extends Invader{
     private Time lastAttack;
 
     /////// constructor
-    ExG(Coordinate init_coordinate){
+    ExG(int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.shootPower = 2; //Low shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         this.lastAttack = new Time(0);
@@ -43,7 +45,7 @@ public class ExG extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
             return true;
         }

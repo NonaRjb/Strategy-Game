@@ -40,7 +40,7 @@ public class Sauron extends Armory implements Weapon{
     @Override
     public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
         if( currentTime.getTime()-this.lastAttack.getTime() >= this.attackRateTime.getTime() ){
-            gameShots.add( new Bullet(super.coordinate, targetInvader, shotPower) );
+            gameShots.add( new Bullet(super.coordinate, this, targetInvader, shotPower) );
             this.setLastAttack(currentTime);
         }
     }

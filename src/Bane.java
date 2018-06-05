@@ -6,7 +6,9 @@ public class Bane extends Invader{
     private Time lastAttack;
 
     // constructor
-    Bane(Coordinate init_coordinate){
+    Bane( int id, Coordinate init_coordinate){
+        super();
+        super.instanceNum = id;
         this.shootPower = 5; //High shoot power
         this.attackRateTime = new Time(3); //attacks every 3 time units
         this.lastAttack = new Time(0);
@@ -40,7 +42,7 @@ public class Bane extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, super.getTarget(i), shootPower));
+                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
             return true;
         }
