@@ -1,0 +1,39 @@
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class GameFX extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+
+        GameController gameController = new GameController();
+
+        try {
+            /// Roots
+
+            FXMLLoader startLoader = new FXMLLoader(getClass().getResource("startPage.fxml"));
+            StartPageController startPageController = startLoader.getController();
+            startPageController.setModel( gameController );
+            Parent startRoot = startLoader.load();
+
+
+            /// Scenes
+            Scene startScene = new Scene(startRoot,800,600);
+
+            primaryStage.setTitle("Hello World");
+            primaryStage.setScene(startScene);
+            primaryStage.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+}

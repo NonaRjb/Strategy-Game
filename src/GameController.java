@@ -29,12 +29,12 @@ public class GameController {
 
     public void playRound(int round){
 
-        game.setInvaderRate( new Time(20-round) );
-        game.setThisRoundNumberOfInvaders(round*10);
+        //game.setInvaderRate( new Time(20-round) );
+        //game.setThisRoundNumberOfInvaders(round*10);
 
-        command = scanner.nextLine();
+        //command = scanner.nextLine();
 
-        while (!game.isEnded()){
+        //while (!game.isEnded()){
 
             if (command.matches("add [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
@@ -151,16 +151,16 @@ public class GameController {
                 game.naturalEventHappening();
             }
 
-            command = scanner.nextLine();
+            //command = scanner.nextLine();
 
-        }
+        //}
 
-        round++;
+        /*round++;
         if( round <= this.numberOfRounds )
             playEndRound();
         else
             playWinnerEnd();
-
+        */
 
     }
 

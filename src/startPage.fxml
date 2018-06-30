@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StartPageController">
+   <children>
+      <Button fx:id="startGame" layoutX="372.0" layoutY="363.0" mnemonicParsing="false" text="Start Game" />
+      <TextArea layoutX="261.0" layoutY="247.0" prefHeight="107.0" prefWidth="317.0" text="Welcome to TowerDefense!&#10;&#10;&#10;If you are ready to go press the start button!" />
+   </children>
+</AnchorPane>
