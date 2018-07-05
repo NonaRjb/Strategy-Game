@@ -8,13 +8,13 @@ import java.io.IOException;
 
 public class MainGameController {
 
-    GameController gameController;
+    //GameController gameController;
 
-    public void setGameController(GameController gameController) {
+    /*public void setGameController(GameController gameController) {
         this.gameController = gameController;
-    }
+    }*/
 
-    @FXML
+    /*@FXML
     private void initialize(){
         startGame.setOnAction(event -> {
             try {
@@ -32,5 +32,5 @@ public class MainGameController {
             }
 
         });
-
+    */
 }

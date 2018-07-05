@@ -62,6 +62,6 @@ public class Miner extends Invader{
         System.out.println("Additional Abilities: Moves under the ground and only can be seen by hero");
         System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
         System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
-        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
+        System.out.println("Number of times Hero got killed by this Invader: " + super.numberOfHeroKill);
     }
 }

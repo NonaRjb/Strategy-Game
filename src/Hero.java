@@ -43,6 +43,7 @@ public class Hero implements DetailShow {
         isInMission = false;
         isIdle = false;
         isStopped = false;
+        stopStartTime = new Time(0);
     }
 
     //setter & getters

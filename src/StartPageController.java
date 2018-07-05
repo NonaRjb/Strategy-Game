@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class StartPageController {
 
-    GameController gameController;
+    private GameController gameController = GameController.getInstance();
 
     @FXML
     private Button startGame;
@@ -19,10 +19,11 @@ public class StartPageController {
     @FXML
     private void initialize(){
         startGame.setOnAction(event -> {
-            try {
+            this.gameController.setCommand("go ahead one sec");
+            /*try {
                 FXMLLoader prepareGameLoader = new FXMLLoader(getClass().getResource("prepareGame.fxml"));
                 PrepareGameController prepareGameController = prepareGameLoader.getController();
-                prepareGameController.setGameController(gameController);
+               // prepareGameController.setGameController(gameController);
                 Parent prepareGameRoot = prepareGameLoader.load();
                 Scene prepareGameScene = new Scene(prepareGameRoot,800,600);
                 Stage stage = new Stage();
@@ -31,12 +32,14 @@ public class StartPageController {
 
             }catch (IOException io){
                 io.printStackTrace();
-            }
+            }*/
 
         });
     }
 
-    public void setModel( GameController gameController ){
+
+
+    /*public void setModel( GameController gameController ){
         this.gameController = gameController;
-    }
+    }*/
 }

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class GameController {
 
+    private static GameController gameController_instance = null;
     private Scanner scanner = new Scanner(System.in);
     private Game game;
     private String command;
@@ -16,7 +17,7 @@ public class GameController {
     private final int numberOfRounds = 5;
 
     // Constructor
-    public GameController() {
+    private GameController() {
         this.game = new Game();
         this.currentRound = 0;
         playRound(0);
@@ -25,16 +26,23 @@ public class GameController {
         this.plagueTime = new Time( rand.nextInt( 100 ) );
         this.naturalEventRound = rand.nextInt( this.numberOfRounds );
         this.naturalEventTime = new Time( rand.nextInt( 100 ) );
+        command = " ";
+    }
+
+    public static GameController getInstance(){
+        if (gameController_instance != null){
+            gameController_instance = new GameController();
+        }
+        return gameController_instance;
     }
 
     public void playRound(int round){
 
-        //game.setInvaderRate( new Time(20-round) );
-        //game.setThisRoundNumberOfInvaders(round*10);
+        game.setInvaderRate( new Time(20-round) );
+        game.setThisRoundNumberOfInvaders((round+1)*10);
 
         //command = scanner.nextLine();
-
-        //while (!game.isEnded()){
+       // while (/*!game.isEnded()*/!command.equals("end")){
 
             if (command.matches("add [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
@@ -143,24 +151,24 @@ public class GameController {
                 game.makeGameSoldiers();
             }
 
-            if( round == this.plagueRound && game.getGameTime().getTime()==this.plagueTime.getTime() ){
+            /*if( round == this.plagueRound && game.getGameTime().getTime()==this.plagueTime.getTime() ){
                 game.spreadPlague();
             }
 
             if( round == this.naturalEventRound && game.getGameTime().getTime()==this.naturalEventTime.getTime() ){
                 game.naturalEventHappening();
-            }
+            }*/
 
             //command = scanner.nextLine();
 
-        //}
+       // }
 
-        /*round++;
+       /* round++;
         if( round <= this.numberOfRounds )
             playEndRound();
         else
-            playWinnerEnd();
-        */
+            playWinnerEnd();*/
+
 
     }
 
@@ -236,7 +244,47 @@ public class GameController {
     }
 
     public void playWinnerEnd(){
-        System.out.println("Congratulation :)) You are Wined the game ...");
+        System.out.println("Congratulation :)) You won the game ...");
+    }
+
+    public void setCommand(String command){
+        this.command = command;
+        System.out.println(command);
+        this.doCommand(command);
+    }
+
+    public void doCommand(String command){
+        if (command.matches("add [a-zA-Z]{5,10} in place [0-9]{1,2}")){
+            String[] tmp = command.split(" ");
+            game.createArmory(tmp[1], Integer.parseInt(tmp[4]));
+        }
+        if (command.matches("show details [a-z]{4,8}")){
+            String[] tmp = command.split(" ");
+            if (tmp[2].equals("weapons")){
+                game.showArmoriesDetails();
+            }
+            if (tmp[2].equals("enemy")){
+                game.showInvadersDetails();
+            }
+            if (tmp[2].equals("infantry")){
+                game.showSoldiersDetails();
+            }
+            if (tmp[2].equals("slots")){
+                game.showSlotsDetails();
+            }
+            if (tmp[2].equals("hero")){
+                game.showHeroDetails();
+            }
+        }
+
+        if( command.equals("Pause") ){
+            playPause();
+        }
+
+        if (command.equals("go ahead one sec")){
+            game.increaseTime();
+            System.out.println("Game Time Successfully increased");
+        }
     }
 
 }

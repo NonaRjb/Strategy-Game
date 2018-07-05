@@ -666,14 +666,17 @@ public class Game {
         if(hero != null) {
             ArrayList<Invader> targets = new ArrayList<>();
             //Todo is in mission mix with go after Invader
-            if (!hero.isInMission()) {
+            if (hero.isInMission() == false) {
                 targets = findInvaders(hero.getCoordinate(), hero.getRange(), TargetPriority.AllInRange);
-                for (Invader invader : targets) {
-                    if (invader instanceof Sparrow) {
-                        targets.remove(invader);
+                if (targets != null) {
+                    System.out.println(targets.size());/////////////////test
+                    for (Invader invader : targets) {
+                        if (invader instanceof Sparrow) {
+                            targets.remove(invader);
+                        }
                     }
                 }
-                if (targets.size() != 0) {
+                if (targets != null) {
                     hero.attack(gameTime, gameShots, targets);
                 }
             }else {

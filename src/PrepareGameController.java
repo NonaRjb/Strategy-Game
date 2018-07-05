@@ -8,14 +8,14 @@ import java.io.IOException;
 
 public class PrepareGameController {
 
-    GameController gameController;
+    //GameController gameController;
 
-    public void setGameController( GameController gameController ){
+    /*public void setGameController( GameController gameController ){
         this.gameController=gameController;
     }
 
 
-    @FXML
+    /*@FXML
     private void initialize(){
         startGame.setOnAction(event -> {
             try {
@@ -33,5 +33,5 @@ public class PrepareGameController {
             }
 
         });
-
+    */
 }
