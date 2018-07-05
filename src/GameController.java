@@ -20,7 +20,7 @@ public class GameController {
     private GameController() {
         this.game = new Game();
         this.currentRound = 0;
-        playRound(0);
+       // playRound(0);
         Random rand = new Random();
         this.plagueRound = rand.nextInt( this.numberOfRounds );
         this.plagueTime = new Time( rand.nextInt( 100 ) );
@@ -30,7 +30,7 @@ public class GameController {
     }
 
     public static GameController getInstance(){
-        if (gameController_instance != null){
+        if (gameController_instance == null){
             gameController_instance = new GameController();
         }
         return gameController_instance;
