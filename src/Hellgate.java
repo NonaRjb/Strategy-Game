@@ -57,14 +57,16 @@ public class Hellgate extends Armory implements Weapon{
     public void setLastAttack(Time t){}
 
     @Override
-    public void showDetail() {
-        System.out.println("Hellgate id: "+super.id);
-        System.out.println("Additional Characteristics: Burns Every Invader in Range");
-        System.out.println("Attack Range: "+super.range+" pixels!");
-        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
-        System.out.println("Price: "+super.price.getPrice()+" Coins");
-        System.out.println("Target Priority: "+super.getTargetPriority());
-        System.out.println("//////////////////////////////////////");
+    public String showDetail() {
+        String detail="";
+        detail = detail + "Hellgate id: "+super.id +"\n";
+        detail = detail + "Additional Characteristics: Burns Every Invader in Range" +"\n";
+        detail = detail + "Attack Range: "+super.range+" pixels!" +"\n";
+        detail = detail + "Health Level: "+super.healthDegree.getHealthLevel()+" Units" +"\n";
+        detail = detail + "Price: "+super.price.getPrice()+" Coins" +"\n";
+        detail = detail + "Target Priority: "+super.getTargetPriority() +"\n";
+        detail = detail + "//////////////////////////////////////" +"\n";
+        return detail;
     }
 
 }

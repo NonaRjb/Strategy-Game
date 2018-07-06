@@ -1,4 +1,4 @@
-import org.omg.PortableServer.THREAD_POLICY_ID;
+//import org.omg.PortableServer.THREAD_POLICY_ID;
 
 public class Coordinate {
     private int x;

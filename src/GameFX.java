@@ -16,7 +16,7 @@ public class GameFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //GameController gameController = new GameController();
+
         try {
             /// Roots
 

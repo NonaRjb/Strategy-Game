@@ -55,16 +55,17 @@ public class MachineGun extends Armory implements Weapon{
     }
 
     @Override
-    public void showDetail() {
-
-        System.out.println("MachineGun id: "+super.id);
-        System.out.println("Additional Characteristics: Whatever Medium!");
-        System.out.println("Attack Range: "+super.range+" pixels!");
-        System.out.println("Attack Speed: Every "+this.attackRateTime.getTime()+" Seconds");
-        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
-        System.out.println("Price: "+super.price.getPrice()+" Coins");
-        System.out.println("Target Priority: "+super.getTargetPriority());
-        System.out.println("//////////////////////////////////////");
+    public String showDetail() {
+        String detail="";
+        detail = detail + "MachineGun id: "+super.id +"\n";
+        detail = detail + "Additional Characteristics: Whatever Medium!" +"\n";
+        detail = detail + "Attack Range: "+super.range+" pixels!" +"\n";
+        detail = detail + "Attack Speed: Every "+this.attackRateTime.getTime()+" Seconds" +"\n";
+        detail = detail + "Health Level: "+super.healthDegree.getHealthLevel()+" Units" +"\n";
+        detail = detail + "Price: "+super.price.getPrice()+" Coins" +"\n";
+        detail = detail + "Target Priority: "+super.getTargetPriority() +"\n";
+        detail = detail + "//////////////////////////////////////" +"\n";
+        return detail;
 
     }
 

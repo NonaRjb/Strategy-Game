@@ -30,17 +30,19 @@ public class Boomer extends Invader{
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Boomer:");
-        System.out.println("Visibility Range: Medium");
-        System.out.println("Movement Speed: High");
-        System.out.println("Health Degree: Very Low");
-        System.out.println("Attack Rate: None");
-        System.out.println("Shoot Power: None");
-        System.out.println("Additional Abilities: When it get to the first building in its way, it explodes and causes" +
-                           "that building stops working for some secs");
-        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
-        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
-        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
+    public String showDetail(){
+        String detail="";
+        detail = detail + "Boomer:"+"\n";
+        detail = detail + "Visibility Range: Medium"+"\n";
+        detail = detail + "Movement Speed: High"+"\n";
+        detail = detail + "Health Degree: Very Low"+"\n";
+        detail = detail + "Attack Rate: None"+"\n";
+        detail = detail + "Shoot Power: None"+"\n";
+        detail = detail + "Additional Abilities: When it get to the first building in its way, it explodes and causes" +
+                           "that building stops working for some secs"+"\n";
+        detail = detail + "current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")"+"\n";
+        detail = detail + "Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers+"\n";
+        detail = detail + "Number of times Hero got killed by this Invader" + super.numberOfHeroKill+"\n";
+        return detail;
     }
 }

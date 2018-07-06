@@ -49,14 +49,16 @@ public class Motivator extends Invader {
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Motivator:");
-        System.out.println("Visibility Range: Low");
-        System.out.println("Movement Speed: Low");
-        System.out.println("Health Degree: Medium");
-        System.out.println("Motivation Rate: Medium");
-        System.out.println("Motivation Power: Low");
-        System.out.println("Additional Abilities: Causes every Invaders in it's range, have more shoot power");
-        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+    public String showDetail(){
+        String detail="";
+        detail = detail + "Motivator:" +"\n";
+        detail = detail + "Visibility Range: Low" +"\n";
+        detail = detail + "Movement Speed: Low" +"\n";
+        detail = detail + "Health Degree: Medium" +"\n";
+        detail = detail + "Motivation Rate: Medium" +"\n";
+        detail = detail + "Motivation Power: Low" +"\n";
+        detail = detail + "Additional Abilities: Causes every Invaders in it's range, have more shoot power" +"\n";
+        detail = detail + "current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")" +"\n";
+        return detail;
     }
 }

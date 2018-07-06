@@ -50,16 +50,18 @@ public class Bane extends Invader{
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Bane:");
-        System.out.println("Visibility Range: Low");
-        System.out.println("Movement Speed: Very Low");
-        System.out.println("Health Degree: High");
-        System.out.println("Attack Rate: Low");
-        System.out.println("Shoot Power: High");
-        System.out.println("Additional Abilities: None");
-        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
-        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
-        System.out.println("Number of times Hero got killed by this Invader: " + super.numberOfHeroKill);
+    public String showDetail(){
+        String detail ="";
+        detail = detail + "Bane:"+"\n";
+        detail = detail + "Visibility Range: Low"+"\n";
+        detail = detail + "Movement Speed: Very Low"+"\n";
+        detail = detail + "Health Degree: High"+"\n";
+        detail = detail + "Attack Rate: Low"+"\n";
+        detail = detail + "Shoot Power: High"+"\n";
+        detail = detail + "Additional Abilities: None"+"\n";
+        detail = detail + "current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")"+"\n";
+        detail = detail + "Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers+"\n";
+        detail = detail + "Number of times Hero got killed by this Invader: " + super.numberOfHeroKill+"\n";
+        return detail;
     }
 }

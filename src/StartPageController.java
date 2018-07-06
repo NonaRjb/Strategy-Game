@@ -20,7 +20,7 @@ public class StartPageController {
     @FXML
     private void initialize(){
         startGame.setOnAction(event -> {
-            this.gameController.setCommand("go ahead one sec");
+            //this.gameController.setCommand("go ahead one sec");
             try {
                 FXMLLoader prepareGameLoader = new FXMLLoader(getClass().getResource("prepareGame.fxml"));
                 Parent prepareGameRoot = prepareGameLoader.load();

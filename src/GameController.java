@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameController {
+public class GameController implements DetailShow {
 
     private static GameController gameController_instance = null;
     private Scanner scanner = new Scanner(System.in);
@@ -36,10 +36,50 @@ public class GameController {
         return gameController_instance;
     }
 
-    public void playRound(int round){
+    //TODO: details
+    @Override
+    public String showDetail() {
+        String details="";
+        details = details + game.showInvadersDetails();
+        details = details + game.showArmoriesDetails();
+        details = details + game.showHeroDetails();
+        details = details + game.showSlotsDetails();
+        details = details + game.showSoldiersDetails();
+        return details;
 
-        game.setInvaderRate( new Time(20-round) );
-        game.setThisRoundNumberOfInvaders((round+1)*10);
+    }
+
+    public void initiateRound(){
+        game.setInvaderRate( new Time(20-this.currentRound) );
+        game.setThisRoundNumberOfInvaders((this.currentRound+1)*10);
+    }
+
+    public boolean goAheadRound(){
+        if( game.isEnded() ){
+            if( this.currentRound < this.numberOfRounds ) {
+                //playEndRound();
+                this.currentRound++;
+            } else {
+                //playWinnerEnd();
+            }
+            return true;
+        } else {
+            game.increaseTime();
+            if( this.currentRound == this.plagueRound && game.getGameTime().getTime()==this.plagueTime.getTime() ){
+                game.spreadPlague();
+            }
+            if( this.currentRound == this.naturalEventRound && game.getGameTime().getTime()==this.naturalEventTime.getTime() ){
+                game.naturalEventHappening();
+            }
+            return false;
+        }
+
+    }
+
+    public String playRound(String command){//int round){
+
+        //game.setInvaderRate( new Time(20-round) );
+        //game.setThisRoundNumberOfInvaders((round+1)*10);
 
         //command = scanner.nextLine();
        // while (/*!game.isEnded()*/!command.equals("end")){
@@ -51,19 +91,19 @@ public class GameController {
             if (command.matches("show details [a-z]{4,8}")){
                 String[] tmp = command.split(" ");
                 if (tmp[2].equals("weapons")){
-                    game.showArmoriesDetails();
+                    return game.showArmoriesDetails();
                 }
                 if (tmp[2].equals("enemy")){
-                    game.showInvadersDetails();
+                    return game.showInvadersDetails();
                 }
                 if (tmp[2].equals("infantry")){
-                    game.showSoldiersDetails();
+                    return game.showSoldiersDetails();
                 }
                 if (tmp[2].equals("slots")){
-                    game.showSlotsDetails();
+                    return game.showSlotsDetails();
                 }
                 if (tmp[2].equals("hero")){
-                    game.showHeroDetails();
+                    return game.showHeroDetails();
                 }
             }
 
@@ -71,10 +111,10 @@ public class GameController {
                 playPause();
             }
 
-            if (command.equals("go ahead one sec")){
+            /*if (command.equals("go ahead one sec")){
                 game.increaseTime();
                 System.out.println("Game Time Successfully increased");
-            }
+            }*/
 
             if (command.matches("set target of [a-zA-Z]{5,10} in place [0-9]{1,2} to be invader [0-9]{1,2}")){ // set target of Armory
                 String[] tmp = command.split(" ");
@@ -132,6 +172,7 @@ public class GameController {
                 game.moveHero( new Coordinate(x,y) );
             }
 
+            //TODO hero stop time
             if (command.equals("let hero stop time")){
                 //method
             }
@@ -150,6 +191,8 @@ public class GameController {
             if (command.equals("divine intervention infantry")){
                 game.makeGameSoldiers();
             }
+
+            return "Done :))";
 
             /*if( round == this.plagueRound && game.getGameTime().getTime()==this.plagueTime.getTime() ){
                 game.spreadPlague();
@@ -172,9 +215,9 @@ public class GameController {
 
     }
 
-    public void playBreak(){
-        command = scanner.nextLine();
-        while (!command.equals("begin next round")){
+    public String playBreak( String command ){
+        //command = scanner.nextLine();
+        //while (!command.equals("begin next round")){
             if (command.equals("show details weapons")){
                 game.showArmoriesDetails();
             }
@@ -221,8 +264,9 @@ public class GameController {
                     game.moveSoldier(PlayGround.numberOfPlaces , Integer.parseInt(tmp[2]), coordinate);
                 }
             }
-            command = scanner.nextLine();
-        }
+            return "Done :))";
+            //command = scanner.nextLine();
+        //}
     }
 
     public void playPause(){
@@ -240,14 +284,14 @@ public class GameController {
         while (!command.equals("OK")){
             command = scanner.nextLine();
         }
-        playBreak();
+        //playBreak();
     }
 
     public void playWinnerEnd(){
         System.out.println("Congratulation :)) You won the game ...");
     }
 
-    public void setCommand(String command){
+    /*public void setCommand(String command){
         this.command = command;
         System.out.println(command);
         this.doCommand(command);
@@ -285,6 +329,6 @@ public class GameController {
             game.increaseTime();
             System.out.println("Game Time Successfully increased");
         }
-    }
+    }*/
 
 }

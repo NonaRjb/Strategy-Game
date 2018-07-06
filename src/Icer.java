@@ -49,14 +49,16 @@ public class Icer extends Invader{
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Icer:");
-        System.out.println("Visibility Range: Medium");
-        System.out.println("Movement Speed: Very Low");
-        System.out.println("Health Degree: High");
-        System.out.println("Attack Rate: Very Low");
-        System.out.println("Shoot Power: None");
-        System.out.println("Additional Abilities: Only attacks buildings and causes them to stop working for 10 secs");
-        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+    public String showDetail(){
+        String detail = "";
+        detail = detail + "Icer:" +"\n";
+        detail = detail + "Visibility Range: Medium" +"\n";
+        detail = detail + "Movement Speed: Very Low" +"\n";
+        detail = detail + "Health Degree: High" +"\n";
+        detail = detail + "Attack Rate: Very Low" +"\n";
+        detail = detail + "Shoot Power: None" +"\n";
+        detail = detail + "Additional Abilities: Only attacks buildings and causes them to stop working for 10 secs" +"\n";
+        detail = detail + "current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")" +"\n";
+        return detail;
     }
 }

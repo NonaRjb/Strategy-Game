@@ -75,16 +75,18 @@ public class Excalibur extends Armory implements Weapon{
     }
 
     @Override
-    public void showDetail() {
+    public String showDetail() {
 
-        System.out.println("Excalibur id: "+super.id);
-        System.out.println("Features: Only One Times could be Produced, with 30 seconds Latency");
-        System.out.println("Attack Range: Infinity!");
-        System.out.println("Attack Speed: Every "+this.attackRateTime.getTime()+" Seconds");
-        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
-        System.out.println("Price: "+super.price.getPrice()+" Coins");
-        System.out.println("Target Priority: "+super.getTargetPriority());
-        System.out.println("//////////////////////////////////////");
+        String detail="";
+        detail = detail +"Excalibur id: "+super.id+"\n";
+        detail = detail +"Features: Only One Times could be Produced, with 30 seconds Latency"+"\n";
+        detail = detail +"Attack Range: Infinity!"+"\n";
+        detail = detail +"Attack Speed: Every "+this.attackRateTime.getTime()+" Seconds"+"\n";
+        detail = detail +"Health Level: "+super.healthDegree.getHealthLevel()+" Units"+"\n";
+        detail = detail +"Price: "+super.price.getPrice()+" Coins"+"\n";
+        detail = detail +"Target Priority: "+super.getTargetPriority()+"\n";
+        detail = detail +"//////////////////////////////////////"+"\n";
+        return detail;
     }
 
 }

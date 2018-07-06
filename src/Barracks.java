@@ -33,13 +33,15 @@ public class Barracks extends Armory{
     public void setSoldierCompensationTime( Time t ){ soldierCompensationTime = t; }
 
     @Override
-    public void showDetail() {
-        System.out.println("Barracks id: "+super.id);
-        System.out.println("Attack Range: "+super.range+" pixels!");
-        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
-        System.out.println("Price: "+super.price.getPrice()+" Coins");
-        System.out.println("Target Priority: "+super.getTargetPriority());
-        System.out.println("//////////////////////////////////////");
+    public String showDetail() {
+        String detail = "";
+        detail = detail + "Barracks id: "+super.id+"\n";
+        detail = detail + "Attack Range: "+super.range+" pixels!"+"\n";
+        detail = detail + "Health Level: "+super.healthDegree.getHealthLevel()+" Units"+"\n";
+        detail = detail + "Price: "+super.price.getPrice()+" Coins"+"\n";
+        detail = detail + "Target Priority: "+super.getTargetPriority()+"\n";
+        detail = detail + "//////////////////////////////////////"+"\n";
+        return detail;
     }
 
     @Override

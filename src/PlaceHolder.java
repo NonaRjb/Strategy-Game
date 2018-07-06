@@ -19,14 +19,16 @@ public class PlaceHolder implements DetailShow{
     public void setOwner(Armory owner) { this.owner = owner; }
 
     @Override
-    public void showDetail() {
-        System.out.println("Slot id: " + id);
-        System.out.println("Slot Coordinate: " + "(" + this.getPlaceCoordinate().getX() + "," + this.getPlaceCoordinate().getY() + ")");
+    public String  showDetail() {
+        String detail="";
+        detail = detail + "Slot id: " + id +"\n";
+        detail = detail + "Slot Coordinate: " + "(" + this.getPlaceCoordinate().getX() + "," + this.getPlaceCoordinate().getY() + ")"+"\n";
         if (this.owner == null){
-            System.out.println("This Place Is Empty");
+            detail = detail + "This Place Is Empty"+"\n";
         }
         else{
-            owner.showDetail();
+            detail = detail + owner.showDetail();
         }
+        return detail;
     }
 }
