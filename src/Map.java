@@ -400,5 +400,11 @@ public class Map {
         return false;
     }
 
+    //get the paths for drawing the map in fxml files
+    public ArrayList<Path> getPaths() {
+        return paths;
+    }
+
+
 
 }

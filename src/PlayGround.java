@@ -64,4 +64,8 @@ public class PlayGround {
         return map.isInWay(coordinate);
     }
 
+    public Map getMap() {
+        return map;
+    }
+
 }

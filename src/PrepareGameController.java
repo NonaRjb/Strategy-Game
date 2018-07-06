@@ -2,18 +2,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PrepareGameController {
 
-    //GameController gameController;
+    GameController gameController = GameController.getInstance();
+    private PlayGround playGround = new PlayGround();
+    private ArrayList<Path> paths = playGround.getMap().getPaths();
+    private Coordinate[] placeOfArmories = playGround.getPlaceOfArmories();
 
-    /*public void setGameController( GameController gameController ){
-        this.gameController=gameController;
-    }
-
+   // @FXML
 
     /*@FXML
     private void initialize(){
@@ -34,4 +36,9 @@ public class PrepareGameController {
 
         });
     */
+    /*public ArrayList<ImageView> armoryPlaceBuilder(Coordinate[] placeOfArmories){
+        for (Coordinate armoryPlace: placeOfArmories){
+            ImageView imageView = new ImageView();
+        }
+    }*/
 }

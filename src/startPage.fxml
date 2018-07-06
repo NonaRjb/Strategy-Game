@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StartPageController">
+<AnchorPane prefHeight="900.0" prefWidth="1600.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="StartPageController"
+            style="-fx-background-image: url('./startPage.jpg')">
    <children>
-      <Button fx:id="startGame" layoutX="372.0" layoutY="363.0" mnemonicParsing="false" text="Start Game" />
-      <TextArea layoutX="261.0" layoutY="247.0" prefHeight="107.0" prefWidth="317.0" text="Welcome to TowerDefense!&#10;&#10;&#10;If you are ready to go press the start button!" />
+      <Button fx:id="startGame"
+              layoutX="704.0" layoutY="519.0"
+              mnemonicParsing="false"
+              prefHeight="60.0" prefWidth="302.0"
+              text="Start Game"
+              >
+       <font>
+           <Font name="Garamond Bold" size="44.0" />
+       </font></Button>
+      <TextArea editable="false"
+                layoutX="623.0" layoutY="250.0"
+                prefHeight="243.0" prefWidth="434.0"
+                text="Welcome to Tower Defense!&#10;&#10;&#10;If you are ready to go press the start button!"
+                wrapText="true"
+                >
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <font>
+            <Font name="Garamond Bold" size="24.0" />
+         </font></TextArea>
    </children>
 </AnchorPane>

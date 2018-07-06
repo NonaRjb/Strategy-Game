@@ -27,9 +27,9 @@ public class GameFX extends Application {
 
 
             /// Scenes
-            Scene startScene = new Scene(startRoot,800,600);
+            Scene startScene = new Scene(startRoot,1600,900);
 
-            primaryStage.setTitle("Hello World");
+            primaryStage.setTitle("Tower Defense");
             primaryStage.setScene(startScene);
             primaryStage.show();
         }catch (IOException e){
