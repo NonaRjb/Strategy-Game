@@ -54,16 +54,18 @@ public class Henchman extends Invader{
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Henchman:");
-        System.out.println("Visibility Range: Medium");
-        System.out.println("Movement Speed: High");
-        System.out.println("Health Degree: Medium");
-        System.out.println("Attack Rate: Medium");
-        System.out.println("Shoot Power: Low");
-        System.out.println("Additional Abilities: None");
-        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
-        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
-        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
+    public String showDetail(){
+        String detail = "";
+        detail = detail + "Henchman:" +"\n";
+        detail = detail + "Visibility Range: Medium" +"\n";
+        detail = detail + "Movement Speed: High" +"\n";
+        detail = detail + "Health Degree: Medium" +"\n";
+        detail = detail + "Attack Rate: Medium" +"\n";
+        detail = detail + "Shoot Power: Low" +"\n";
+        detail = detail + "Additional Abilities: None" +"\n";
+        detail = detail + "current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")" +"\n";
+        detail = detail + "Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers +"\n";
+        detail = detail + "Number of times Hero got killed by this Invader" + super.numberOfHeroKill +"\n";
+        return detail;
     }
 }

@@ -318,10 +318,12 @@ public class Game {
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void showArmoriesDetails(){
+    public String showArmoriesDetails(){
+        String details="";
         for( Armory currentArmory : this.armories ){
-            currentArmory.showDetail();
+            details = details + currentArmory.showDetail();
         }
+        return details;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void invaderMaker(){
@@ -389,26 +391,32 @@ public class Game {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void showInvadersDetails(){
+    public String showInvadersDetails(){
+        String details="";
         for( Invader currentInvader : this.invaders ){
-            currentInvader.showDetail();
+            details = details + currentInvader.showDetail();
         }
+        return details;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void showHeroDetails(){
-        hero.showDetail();
+    public String showHeroDetails(){
+        return hero.showDetail();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void showSoldiersDetails(){
+    public String showSoldiersDetails(){
+        String details = "";
         for ( Soldier soldier : soldiers){
-            soldier.showDetail();
+            details = details + soldier.showDetail();
         }
+        return details;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void showSlotsDetails(){
+    public String showSlotsDetails(){
+        String details="";
         for (PlaceHolder placeHolder : playGround.getPlaceHolder()){
-            placeHolder.showDetail();
+            details = details + placeHolder.showDetail();
         }
+        return details;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     public void doAttacks(){
@@ -1062,27 +1070,29 @@ public class Game {
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void naturalEventHappening(){
-        Random rand = new Random();
-        int poorArmoryIndex = rand.nextInt( armories.size() );
-        Armory poorArmory = armories.get( poorArmoryIndex );
-        for( Invader invader : invaders ){
-            if( invader.getTarget(0).equals(poorArmory) ){
-                invader.setFighting(false);
-                invader.clearTarget();
-            }
-        }
-        if( poorArmory instanceof Barracks ){
-            for( Soldier soldier : soldiers ){
-                if( soldier.getBarracksOwner().getId()==poorArmory.getId() ) {
-                    soldiers.remove(soldier);
+        if( armories.size()>0 ) {
+            Random rand = new Random();
+            int poorArmoryIndex = rand.nextInt(armories.size());
+            Armory poorArmory = armories.get(poorArmoryIndex);
+            for (Invader invader : invaders) {
+                if (invader.getTarget(0).equals(poorArmory)) {
+                    invader.setFighting(false);
+                    invader.clearTarget();
                 }
             }
-            ((Barracks)poorArmory).removeSoldier( 0, gameTime );
-            ((Barracks)poorArmory).removeSoldier( 1, gameTime );
-            ((Barracks)poorArmory).removeSoldier( 2, gameTime );
+            if (poorArmory instanceof Barracks) {
+                for (Soldier soldier : soldiers) {
+                    if (soldier.getBarracksOwner().getId() == poorArmory.getId()) {
+                        soldiers.remove(soldier);
+                    }
+                }
+                ((Barracks) poorArmory).removeSoldier(0, gameTime);
+                ((Barracks) poorArmory).removeSoldier(1, gameTime);
+                ((Barracks) poorArmory).removeSoldier(2, gameTime);
+            }
+            armories.remove(poorArmory);
+            System.out.println("Sorry . It is natural :))");
         }
-        armories.remove(poorArmory);
-        System.out.println("Sorry . It is natural :))");
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean isEnded(){

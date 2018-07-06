@@ -147,16 +147,18 @@ public class Hero implements DetailShow {
     }
 
     @Override
-    public void showDetail() {
-        System.out.println("Hero:");
-        System.out.println("Level: " + level);
-        System.out.println("Health Level: " + healthLevel.getHealthLevel());
-        System.out.println("XP count: " + xpCnt);
-        System.out.println("Delay after getting killed: " + delayConst);
-        System.out.println("Number of killed Invaders by Hero: " + numberOfKillings);
-        System.out.println("Number of times that hero has been killed: " + deathNum);
-        System.out.println("Current Coordinate: " + this.coordinate.getX() + "," + this.coordinate.getY());
+    public String showDetail() {
+        String detail="";
+        detail = detail + "Hero:" +"\n";
+        detail = detail + "Level: " + level +"\n";
+        detail = detail + "Health Level: " + healthLevel.getHealthLevel() +"\n";
+        detail = detail + "XP count: " + xpCnt +"\n";
+        detail = detail + "Delay after getting killed: " + delayConst +"\n";
+        detail = detail + "Number of killed Invaders by Hero: " + numberOfKillings +"\n";
+        detail = detail + "Number of times that hero has been killed: " + deathNum +"\n";
+        detail = detail + "Current Coordinate: " + this.coordinate.getX() + "," + this.coordinate.getY() +"\n";
         // Speed and range are assumed to be constant
+        return detail;
     }
 
     public boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Invader> targetInvaders){

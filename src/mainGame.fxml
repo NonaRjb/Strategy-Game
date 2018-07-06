@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="MainGameController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainGameController">
+<children>
+    <FlowPane layoutX="177.0" layoutY="81.0" prefHeight="218.0" prefWidth="225.0" vgap="20.0">
+        <children>
+            <TextField fx:id="textField" minWidth="0.0" prefHeight="27.0" prefWidth="210.0" />
+            <Button fx:id="doCommand" mnemonicParsing="false" prefHeight="27.0" text="Do Command :))" />
+            <TextArea fx:id="comments" editable="false" prefHeight="144.0" prefWidth="212.0" />
+        </children>
+    </FlowPane>
+</children>
 </AnchorPane>

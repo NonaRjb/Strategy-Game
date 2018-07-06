@@ -1,3 +1,5 @@
+import jdk.nashorn.api.tree.RegExpLiteralTree;
+
 import java.util.ArrayList;
 
 public class Healer extends Invader {
@@ -57,14 +59,16 @@ public class Healer extends Invader {
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Healer:");
-        System.out.println("Visibility Range: Low");
-        System.out.println("Movement Speed: Low");
-        System.out.println("Health Degree: Low");
-        System.out.println("Heal Rate: Medium");
-        System.out.println("Heal Power: Low");
-        System.out.println("Additional Abilities: Instead of attacking, heals other Invaders but it can't heals itself");
-        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
+    public String showDetail(){
+        String detail="";
+        detail = detail + "Healer:" +"\n";
+        detail = detail + "Visibility Range: Low" +"\n";
+        detail = detail + "Movement Speed: Low" +"\n";
+        detail = detail + "Health Degree: Low" +"\n";
+        detail = detail + "Heal Rate: Medium" +"\n";
+        detail = detail + "Heal Power: Low" +"\n";
+        detail = detail + "Additional Abilities: Instead of attacking, heals other Invaders but it can't heals itself" +"\n";
+        detail = detail + "current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")" +"\n";
+        return detail;
     }
 }

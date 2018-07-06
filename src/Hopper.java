@@ -57,17 +57,19 @@ public class Hopper extends Invader{
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Hopper:");
-        System.out.println("Visibility Range: Medium");
-        System.out.println("Movement Speed: Medium");
-        System.out.println("Health Degree: Low");
-        System.out.println("Attack Rate: Medium");
-        System.out.println("Shoot Power: Medium");
-        System.out.println("Additional Abilities: When it gets to the hero or a soldier for the first time, it moves 2" +
-                           "times of its traveled distance in a sec");
-        System.out.println("current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")");
-        System.out.println("Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers);
-        System.out.println("Number of times Hero got killed by this Invader" + super.numberOfHeroKill);
+    public String showDetail(){
+        String detail="";
+        detail = detail + "Hopper:" +"\n";
+        detail = detail + "Visibility Range: Medium" +"\n";
+        detail = detail + "Movement Speed: Medium" +"\n";
+        detail = detail + "Health Degree: Low" +"\n";
+        detail = detail + "Attack Rate: Medium" +"\n";
+        detail = detail + "Shoot Power: Medium" +"\n";
+        detail = detail + "Additional Abilities: When it gets to the hero or a soldier for the first time, it moves 2" +
+                           "times of its traveled distance in a sec" +"\n";
+        detail = detail + "current coordinate: " + "(" + super.coordinate.getX() + " , "  + super.coordinate.getY() + ")" +"\n";
+        detail = detail + "Number of soldiers killed by this Invader: " + super.numberOfKilledSoldiers +"\n";
+        detail = detail + "Number of times Hero got killed by this Invader" + super.numberOfHeroKill +"\n";
+        return detail;
     }
 }

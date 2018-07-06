@@ -69,14 +69,16 @@ public class Laser extends Armory implements Weapon{
     public void setLastAttack(Time t) {}
 
     @Override
-    public void showDetail() {
-        System.out.println("Laser id: "+super.id);
-        System.out.println("Additional Characteristics: Shoot Continues LaserShot ");
-        System.out.println("Attack Range: "+super.range+" pixels!");
-        System.out.println("Health Level: "+super.healthDegree.getHealthLevel()+" Units");
-        System.out.println("Price: "+super.price.getPrice()+" Coins");
-        System.out.println("Target Priority: "+super.getTargetPriority());
-        System.out.println("//////////////////////////////////////");
+    public String showDetail() {
+        String detail = "";
+        detail = detail + "Laser id: "+super.id +"\n";
+        detail = detail + "Additional Characteristics: Shoot Continues LaserShot " +"\n";
+        detail = detail + "Attack Range: "+super.range+" pixels!" +"\n";
+        detail = detail + "Health Level: "+super.healthDegree.getHealthLevel()+" Units" +"\n";
+        detail = detail + "Price: "+super.price.getPrice()+" Coins" +"\n";
+        detail = detail + "Target Priority: "+super.getTargetPriority() +"\n";
+        detail = detail + "//////////////////////////////////////" +"\n";
+        return detail;
 
     }
 }

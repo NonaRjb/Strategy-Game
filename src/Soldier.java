@@ -97,12 +97,14 @@ public class Soldier implements DetailShow{
     }
 
     @Override
-    public void showDetail(){
-        System.out.println("Soldier ");
-        System.out.println("HealthLevel: " + health);
-        System.out.println("Number of killed invaders by this soldier: " + numberOfKillings);
-        System.out.println("Current coordinate: " + this.getCoordinate().getX() + "," + this.getCoordinate().getY());
-        System.out.println("////////////////////////////////////////");
+    public String showDetail(){
+        String detail="";
+        detail = detail + "Soldier " +"\n";
+        detail = detail + "HealthLevel: " + health +"\n";
+        detail = detail + "Number of killed invaders by this soldier: " + numberOfKillings +"\n";
+        detail = detail + "Current coordinate: " + this.getCoordinate().getX() + "," + this.getCoordinate().getY() +"\n";
+        detail = detail + "////////////////////////////////////////" +"\n";
+        return detail;
     }
 
     public void goAfterInvader(Invader target, Coordinate nextCoordinate){
