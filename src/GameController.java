@@ -331,4 +331,7 @@ public class GameController implements DetailShow {
         }
     }*/
 
+    public Game getGame() {
+        return game;
+    }
 }

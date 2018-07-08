@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class PlayGround {
+    private static PlayGround playGround_instance = null;
     static final int numberOfPlaces = 8;
     static final int numberOfOrigins = 9;
     final Map map = new Map();
@@ -9,7 +10,7 @@ public class PlayGround {
                                     new Coordinate(230,1199),
                                     new Coordinate(600,300),
                                     new Coordinate(740,1049),
-                                    new Coordinate(750,1540),
+                                    new Coordinate(740,1450),
                                     new Coordinate(690,590),
                                     new Coordinate(540,680),
                                     new Coordinate(470,1000)};
@@ -27,10 +28,18 @@ public class PlayGround {
     PlaceHolder[] placeHolder = new PlaceHolder[numberOfPlaces];
 
     // Constructor
-    public PlayGround() {
+    private PlayGround() {
         for( int i=0; i<numberOfPlaces; i++ ){
             this.placeHolder[i] = new PlaceHolder( i,placeOfArmories[i] );
         }
+    }
+
+    // get instance
+    public static PlayGround getInstance(){
+       if (playGround_instance == null){
+           playGround_instance = new PlayGround();
+       }
+       return playGround_instance;
     }
 
     // Getters

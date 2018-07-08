@@ -15,7 +15,7 @@ public class Path {
     // checks if the path contains the given coordinate
     public Boolean isInWay(Coordinate coordinate){
         for (Coordinate pathCoor : pathWay){
-            if (pathCoor.getX() == coordinate.getX() && pathCoor.getY() == coordinate.getY()){
+            if (pathCoor.getX() == coordinate.getX() && pathCoor.getY() == coordinate.getY()){ //todo Null Pointer Exception
                     return true;
             }
         }

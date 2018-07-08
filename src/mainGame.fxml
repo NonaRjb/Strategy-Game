@@ -6,7 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainGameController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('grass1.jpg')" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainGameController">
 <children>
     <FlowPane layoutX="177.0" layoutY="81.0" prefHeight="218.0" prefWidth="225.0" vgap="20.0">
         <children>
@@ -15,5 +17,44 @@
             <TextArea fx:id="comments" editable="false" prefHeight="144.0" prefWidth="212.0" />
         </children>
     </FlowPane>
+    <ImageView fx:id="ID_0" fitHeight="100.0" fitWidth="100.0" layoutX="449.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="ID_1" fitHeight="100.0" fitWidth="100.0" layoutX="1149.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image></ImageView>
+    <ImageView fx:id="ID_2" fitHeight="100.0" fitWidth="100.0" layoutX="250.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="ID_3" fitHeight="100.0" fitWidth="100.0" layoutX="999.0" layoutY="690.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="ID_4" fitHeight="100.0" fitWidth="100.0" layoutX="1400.0" layoutY="690.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="ID_5" fitHeight="100.0" fitWidth="100.0" layoutX="540.0" layoutY="640.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="ID_6" fitHeight="100.0" fitWidth="100.0" layoutX="630.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image>
+    </ImageView>
+    <ImageView fx:id="ID_7" fitHeight="100.0" fitWidth="100.0" layoutX="950.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@placeholder.png" />
+        </image>
+    </ImageView>
 </children>
 </AnchorPane>

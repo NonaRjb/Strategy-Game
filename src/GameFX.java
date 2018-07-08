@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class GameFX extends Application {
 
+    static Parent root;
+
     public static void main(String[] args) {
         GameController gameController = GameController.getInstance();
         launch(args);
@@ -23,11 +25,12 @@ public class GameFX extends Application {
             FXMLLoader startLoader = new FXMLLoader(getClass().getResource("startPage.fxml"));
             StartPageController startPageController = startLoader.getController();
             //startPageController.setModel( gameController );
-            Parent startRoot = startLoader.load();
-
+            //Parent startRoot = startLoader.load();
+            root = startLoader.load();
 
             /// Scenes
-            Scene startScene = new Scene(startRoot,1600,900);
+            //Scene startScene = new Scene(startRoot,1600,900);
+            Scene startScene = new Scene(root,1600,900);
 
             primaryStage.setTitle("Tower Defense");
             primaryStage.setScene(startScene);

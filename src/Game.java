@@ -27,7 +27,7 @@ public class Game {
 
     // Constructor
     public Game() {
-        this.playGround = new PlayGround();
+        this.playGround = PlayGround.getInstance();
         this.armories = new ArrayList<>();
         this.invaders = new ArrayList<>();
         this.soldiers = new ArrayList<>();
@@ -447,9 +447,11 @@ public class Game {
         ArrayList<Invader> invadersInRange = findInvaders( armory.getCoordinate(), armory.getRange(), armory.getTargetPriority() );
 
         // If Miner is in invadersInRange it should be removed because it cannot be seen by anybody except hero
-        for (Invader invader : invadersInRange){
-            if (invader instanceof Miner){
-                invadersInRange.remove(invader);
+        if(invadersInRange != null) {
+            for (Invader invader : invadersInRange) {
+                if (invader instanceof Miner) {
+                    invadersInRange.remove(invader);
+                }
             }
         }
         //
@@ -677,7 +679,6 @@ public class Game {
             if (hero.isInMission() == false) {
                 targets = findInvaders(hero.getCoordinate(), hero.getRange(), TargetPriority.AllInRange);
                 if (targets != null) {
-                    System.out.println(targets.size());/////////////////test
                     for (Invader invader : targets) {
                         if (invader instanceof Sparrow) {
                             targets.remove(invader);
@@ -721,19 +722,21 @@ public class Game {
     private void soldierAttackGame(Soldier soldier){
         ArrayList<Invader> targets = findInvaders(soldier.getCoordinate(), soldier.getRange(), TargetPriority.AllInRange);
         //Todo is in mission mix with go after Invader
-        if (!soldier.isInMission()) {
-            for (Invader invader : targets) {
-                if (invader instanceof Sparrow) {
-                    targets.remove(invader);
+        if (targets != null) {
+            if (!soldier.isInMission()) {
+                for (Invader invader : targets) {
+                    if (invader instanceof Sparrow) {
+                        targets.remove(invader);
+                    }
                 }
-            }
-            if (targets.size() != 0) {
-                soldier.attack(gameTime, gameShots, targets);
-            }
-        }else {
-            if (soldier.getTargetInvader() != null) {
-                targets.add(soldier.getTargetInvader());
-                soldier.attack(gameTime, gameShots, targets);
+                if (targets.size() != 0) {
+                    soldier.attack(gameTime, gameShots, targets);
+                }
+            } else {
+                if (soldier.getTargetInvader() != null) {
+                    targets.add(soldier.getTargetInvader());
+                    soldier.attack(gameTime, gameShots, targets);
+                }
             }
         }
     }
@@ -1102,7 +1105,21 @@ public class Game {
             return false;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    public ArrayList<Invader> getInvaders() {
+        return invaders;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public ArrayList<Shot> getGameShots() {
+        return gameShots;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public ArrayList<Soldier> getSoldiers() {
+        return soldiers;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public Hero getHero() {
+        return hero;
+    }
 }
 
 
