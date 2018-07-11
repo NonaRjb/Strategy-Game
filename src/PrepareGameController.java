@@ -1,3 +1,4 @@
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,11 +63,17 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
 
         startGameButton.setOnAction( event -> {
             try {
+                //comments.getScene().setRoot(new Parent() {});
                 FXMLLoader mainGameLoader = new FXMLLoader(getClass().getResource("mainGame.fxml"));
-                MainGameController mainGameController = mainGameLoader.getController();
+                //MainGameController mainGameController = new MainGameController();
                 //mainGameController.setGameController(gameController);
                 //Parent mainGameRoot = mainGameLoader.load();
                 GameFX.root = mainGameLoader.load();
+                //MainGameController mainGameController = mainGameLoader.getController();
+                //mainGameController.addButton();
+
+                //Parent mainGameRoot = mainGameLoader.load();
+                //((AnchorPane)(GameFX.root)).getChildren().addAll( mainGameRoot );
 
                 //GameFX.root = (Parent)( ((AnchorPane)(GameFX.root)).getChildren().addAll(bb) );
                 //Scene mainGameScene = new Scene(mainGameRoot, 1600, 900);
@@ -75,6 +82,7 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 stage.setScene(mainGameScene);
                 stage.show();
+                //System.out.println("Shame!");
                 //Button bb = new Button("ll");
                 //((AnchorPane)(GameFX.root)).getChildren().addAll(bb);
 

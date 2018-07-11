@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class GameFX extends Application {
 
-    static Parent root;
+    public static Parent root;
 
     public static void main(String[] args) {
         GameController gameController = GameController.getInstance();
