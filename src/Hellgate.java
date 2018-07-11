@@ -45,8 +45,8 @@ public class Hellgate extends Armory implements Weapon{
     }
 
     @Override
-    public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
-            gameShots.add( new Fire(super.coordinate, shotPower, this) );
+    public Shot attack( Time currentTime, Invader targetInvader ) {
+            return new Fire(super.coordinate, shotPower, this);
     }
 
     @Override

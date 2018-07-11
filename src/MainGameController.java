@@ -11,6 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -27,6 +30,9 @@ public class MainGameController implements ArmoryPlaceBuilder{
     //private ObservableList<Node> primaryNodes;
     private ArrayList<ImageView> invadersIMV = new ArrayList<>();
     private ArrayList<ImageView> previousInvadersIMV = new ArrayList<>();
+    private ArrayList<ImageView> shotsIMV = new ArrayList<>();
+    private ArrayList<ImageView> previousShotsIMV = new ArrayList<>();
+
 
     //Button button = new Button("SALAM");
 
@@ -44,11 +50,15 @@ public class MainGameController implements ArmoryPlaceBuilder{
         //ImageView imageView = new ImageView("./bane.png");
         //this.addButton();
         invadersIMV = this.InvaderBuilder();
+        shotsIMV = this.shotBuilder();
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousInvadersIMV);
+        ((AnchorPane)GameFX.root).getChildren().removeAll(previousShotsIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(invadersIMV);
+        ((AnchorPane)GameFX.root).getChildren().addAll(shotsIMV);
         //((AnchorPane)GameFX.root).getChildren().setAll( primaryNodes );//, (ArrayList<Node>)invadersIMV );
         //((AnchorPane)GameFX.root).getChildren().addAll( invadersIMV );
         previousInvadersIMV = invadersIMV;
+        previousShotsIMV = shotsIMV;
         /*if(!done)
         ((AnchorPane)GameFX.root).getChildren().addAll(button);
         done = true;*/
@@ -135,7 +145,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private void initialize() {
         gameController.initiateRound();
         //timer.schedule(playing,0L, 2*1000L);
-        timer.scheduleAtFixedRate(playing, 1000L, 1*2000L);
+        timer.scheduleAtFixedRate(playing, 1000L, 1*1000L);
         doCommand.setOnAction( event -> {
             comments.setText( gameController.playRound( textField.getText() ) );
             textField.clear();
@@ -249,7 +259,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof Skipper){
-                Image image = new Image("./skipper.png"); //todo must be changed
+                Image image = new Image("./skipper.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -282,7 +292,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof Healer){
-                Image image = new Image("./healer.png"); // todo should be changed
+                Image image = new Image("./healer.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -293,7 +303,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof Motivator){
-                Image image = new Image("./motivator.png"); // todo should be changed
+                Image image = new Image("./motivator.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -304,7 +314,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof Icer){
-                Image image = new Image("./icer.png"); //todo
+                Image image = new Image("./icer.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -315,7 +325,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof Miner){
-                Image image = new Image("./miner.png");//todo
+                Image image = new Image("./miner.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -326,7 +336,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof Smelly){
-                Image image = new Image("./smelly.png"); //todo
+                Image image = new Image("./smelly.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -337,7 +347,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof Hopper){
-                Image image = new Image("./hopper.png"); //todo
+                Image image = new Image("./hopper.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -348,7 +358,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof ExG){
-                Image image = new Image("./exg.png"); //todo
+                Image image = new Image("./exg.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -359,7 +369,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(100);
                 invadersIMV.add(imageView);
             } else if (invader instanceof HockeyMaskMan){
-                Image image = new Image("./hockeymaskman.png"); //todo
+                Image image = new Image("./hockeymaskman.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setX(invader.getCoordinate().getY()-50);
@@ -373,5 +383,69 @@ public class MainGameController implements ArmoryPlaceBuilder{
         }
         return invadersIMV;
     }
+
+    public ArrayList<ImageView> shotBuilder() {
+
+        ArrayList<ImageView> shotsIMV = new ArrayList<>();
+        ArrayList<Shot> shots = gameController.getGame().getGameShots();
+        for (Shot shot : shots) {
+            if (shot instanceof Bullet) {
+                Image image = new Image("./bullet.png");
+                ImageView imageView = new ImageView();
+                imageView.setImage(image);
+                imageView.setX(shot.getCoordinate().getY() - 15);
+                imageView.setY(shot.getCoordinate().getX() - 15);
+                imageView.setFitHeight(30);
+                imageView.setFitWidth(30);
+                imageView.prefWidth(30);
+                imageView.prefHeight(30);
+                shotsIMV.add(imageView);
+                //System.out.println(shot.getCoordinate().getX()+","+shot.getCoordinate().getY());
+            } else if (shot instanceof Ice) {
+                Image image = new Image("./ice.png");
+                ImageView imageView = new ImageView();
+                imageView.setImage(image);
+                imageView.setX(shot.getCoordinate().getY() - 50);
+                imageView.setY(shot.getCoordinate().getX() - 50);
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+                imageView.prefWidth(100);
+                imageView.prefHeight(100);
+                shotsIMV.add(imageView);
+            } else if (shot instanceof Fire) {
+                Image image = new Image("./fire.png");
+                ImageView imageView = new ImageView();
+                imageView.setImage(image);
+                imageView.setX(shot.getCoordinate().getY() - 50);
+                imageView.setY(shot.getCoordinate().getX() - 50);
+                imageView.setFitHeight(100); //TODO: fire range
+                imageView.setFitWidth(100);
+                imageView.prefWidth(100);
+                imageView.prefHeight(100);
+                shotsIMV.add(imageView);
+            } /*else if (shot instanceof LaserShot){
+                LaserShot currentLaserShot = (LaserShot)shot;
+                Line line = new Line();
+                line.setFill(Color.RED);
+                line.setStartX( currentLaserShot.getCoordinate().getX() );
+                line.setStartY( currentLaserShot.getCoordinate().getY() );
+                line.setEndX( currentLaserShot.getEndCoordinate().getX() );
+                line.setEndY( currentLaserShot.getEndCoordinate().getY() );
+                /*Image image = new Image("./fire.png");
+                ImageView imageView = new ImageView();
+                imageView.setImage(image);
+                imageView.setX(shot.getCoordinate().getY()-5);
+                imageView.setY(shot.getCoordinate().getX()-5);
+                imageView.setFitHeight(10);
+                imageView.setFitWidth(10);
+                imageView.prefWidth(10);
+                imageView.prefHeight(10);
+                shotsIMV.add(imageView);
+            }*/
+        }
+        return shotsIMV;
+
+    }
+
 
 }

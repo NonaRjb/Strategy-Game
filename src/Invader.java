@@ -47,7 +47,9 @@ abstract class Invader implements DetailShow, InvaderAttack{
         return healthDegree;
     }
     public Object getTarget(int index) {
-        return target.get(index);
+        if( target != null )
+            return target.get(index);
+        return null;
     }
     public int getRange() {
         return range;

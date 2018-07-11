@@ -35,11 +35,12 @@ public class Beehive extends Armory implements Weapon{
     }
 
     @Override
-    public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
+    public Shot attack( Time currentTime, Invader targetInvader ) {
         if( currentTime.getTime()-this.lastAttack.getTime() >= this.attackRateTime.getTime() ){
-            gameShots.add( new Poison(super.coordinate, super.range) );
             this.setLastAttack(currentTime);
+            return new Poison(super.coordinate, super.range);
         }
+        return null;
     }
 
     @Override

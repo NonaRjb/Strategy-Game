@@ -54,12 +54,13 @@ public class Laser extends Armory implements Weapon{
     }
 
     @Override
-    public void attack( Time currentTime, Invader targetInvader, ArrayList<Shot> gameShots ) {
+    public Shot attack( Time currentTime, Invader targetInvader ) {
         if( !onAttack ){
             LaserShot laserShot = new LaserShot(super.coordinate, targetInvader, shotPower, this);
-            gameShots.add( laserShot );
             this.setOnAttack( laserShot );
+            return laserShot ;
         }
+        return null;
     }
 
     @Override

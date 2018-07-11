@@ -181,7 +181,7 @@ public class Game {
         this.botherBurnings();
         this.botherToxicants();
         this.botherBurnings();
-        this.botherToxicants();
+        this.botherToxicants();//todo: double?
         this.refreshFrozenArmories();
         this.doAttacks();
         this.moveObjects();
@@ -296,6 +296,7 @@ public class Game {
                 Invader target = (Invader) targetObject;
                 Coordinate finalCoordinate = target.getCoordinate();
                 shot.setCoordinate( Coordinate.moveTo( currentCoordinate, finalCoordinate, shot.getBulletSpeed() ) );
+                //System.out.println(shot.getCoordinate().getX()+","+shot.getCoordinate().getY());//TODO
             }
             else if ( targetObject instanceof Soldier ) {
                 Soldier target = (Soldier) targetObject;
@@ -331,6 +332,7 @@ public class Game {
             if (this.gameTime.getTime() - this.lastInvaderTime.getTime() >= this.invaderRate.getTime()) {
                 this.produceInvader();
                 thisRoundNumberOfInvaders--;
+                this.lastInvaderTime = this.gameTime;
             }
         }
     }
@@ -436,7 +438,7 @@ public class Game {
         }
 
         for( Shot shot: gameShots ){
-            effectShot( shot );
+            effectShot( shot ); //todo: concurrent modification?
         }
 
     }
@@ -448,9 +450,10 @@ public class Game {
 
         // If Miner is in invadersInRange it should be removed because it cannot be seen by anybody except hero
         if(invadersInRange != null) {
+            //System.out.println(invadersInRange.get(0).instanceNum);//TODO
             for (Invader invader : invadersInRange) {
                 if (invader instanceof Miner) {
-                    invadersInRange.remove(invader);
+                    invadersInRange.remove(invader); //TODO: concurrent modification here
                 }
             }
         }
@@ -471,30 +474,41 @@ public class Game {
             if (armory instanceof Freezer) {
                 Freezer currentFreezer = (Freezer) armory;
                 if (targetInvader != null) {
-                    currentFreezer.attack(this.gameTime, targetInvader, gameShots);
+                    Shot attackShot = currentFreezer.attack(this.gameTime, targetInvader);
+                    if( attackShot != null )
+                        this.gameShots.add(attackShot);
                 }
             } else if (armory instanceof Hellgate) {
                 Hellgate currentHellgate = (Hellgate) armory;
                 if (!currentHellgate.isBurning()) {
                     if (targetInvader != null) {
-                        currentHellgate.attack(null, null, gameShots);
+                        Shot attackShot = currentHellgate.attack(null, null);
                         currentHellgate.setBurning(true);
                     }
                 }
             } else if (armory instanceof MachineGun) {
                 MachineGun currentMachineGun = (MachineGun) armory;
                 if (targetInvader != null) {
-                    currentMachineGun.attack(this.gameTime, targetInvader, gameShots);
+                    //System.out.println(targetInvader.instanceNum);//todo
+                    Shot attackShot = currentMachineGun.attack(this.gameTime, targetInvader);
+                    if( attackShot != null )
+                        this.gameShots.add(attackShot);
+                    //currentMachineGun.attack(this.gameTime, targetInvader, gameShots);//todo: bad gameShot!
+                    //System.out.println(gameShots.size());
                 }
             } else if (armory instanceof Laser) {
                 Laser currentLaser = (Laser) armory;
                 if (targetInvader != null) {
                     if (!currentLaser.isOnAttack()) {
-                        currentLaser.attack(this.gameTime, targetInvader, gameShots);
+                        Shot attackShot = currentLaser.attack(this.gameTime, targetInvader);
+                        if( attackShot != null )
+                            this.gameShots.add(attackShot);
                     } else {
                         if (currentLaser.getSpecificTargetInvader() != targetInvader) {
                             gameShots.remove(currentLaser.getAttackingLaserShot());
-                            currentLaser.attack(this.gameTime, targetInvader, gameShots);
+                            Shot attackShot = currentLaser.attack(this.gameTime, targetInvader);
+                            if( attackShot != null )
+                                this.gameShots.add(attackShot);
                         }
                     }
                 } else {
@@ -506,22 +520,30 @@ public class Game {
             } else if (armory instanceof Rocket) {
                 Rocket currentRocket = (Rocket) armory;
                 if (targetInvader != null) {
-                    currentRocket.attack(this.gameTime, null, gameShots);
+                    Shot attackShot = currentRocket.attack(this.gameTime, null);
+                    if( attackShot != null )
+                        this.gameShots.add(attackShot);
                 }
             } else if (armory instanceof Excalibur) {
                 Excalibur currentExcalibur = (Excalibur) armory;
                 if (targetInvader != null) {
-                    currentExcalibur.attack(this.gameTime, targetInvader, gameShots);
+                    Shot attackShot = currentExcalibur.attack(this.gameTime, targetInvader);
+                    if( attackShot != null )
+                        this.gameShots.add(attackShot);
                 }
             } else if (armory instanceof Beehive) {
                 Beehive currentBeehive = (Beehive) armory;
                 if (targetInvader != null) {
-                    currentBeehive.attack(this.gameTime, targetInvader, gameShots);
+                    Shot attackShot = currentBeehive.attack(this.gameTime, targetInvader);
+                    if( attackShot != null )
+                        this.gameShots.add(attackShot);
                 }
             } else if (armory instanceof Sauron) {
                 Sauron currentSauron = (Sauron) armory;
                 if (targetInvader != null) {
-                    currentSauron.attack(this.gameTime, targetInvader, gameShots);
+                    Shot attackShot = currentSauron.attack(this.gameTime, targetInvader);
+                    if( attackShot != null )
+                        this.gameShots.add(attackShot);
                 }
             }
         }

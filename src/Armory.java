@@ -14,8 +14,8 @@ abstract class Armory implements DetailShow {
     private int icePower;
 
     final int priceUnit = Price.basePrice;
-    final int attackTimeUnit = 100;
-    final int rangeUnit = 10;
+    final int attackTimeUnit = 1;
+    final int rangeUnit = 50;
     final int shotPowerUnit = 10;
 
 

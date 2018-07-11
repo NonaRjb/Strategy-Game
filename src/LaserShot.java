@@ -15,4 +15,9 @@ public class LaserShot extends Shot{
         return owner;
     }
 
+    public Coordinate getEndCoordinate(){
+        Invader targetInvader = (Invader)target;
+        return targetInvader.getCoordinate();
+    }
+
 }
