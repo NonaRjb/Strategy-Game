@@ -34,7 +34,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private ArrayList<ImageView> previousShotsIMV = new ArrayList<>();
     private ImageView heroIMV = new ImageView();
     private ImageView previousHeroIMV = new ImageView();
-
+    private ArrayList<ImageView> soldiersIMV = new ArrayList<>();
+    private ArrayList<ImageView> previousSoldierIMV = new ArrayList<>();
 
 
     private void updateView(){
@@ -53,17 +54,21 @@ public class MainGameController implements ArmoryPlaceBuilder{
         heroIMV = this.heroBuilder();
         invadersIMV = this.InvaderBuilder();
         shotsIMV = this.shotBuilder();
+        soldiersIMV = this.soldierBuilder();
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousHeroIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousInvadersIMV);
+        ((AnchorPane)GameFX.root).getChildren().removeAll(previousSoldierIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousShotsIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(heroIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(invadersIMV);
+        ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(shotsIMV);
         //((AnchorPane)GameFX.root).getChildren().setAll( primaryNodes );//, (ArrayList<Node>)invadersIMV );
         //((AnchorPane)GameFX.root).getChildren().addAll( invadersIMV );
         previousHeroIMV = heroIMV;
         previousInvadersIMV = invadersIMV;
         previousShotsIMV = shotsIMV;
+        previousSoldierIMV = soldiersIMV;
         /*if(!done)
         ((AnchorPane)GameFX.root).getChildren().addAll(button);
         done = true;*/
@@ -473,6 +478,21 @@ public class MainGameController implements ArmoryPlaceBuilder{
         heroIMV.setFitWidth(100);
         heroIMV.setFitHeight(100);
         return heroIMV;
+    }
+
+    public ArrayList<ImageView> soldierBuilder(){
+        ArrayList<ImageView> soldierIMV = new ArrayList<>();
+        ArrayList<Soldier> soldiers = gameController.getGame().getSoldiers();
+        for (Soldier soldier : soldiers){
+            Image image = new Image("./soldier.png");
+            ImageView imageView = new ImageView();
+            imageView.setImage(image);
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+            imageView.setY(soldier.getCoordinate().getX());
+            imageView.setX(soldier.getCoordinate().getY());
+        }
+        return soldierIMV;
     }
 
 

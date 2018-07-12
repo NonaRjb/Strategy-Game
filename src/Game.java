@@ -72,7 +72,12 @@ public class Game {
             if( playGround.getPlaceHolder(id).getOwner() != null ){
                 System.out.println("Place ID "+id+" is Full!");
             } else {
-                this.armories.add( new Barracks(id, playGround.getPlaceHolder(id).getPlaceCoordinate(), soldiers) );
+                Barracks barracks = new Barracks(id, playGround.getPlaceHolder(id).getPlaceCoordinate(), soldiers);
+                this.armories.add( barracks );
+                ArrayList<Soldier> barracksSoldiers = barracks.getBarracksSoldiers();
+                for (int i = 0; i < barracksSoldiers.size(); i++ ){
+                    this.soldiers.add(barracksSoldiers.get(i));
+                }
                 this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
             }
 

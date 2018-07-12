@@ -25,7 +25,8 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
 
     GameController gameController = GameController.getInstance();
     private PlayGround playGround = PlayGround.getInstance();
-    private ArrayList<Path> paths = playGround.getMap().getPaths();
+    private ArrayList<ImageView> soldiersIMV = new ArrayList<>();
+    private ArrayList<ImageView> previousSoldierIMV = new ArrayList<>();
     private PlaceHolder[] placeOfArmories = playGround.getPlaceHolder();
     //private ArrayList<ImageView> armoryPlaces = armoryPlaceBuilder();
 
@@ -173,5 +174,24 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
         ID_5.setImage(armories.get(5));
         ID_6.setImage(armories.get(6));
         ID_7.setImage(armories.get(7));
+        soldiersIMV = this.soldierBuilder();
+        ((AnchorPane)GameFX.root).getChildren().removeAll(previousSoldierIMV);
+        ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
+        previousSoldierIMV = soldiersIMV;
+    }
+
+    public ArrayList<ImageView> soldierBuilder(){
+        ArrayList<ImageView> soldierIMV = new ArrayList<>();
+        ArrayList<Soldier> soldiers = gameController.getGame().getSoldiers();
+        for (Soldier soldier : soldiers){
+            Image image = new Image("./soldier.png");
+            ImageView imageView = new ImageView();
+            imageView.setImage(image);
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+            imageView.setY(soldier.getCoordinate().getX());
+            imageView.setX(soldier.getCoordinate().getY());
+        }
+        return soldierIMV;
     }
 }

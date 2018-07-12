@@ -6,6 +6,7 @@ public class Barracks extends Armory{
     private HealthLevel soldiersInitHealth;
     private Time soldierCompensationTime;
     private Time[] lastKilledsoldierTime = new Time[3];
+    private ArrayList<Soldier> barracksSoldiers = new ArrayList<>();
 
     //Constructor
     public Barracks(int id, Coordinate coordinate, ArrayList<Soldier> gameSoldiers) {
@@ -23,14 +24,18 @@ public class Barracks extends Armory{
         soldiers[0] = new Soldier(coordinate, this, 0, soldiersInitHealth);
         soldiers[1] = new Soldier(coordinate, this, 1, soldiersInitHealth);;
         soldiers[2] = new Soldier(coordinate, this, 2, soldiersInitHealth);;
-        gameSoldiers.add(soldiers[0]);
-        gameSoldiers.add(soldiers[1]);
-        gameSoldiers.add(soldiers[2]);
+        barracksSoldiers.add(soldiers[0]);
+        barracksSoldiers.add(soldiers[1]);
+        barracksSoldiers.add(soldiers[2]);
         System.out.println("Barracks successfully Build");
         System.out.println("Warning: Move the soldiers to an appropriate place");
     }
 
     public void setSoldierCompensationTime( Time t ){ soldierCompensationTime = t; }
+
+    public ArrayList<Soldier> getBarracksSoldiers() {
+        return barracksSoldiers;
+    }
 
     @Override
     public String showDetail() {
