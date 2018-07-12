@@ -491,6 +491,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
             imageView.setFitWidth(100);
             imageView.setY(soldier.getCoordinate().getX());
             imageView.setX(soldier.getCoordinate().getY());
+            soldierIMV.add(imageView);
         }
         return soldierIMV;
     }
