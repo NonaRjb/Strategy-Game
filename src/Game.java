@@ -60,6 +60,7 @@ public class Game {
     }
     public void setThisRoundNumberOfInvaders(int thisRoundNumberOfInvaders) {
         this.thisRoundNumberOfInvaders = thisRoundNumberOfInvaders;
+        this.invaderCounter = 1;
     }
 
 
