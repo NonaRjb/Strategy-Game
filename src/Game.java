@@ -23,7 +23,8 @@ public class Game {
     private boolean interventionUsed;
     private int remainedTeslas;
     private final int teslaRange = 20;
-
+    private int invaderCounter = 1;
+    private static boolean loser = false;
 
     // Constructor
     public Game() {
@@ -35,7 +36,7 @@ public class Game {
         this.gameTime = new Time(0);
         this.invaderRate = new Time(2);
         this.lastInvaderTime = new Time(0);
-        this.hero = new Hero( new Coordinate(10,10) );
+        this.hero = new Hero( new Coordinate(430,1500) );
         this.property = new Price(10);
         this.gameSoldierIsUsed = false;
         this.interventionUsed = false;
@@ -239,6 +240,13 @@ public class Game {
             for (int i = 1; i <= currentSpeed; i++) {
                 nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
                 invader.setCoordinate(nextCoordinate);
+                if (nextCoordinate.getX() == 450 && nextCoordinate.getY() == 1599){
+                    invaders.remove(invader);
+                    invaderCounter--;
+                    if(invaderCounter == 0){
+                        loser = true;
+                    }
+                }
             }
         }
 
@@ -1141,6 +1149,10 @@ public class Game {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Hero getHero() {
         return hero;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static boolean getLoser(){
+        return loser;
     }
 }
 

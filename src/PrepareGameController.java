@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
     private ImageView ID_6;
     @FXML
     private ImageView ID_7;
+
 
     @FXML
     private void initialize() {

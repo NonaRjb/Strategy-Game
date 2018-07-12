@@ -32,7 +32,7 @@ public class DetailGameController {
                 PrepareGameController prepareGameController = prepareGameLoader.getController();
                 //prepareGameController.setGameController(gameController);
                 Parent prepareGameRoot = prepareGameLoader.load();
-                Scene prepareGameScene = new Scene(prepareGameRoot, 800, 600);
+                Scene prepareGameScene = new Scene(prepareGameRoot, 1600, 900);
                 Stage stage = new Stage();
                 stage.setScene(prepareGameScene);
                 stage.show();

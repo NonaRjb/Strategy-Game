@@ -6,7 +6,6 @@ public class Map {
     ArrayList<Path> paths = new ArrayList<>();
     int offset = 10;
 
-
     // home ID = 9
     // first path IDs  = 0 , 1 , 2
     // second path IDs = 3 , 4 , 5
@@ -354,19 +353,6 @@ public class Map {
             tileNo[7].add(counter[1]++);
             tileNo[8].add(counter[2]++);*/
         }
-
-        // intersections are marked with #
-        /*tileId[550][690] = "#";
-        tileId[550][700] = "#";
-        tileId[550][710] = "#";
-
-        tileId[560][690] = "#";
-        tileId[560][700] = "#";
-        tileId[560][710] = "#";
-
-        tileId[570][690] = "#";
-        tileId[570][700] = "#";
-        tileId[570][710] = "#";*/
 
         paths.add(path0);
         paths.add(path1);

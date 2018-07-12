@@ -65,6 +65,9 @@ public class GameController implements DetailShow {
             return true;
         } else {
             game.increaseTime();
+            if(game.getLoser()){
+               return true;
+            }
             if( this.currentRound == this.plagueRound && game.getGameTime().getTime()==this.plagueTime.getTime() ){
                 game.spreadPlague();
             }

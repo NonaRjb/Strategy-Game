@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" style="-fx-background-image: url('grass1.jpg')" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PrepareGameController">
+   <children>
+      <Line endX="250.0" layoutX="250.0" layoutY="310.0" startX="-250.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="50.0" endY="-50.0" layoutX="557.0" layoutY="255.0" startX="-50.0" startY="50.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="300.0" layoutX="916.0" layoutY="205.0" startX="-300.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <FlowPane layoutX="14.0" layoutY="8.0" prefHeight="265.0" prefWidth="266.0" vgap="20.0">
+         <children>
+            <TextField fx:id="textField" minWidth="0.0" prefHeight="31.0" prefWidth="237.0" />
+            <Button fx:id="doCommand" mnemonicParsing="false" prefHeight="27.0" text="Do Command :))" />
+          <Button fx:id="startGameButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="108.0" text="Start Game" />
+            <TextArea fx:id="comments" editable="false" prefHeight="144.0" prefWidth="238.0" />
+         </children>
+      </FlowPane>
+      <ImageView fx:id="ID_0" fitHeight="80.0" fitWidth="80.0" layoutX="442.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ID_1" fitHeight="80.0" fitWidth="80.0" layoutX="1159.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image></ImageView>
+      <ImageView fx:id="ID_2" fitHeight="80.0" fitWidth="80.0" layoutX="250.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ID_3" fitHeight="80.0" fitWidth="80.0" layoutX="1042.0" layoutY="655.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ID_4" fitHeight="80.0" fitWidth="80.0" layoutX="1424.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ID_5" fitHeight="80.0" fitWidth="80.0" layoutX="492.0" layoutY="643.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ID_6" fitHeight="80.0" fitWidth="80.0" layoutX="593.0" layoutY="454.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ID_7" fitHeight="80.0" fitWidth="80.0" layoutX="946.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholder.png" />
+         </image>
+      </ImageView>
+      <Line endX="115.0" endY="115.0" layoutX="1335.0" layoutY="320.0" startX="-115.0" startY="-115.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="35.0" layoutX="1484.0" layoutY="435.0" startX="-35.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="300.0" layoutX="300.0" layoutY="600.0" startX="-300.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="25.0" endY="-25.0" layoutX="625.0" layoutY="575.0" startX="-25.0" startY="25.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="100.0" layoutX="750.0" layoutY="550.0" startX="-100.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="100.0" endY="100.0" layoutX="950.0" layoutY="650.0" startX="-100.0" startY="-100.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="250.0" layoutX="1300.0" layoutY="750.0" startX="-250.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endY="135.0" layoutX="1550.0" layoutY="615.0" startY="-135.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endY="100.0" layoutX="590.0" layoutY="800.0" startY="-100.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="-50.0" endY="50.0" layoutX="640.0" layoutY="650.0" startX="50.0" startY="-50.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endY="60.0" layoutX="690.0" layoutY="540.0" startY="-60.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <Line endX="420.0" endY="25.0" layoutX="1100.0" layoutY="455.0" startX="-400.0" startY="25.0" stroke="SADDLEBROWN" strokeLineCap="ROUND" strokeWidth="30.0" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="1502.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@home.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -32,9 +32,10 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private ArrayList<ImageView> previousInvadersIMV = new ArrayList<>();
     private ArrayList<ImageView> shotsIMV = new ArrayList<>();
     private ArrayList<ImageView> previousShotsIMV = new ArrayList<>();
+    private ImageView heroIMV = new ImageView();
+    private ImageView previousHeroIMV = new ImageView();
 
 
-    //Button button = new Button("SALAM");
 
     private void updateView(){
         /// update armories
@@ -49,14 +50,18 @@ public class MainGameController implements ArmoryPlaceBuilder{
         ID_7.setImage(armories.get(7));
         //ImageView imageView = new ImageView("./bane.png");
         //this.addButton();
+        heroIMV = this.heroBuilder();
         invadersIMV = this.InvaderBuilder();
         shotsIMV = this.shotBuilder();
+        ((AnchorPane)GameFX.root).getChildren().removeAll(previousHeroIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousInvadersIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousShotsIMV);
+        ((AnchorPane)GameFX.root).getChildren().addAll(heroIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(invadersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(shotsIMV);
         //((AnchorPane)GameFX.root).getChildren().setAll( primaryNodes );//, (ArrayList<Node>)invadersIMV );
         //((AnchorPane)GameFX.root).getChildren().addAll( invadersIMV );
+        previousHeroIMV = heroIMV;
         previousInvadersIMV = invadersIMV;
         previousShotsIMV = shotsIMV;
         /*if(!done)
@@ -104,22 +109,33 @@ public class MainGameController implements ArmoryPlaceBuilder{
             //} );
             if( gameController.goAheadRound() ){
                 //TODO now infinity Rounds!
-                try {
-                    FXMLLoader detailGameLoader = new FXMLLoader(getClass().getResource("detailGame.fxml"));
-                    //DetailGameController detailGameController = detailGameLoader.getController();
-                    //detailGameController.setGameController(gameController);
-                    //Parent detailGameRoot = detailGameLoader.load();
-                    GameFX.root = detailGameLoader.load();
-                    //ArrayList<ImageView> invaders = InvaderBuilder();
-                    //Scene detailGameScene = new Scene(detailGameRoot,800,600);
-                    Scene detailGameScene = new Scene(GameFX.root,800,600);
+                if (Game.getLoser()){
+                    try {
+                        FXMLLoader loserPageLoader = new FXMLLoader(getClass().getResource("loserPage.fxml"));
+                        GameFX.root = loserPageLoader.load();
+                        Scene loserPageScene = new Scene(GameFX.root,1600,900);
+                        Stage stage = (Stage) doCommand.getScene().getWindow();
+                        stage.setScene(loserPageScene);
+                        stage.setTitle("you lost!");
+                        stage.show();
+                    } catch (IOException io){
+                        io.printStackTrace();
+                    }
+                }
+                else {
+                    try {
+                        FXMLLoader detailGameLoader = new FXMLLoader(getClass().getResource("detailGame.fxml"));
+                        GameFX.root = detailGameLoader.load();
+                        Scene detailGameScene = new Scene(GameFX.root, 1600, 900);
 
-                    Stage stage = new Stage();
-                    stage.setScene(detailGameScene);
-                    stage.show();
+                        Stage stage = (Stage) doCommand.getScene().getWindow();
+                        stage.setScene(detailGameScene);
+                        stage.setTitle("Game Details");
+                        stage.show();
 
-                }catch (IOException io){
-                    io.printStackTrace();
+                    } catch (IOException io) {
+                        io.printStackTrace();
+                    }
                 }
             } else {
                 updateView();
@@ -445,6 +461,18 @@ public class MainGameController implements ArmoryPlaceBuilder{
         }
         return shotsIMV;
 
+    }
+
+    public ImageView heroBuilder(){
+        ImageView heroIMV = new ImageView();
+        Image heroIMG = new Image("./hero.png");
+        Hero hero = gameController.getGame().getHero();
+        heroIMV.setImage(heroIMG);
+        heroIMV.setX(hero.getCoordinate().getY()-50);
+        heroIMV.setY(hero.getCoordinate().getX()-50);
+        heroIMV.setFitWidth(100);
+        heroIMV.setFitHeight(100);
+        return heroIMV;
     }
 
 
