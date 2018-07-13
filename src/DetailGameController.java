@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,7 +34,7 @@ public class DetailGameController {
                 //prepareGameController.setGameController(gameController);
                 Parent prepareGameRoot = prepareGameLoader.load();
                 Scene prepareGameScene = new Scene(prepareGameRoot, 1600, 900);
-                Stage stage = new Stage();
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 stage.setScene(prepareGameScene);
                 stage.show();
 

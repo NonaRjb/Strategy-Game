@@ -70,6 +70,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private Image soldierImage;
 
     private DropShadow burningEffect;
+    private DropShadow frozenEffect;
 
 
 
@@ -240,6 +241,10 @@ public class MainGameController implements ArmoryPlaceBuilder{
         this.burningEffect.setColor( Color.ORANGERED );
         this.burningEffect.setRadius(40);
 
+        this.frozenEffect = new DropShadow();
+        this.frozenEffect.setColor( Color.BLUE );
+        this.frozenEffect.setRadius(40);
+
         doCommand.setOnAction( event -> {
             comments.setText( gameController.playRound( textField.getText() ) );
             textField.clear();
@@ -340,6 +345,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -353,6 +360,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -366,6 +375,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -379,6 +390,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -392,6 +405,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -405,6 +420,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -418,6 +435,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -431,6 +450,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -444,6 +465,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -457,6 +480,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -470,6 +495,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -483,6 +510,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -496,6 +525,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.getFrozen() )
+                    imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
@@ -513,24 +544,24 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 //Image image = new Image("./bullet.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(this.bulletImage);
-                imageView.setX(shot.getCoordinate().getY() - 15);
-                imageView.setY(shot.getCoordinate().getX() - 15);
-                imageView.setFitHeight(30);
-                imageView.setFitWidth(30);
-                imageView.prefWidth(30);
-                imageView.prefHeight(30);
+                imageView.setX(shot.getCoordinate().getY() - 10);
+                imageView.setY(shot.getCoordinate().getX() - 10);
+                imageView.setFitHeight(20);
+                imageView.setFitWidth(20);
+                imageView.prefWidth(20);
+                imageView.prefHeight(20);
                 shotsIMV.add(imageView);
                 //System.out.println(shot.getCoordinate().getX()+","+shot.getCoordinate().getY());
             } else if (shot instanceof Ice) {
                 //Image image = new Image("./ice.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(this.iceImage);
-                imageView.setX(shot.getCoordinate().getY() - 50);
-                imageView.setY(shot.getCoordinate().getX() - 50);
-                imageView.setFitHeight(100);
-                imageView.setFitWidth(100);
-                imageView.prefWidth(100);
-                imageView.prefHeight(100);
+                imageView.setX(shot.getCoordinate().getY() - 5);
+                imageView.setY(shot.getCoordinate().getX() - 5);
+                imageView.setFitHeight(10);
+                imageView.setFitWidth(10);
+                imageView.prefWidth(10);
+                imageView.prefHeight(10);
                 shotsIMV.add(imageView);
             } else if (shot instanceof Fire) {
                 //Image image = new Image("./fire.png");
