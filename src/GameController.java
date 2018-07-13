@@ -121,22 +121,22 @@ public class GameController implements DetailShow {
 
             if (command.matches("set target of [a-zA-Z]{5,10} in place [0-9]{1,2} to be invader [0-9]{1,2}")){ // set target of Armory
                 String[] tmp = command.split(" ");
-                game.setTargetForArmory(Integer.parseInt(tmp[6]),Integer.parseInt(tmp[10]));
+                return game.setTargetForArmory(Integer.parseInt(tmp[6]),Integer.parseInt(tmp[10]));
             }
 
             if (command.matches("set target of infantry [0-2] of barracks [0-9]{1,2} to be invader [0-9]{1,2}")){ // set target of barracks' infantry
                 String[] tmp = command.split(" ");
-                game.goAfterInvaderSoldier( Integer.parseInt(tmp[4]), Integer.parseInt(tmp[7]), Integer.parseInt(tmp[11]) );
+                return game.goAfterInvaderSoldier( Integer.parseInt(tmp[4]), Integer.parseInt(tmp[7]), Integer.parseInt(tmp[11]) );
             }
 
             if (command.matches("set target of infantry [0-2] of game to be invader [0-9]{1,2}")){ // set target of game infantry
                 String[] tmp = command.split(" ");
-                game.goAfterInvaderSoldier( Integer.parseInt(tmp[4]), PlayGround.numberOfPlaces, Integer.parseInt(tmp[10]));
+                return game.goAfterInvaderSoldier( Integer.parseInt(tmp[4]), PlayGround.numberOfPlaces, Integer.parseInt(tmp[10]));
             }
 
             if (command.matches("set target of hero to be invader [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
-                game.goAfterInvaderHero(Integer.parseInt(tmp[7]));
+                return game.goAfterInvaderHero(Integer.parseInt(tmp[7]));
             }
 
             if (command.matches("upgrade [a-zA-Z]{5,10} in place [0-9]{1,2}")){
@@ -146,17 +146,17 @@ public class GameController implements DetailShow {
 
             if (command.matches("sell [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
-                game.sellArmory(Integer.parseInt(tmp[4]));
+                return game.sellArmory(Integer.parseInt(tmp[4]));
             }
 
             if (command.matches("set priority of [a-zA-Z]{5,10} in place [0-9]{1,2} [a-zA-Z]{7,14}")){
                 String[] tmp = command.split(" ");
-                game.setArmoryTargetPriority(Integer.parseInt(tmp[6]), TargetPriority.valueOf(tmp[7]));
+                return game.setArmoryTargetPriority(Integer.parseInt(tmp[6]), TargetPriority.valueOf(tmp[7]));
             }
 
             if (command.matches("set priority of all [a-zA-Z]{7,14}")){
                 String[] tmp = command.split(" ");
-                game.setArmoryTargetPriority(PlayGround.numberOfPlaces, TargetPriority.valueOf(tmp[4]));
+                return game.setArmoryTargetPriority(PlayGround.numberOfPlaces, TargetPriority.valueOf(tmp[4]));
             }
 
             if( command.contains("add tesla in point") ){
@@ -164,7 +164,7 @@ public class GameController implements DetailShow {
                 String coordinateString = tmp[4]; // (x,y)
                 int x = coordinateString.charAt(1);
                 int y = coordinateString.charAt(3);
-                game.useTesla( new Coordinate(x,y) );
+                return game.useTesla( new Coordinate(x,y) );
             }
 
             if( command.contains("move hero to") ){
@@ -188,11 +188,11 @@ public class GameController implements DetailShow {
             }
 
             if (command.equals("divine intervention kill all")){
-               game.interventionKillAll();
+               return game.interventionKillAll();
             }
 
             if (command.equals("divine intervention infantry")){
-                game.makeGameSoldiers();
+                return game.makeGameSoldiers();
             }
 
             return "Done :))";
@@ -222,16 +222,16 @@ public class GameController implements DetailShow {
         //command = scanner.nextLine();
         //while (!command.equals("begin next round")){
             if (command.equals("show details weapons")){
-                game.showArmoriesDetails();
+                return game.showArmoriesDetails();
             }
             if (command.equals("show details hero")){
-                game.showHeroDetails();
+                return game.showHeroDetails();
             }
             if (command.equals("show details infantry")){
-                game.showSoldiersDetails();
+                return game.showSoldiersDetails();
             }
             if (command.equals("show details slots")){
-                game.showSlotsDetails();
+                return game.showSlotsDetails();
             }
             if (command.contains("add")){
                 String[] tmp = command.split(" ");
@@ -245,7 +245,7 @@ public class GameController implements DetailShow {
             }
             if (command.matches("sell [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
-                game.sellArmory(Integer.parseInt(tmp[4]));
+                return game.sellArmory(Integer.parseInt(tmp[4]));
             }
             if (command.contains("move hero to")){
                 String[] tmp = command.split(" ");
@@ -260,11 +260,11 @@ public class GameController implements DetailShow {
                 if (tmp.length == 12){
                     String[] XY = tmp[11].split("[(),]");
                     Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
-                    game.moveSoldier(Integer.parseInt(tmp[7]), Integer.parseInt(tmp[2]), coordinate);
+                    return game.moveSoldier(Integer.parseInt(tmp[7]), Integer.parseInt(tmp[2]), coordinate);
                 }else if(tmp.length == 9){
                     String[] XY = tmp[7].split("[(),]");
                     Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
-                    game.moveSoldier(PlayGround.numberOfPlaces , Integer.parseInt(tmp[2]), coordinate);
+                    return game.moveSoldier(PlayGround.numberOfPlaces , Integer.parseInt(tmp[2]), coordinate);
                 }
             }
             return "Done :))";

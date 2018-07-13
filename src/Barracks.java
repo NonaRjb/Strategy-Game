@@ -69,16 +69,18 @@ public class Barracks extends Armory{
         lastKilledsoldierTime[soldierID].setTime( currentTime.getTime() );// = currentTime;
     }
 
-    public void reviveSoldiers( Time currentTime, ArrayList<Soldier> gameSoldiers){
+    public String reviveSoldiers( Time currentTime, ArrayList<Soldier> gameSoldiers){
+        String s="";
         for( int i=0; i<3; i++ ){
             if( soldiers[i] == null ){
                 if( currentTime.getTime() - lastKilledsoldierTime[i].getTime() >= soldierCompensationTime.getTime() ){
                     soldiers[i] = new Soldier(this.coordinate, this, i, this.soldiersInitHealth );
                     gameSoldiers.add(soldiers[i]);
-                    System.out.println("New Soldier: "+i+" Revived to Barracks: "+this.id);
+                    s=s+("New Soldier: "+i+" Revived to Barracks: "+this.id)+"\n";
                 }
             }
         }
+        return s;
     }
 
 

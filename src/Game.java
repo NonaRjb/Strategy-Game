@@ -1,6 +1,7 @@
 import javafx.scene.layout.Priority;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 
@@ -86,9 +87,9 @@ public class Game {
                         this.soldiers.add(barracksSoldiers.get(i));
                     }
                     this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
-                    s="Barracks Built Successfully";
+                    s="Barracks Built Successfully"+"\n";
                 } else {
-                    s="Not Enough Coins!";
+                    s="Not Enough Coins!"+"\n";
                 }
             }
 
@@ -224,23 +225,26 @@ public class Game {
         return s;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void setArmoryTargetPriority(int id, TargetPriority targetPriority){
+    public String setArmoryTargetPriority(int id, TargetPriority targetPriority){
+        String s="";
         if (id == PlayGround.numberOfPlaces){
             for (Armory armory : armories){
-                armory.setTargetPriority(targetPriority);
+                s=s+armory.setTargetPriority(targetPriority)+"\n";
             }
         }else {
             for (Armory armory : armories){
                 if (armory.getId() == id){
-                    armory.setTargetPriority(targetPriority);
+                    s=s+armory.setTargetPriority(targetPriority)+"\n";
                     break;
                 }
             }
         }
+        return s;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void increaseTime(){
+    public String increaseTime(){
+        String s="";
         //Todo check frozen, Stop, Idle and etc. --> needs to be rechecked
         for( Invader invader : invaders ){
             invader.clearTarget();
@@ -248,20 +252,21 @@ public class Game {
         }
         for( Armory armory: armories ){
             if( armory instanceof Barracks )
-                ((Barracks)armory).reviveSoldiers( gameTime, soldiers );
+                s=s+((Barracks)armory).reviveSoldiers( gameTime, soldiers );
         }
         hero.checkIdle(gameTime);
         hero.checkStopped(boomerStopConst, gameTime);
         this.moveObjects();
-        this.botherBurnings();
+        s=s+this.botherBurnings()+"\n";
         this.botherToxicants();
         //this.botherBurnings();
-        //this.botherToxicants();//todo: double?
+        //this.botherToxicants();
         this.refreshFrozenArmories();
-        this.doAttacks();
+        s=s+this.doAttacks();
         this.moveObjects();
         this.gameTime.increaseTime();
         this.invaderMaker();
+        return s;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // Moving all Objects
@@ -330,35 +335,39 @@ public class Game {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets soldier's coordinate
-    public void moveSoldier( int barracksID, int soldierId, Coordinate coordinate){
+    public String moveSoldier( int barracksID, int soldierId, Coordinate coordinate){
+        String s="";
         boolean flag = false;
         if( barracksID==PlayGround.numberOfPlaces ){
             for (Soldier soldier : soldiers) {
                 if (soldier.getBarracksOwner() == null && soldier.getSoldierID() == soldierId) {
-                    goSoldier(soldier, coordinate);
+                    s=s+goSoldier(soldier, coordinate);
                     flag = true;
                 }
             }
         } else {
             for (Soldier soldier : soldiers) {
                 if (soldier.getBarracksOwner().getId() == barracksID && soldier.getSoldierID() == soldierId) {
-                    goSoldier(soldier, coordinate);
+                    s=s+goSoldier(soldier, coordinate);
                     flag = true;
                 }
             }
         }
         if( !flag ){
-            System.out.println("No Soldier With this Features");
+            s=s+("No Soldier With this Features")+"\n";
         }
+        return s;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void goSoldier( Soldier soldier, Coordinate coordinate){
+    private String goSoldier( Soldier soldier, Coordinate coordinate){
+        String s="";
         if (playGround.isInWay(coordinate)){
             soldier.moveGame(coordinate);
         }
         else {
-            System.out.println("Moving to the this coordinate is not allowed");
+            s=("Moving to the this coordinate is not allowed")+"\n";
         }
+        return s;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets hero's coordinate
@@ -415,7 +424,7 @@ public class Game {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void invaderMaker(){
         if( thisRoundNumberOfInvaders > 0 ) {
-            //System.out.println(this.gameTime.getTime() - this.lastInvaderTime.getTime());//todo: lastInvaderTime = gameTime a great class mistake!
+            //System.out.println(this.gameTime.getTime() - this.lastInvaderTime.getTime());//done: lastInvaderTime = gameTime a great class mistake!
             if (this.gameTime.getTime() - this.lastInvaderTime.getTime() >= this.invaderRate.getTime()) {
                 this.produceInvader();
                 thisRoundNumberOfInvaders--;
@@ -528,11 +537,13 @@ public class Game {
         return details;
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    public void doAttacks(){
+    public String doAttacks(){
 
+        String s="";
         this.removedShots = new ArrayList<>();
+
         for( Shot shot: gameShots ){
-            effectShot( shot ); //concurrent modification solved
+            s=s+effectShot( shot )+"\n"; //concurrent modification solved
         }
         this.gameShots.removeAll( this.removedShots );
 
@@ -549,6 +560,7 @@ public class Game {
         for (Soldier soldier : soldiers){
             soldierAttackGame(soldier);
         }
+        return s;
 
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -605,11 +617,11 @@ public class Game {
             } else if (armory instanceof MachineGun) {
                 MachineGun currentMachineGun = (MachineGun) armory;
                 if (targetInvader != null) {
-                    //System.out.println(targetInvader.instanceNum);//todo
+                    //System.out.println(targetInvader.instanceNum);
                     Shot attackShot = currentMachineGun.attack(this.gameTime, targetInvader);
                     if( attackShot != null )
                         this.gameShots.add(attackShot);
-                    //currentMachineGun.attack(this.gameTime, targetInvader, gameShots);//todo: bad gameShot!
+                    //currentMachineGun.attack(this.gameTime, targetInvader, gameShots);//solved: bad gameShot!
                     //System.out.println(gameShots.size());
                 }
             } else if (armory instanceof Laser) {
@@ -637,8 +649,10 @@ public class Game {
                 Rocket currentRocket = (Rocket) armory;
                 if (targetInvader != null) {
                     Shot attackShot = currentRocket.attack(this.gameTime, null);
-                    if( attackShot != null )
+                    if( attackShot != null ) {
                         this.gameShots.add(attackShot);
+                        //System.out.println("onja");
+                    }
                 }
             } else if (armory instanceof Excalibur) {
                 Excalibur currentExcalibur = (Excalibur) armory;
@@ -839,7 +853,8 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void goAfterInvaderHero(int invaderID){
+    public String goAfterInvaderHero(int invaderID){
+        String s="";
         boolean invaderFound = false;
         Invader target = null;
         for (Invader invader : invaders){
@@ -856,9 +871,11 @@ public class Game {
             if (nextCoordinate != null) {
                 hero.goAfterInvader(target, nextCoordinate);
             }
+            s=("Hero is Going After Invader")+"\n";
         }else {
-            System.out.println("Invader not found!");
+            s=("Invader not found!")+"\n";
         }
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void soldierAttackGame(Soldier soldier){
@@ -884,7 +901,8 @@ public class Game {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void goAfterInvaderSoldier(int soldierId, int barracksId, int invaderId){
+    public String goAfterInvaderSoldier(int soldierId, int barracksId, int invaderId){
+        String s="";
         boolean soldierFound = false;
         Soldier targetSoldier = null;
         for (Soldier soldier : soldiers){
@@ -921,16 +939,19 @@ public class Game {
                     }
                 }
             } else {
-                System.out.println("Invader not found!");
+                s=("Invader not found!")+"\n";
             }
         }else {
-            System.out.println("Soldier not found!");
+            s=("Soldier not found!")+"\n";
         }
+
+        return s;
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void effectShot( Shot shot ){
+    private String effectShot( Shot shot ){
 
+        String s="";
         if( shot instanceof Bullet ){
             Object target = shot.getTarget();
             Bullet currentBullet = (Bullet)shot;
@@ -938,7 +959,8 @@ public class Game {
                 Invader targetInvader = (Invader)target;
                 if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
                     if( targetInvader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
-                        System.out.println("Invader got killed !");
+                        s = ("Invader got killed !");
+                        removedShots.addAll( cleanShots( targetInvader ) );
                         invaders.remove( targetInvader );
                         if( currentBullet.getOwner() instanceof Hero ){
                             hero.setInMission(false);
@@ -959,7 +981,7 @@ public class Game {
                 Soldier targetSoldier = (Soldier) target;
                 if(shot.getCoordinate().isEqual(targetSoldier.getCoordinate())){
                     if (targetSoldier.getHealth().getHealthLevel() <= shot.getPower()){
-                        System.out.println("Soldier got killed!");
+                        s=("Soldier got killed!")+"\n";
                         targetSoldier.getBarracksOwner().removeSoldier( targetSoldier.getSoldierID(), gameTime );
                         soldiers.remove(targetSoldier);
                         if( currentBullet.getOwner() instanceof Invader ){
@@ -975,7 +997,7 @@ public class Game {
                 Hero targetHero = (Hero) target;
                 if (shot.getCoordinate().isEqual(targetHero.getCoordinate())) {
                     if (targetHero.getHealthLevel().getHealthLevel() <= shot.getPower()){
-                        System.out.println("Hero will be idle for " + hero.getDelayConst() + " seconds");
+                        s=("Hero will be idle for " + hero.getDelayConst() + " seconds")+"\n";
                         hero.addDeathNum();
                         hero.setIdle(gameTime);
                         if( currentBullet.getOwner() instanceof Invader ){
@@ -990,7 +1012,7 @@ public class Game {
                 Armory targetArmory = (Armory) target;
                 if (shot.getCoordinate().isEqual(targetArmory.getCoordinate())){
                     if (targetArmory.getHealthDegree().getHealthLevel() <= shot.getPower()){
-                        System.out.println("The Armory got ruined! Place " + targetArmory.getId() + " is now empty!");
+                        s=("The Armory got ruined! Place " + targetArmory.getId() + " is now empty!")+"\n";
                         playGround.getPlaceHolder(targetArmory.getId()).setOwner(null);
                         armories.remove(targetArmory);
                     }
@@ -1002,7 +1024,7 @@ public class Game {
             if( target instanceof Invader ) {
                 Invader targetInvader = (Invader)target;
                 if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
-                    System.out.println("The Invader got Frozen!");
+                    s=("The Invader got Frozen!")+"\n";
                     targetInvader.setFrozen( true , shot.getPower(), gameTime);
                     //gameShots.remove( shot );
                     this.removedShots.add( shot );
@@ -1010,7 +1032,7 @@ public class Game {
             } else if (target instanceof Armory) {
                 Armory targetArmory = (Armory) target;
                 if (shot.getCoordinate().isEqual(targetArmory.getCoordinate())) {
-                    System.out.println("The Armory got Frozen!");
+                    s=("The Armory got Frozen!")+"\n";
                     targetArmory.setStopped(true, shot.getPower(), gameTime);
                     //gameShots.remove( shot );
                     this.removedShots.add( shot );
@@ -1037,21 +1059,28 @@ public class Game {
             //gameShots.remove( shot );
             this.removedShots.add( shot );
         } else if( shot instanceof RocketShot ){
+            //System.out.println("Inja");
             ArrayList<Invader> shoootedInvaders = findInvaders( shot.getCoordinate(), ((RocketShot) shot).getRange(), TargetPriority.AllInRange );
-            for (Invader invader : shoootedInvaders) {
-                if( invader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
-                    System.out.println("Invader got killed !");
-                    invaders.remove( invader );
-                } else {
-                    invader.getHealthDegree().decreaseHealth( shot.getPower() );
+            if( shoootedInvaders != null ) {
+                for (Invader invader : shoootedInvaders) {
+                    if (invader.getHealthDegree().getHealthLevel() <= shot.getPower()) {
+                        s = ("Invader got killed !") + "\n";
+                        removedShots.addAll(cleanShots(invader));
+                        invaders.remove(invader);
+                    } else {
+                        invader.getHealthDegree().decreaseHealth(shot.getPower());
+                    }
+                    //gameShots.remove( shot );
+                    //this.removedShots.add(shot);
                 }
-                //gameShots.remove( shot );
-                this.removedShots.add( shot );
+                //this.removedShots.add(shot);
             }
+            this.removedShots.add(shot);
         } else if( shot instanceof LaserShot ) {
             Invader targetInvader = (Invader) shot.getTarget();
             if( targetInvader.getHealthDegree().getHealthLevel() <= shot.getPower() ){
-                System.out.println("Invader got killed !");
+                s=("Invader got killed !")+"\n";
+                this.removedShots.addAll( cleanShots( targetInvader ) );
                 invaders.remove( targetInvader );
                 ((LaserShot)shot).getOwner().endAttack();
                 //gameShots.remove( shot );
@@ -1061,15 +1090,32 @@ public class Game {
                 targetInvader.getHealthDegree().decreaseHealth( shot.getPower() );
             }
         }
+        return s;
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void botherBurnings(){
+    private ArrayList<Shot> cleanShots( Invader invader ){
+        ArrayList<Shot> removedShots = new ArrayList<>();
+        for( Shot shot : gameShots ){
+            if( shot.getTarget() instanceof Invader ){
+                Invader targetInvader = (Invader)shot.getTarget();
+                if( targetInvader.equals(invader) ){
+                    removedShots.add( shot );
+                }
+            }
+        }
+        return removedShots;
+        //gameShots.removeAll( removedShots );
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public String botherBurnings(){
+        String s="";
         ArrayList<Invader> removedInvaders = new ArrayList<>();
         for( Invader invader: invaders ){
             if( invader.isBurning() ){
                 if( invader instanceof Icer ){
-                    System.out.println("Icer got Burned !");
+                    s=("Icer got Burned !")+"\n";
+                    gameShots.removeAll( cleanShots( invader ) );
                     removedInvaders.add( invader );
                     //invaders.remove(invader); //Concurrent exception solved
                 } else {
@@ -1078,6 +1124,7 @@ public class Game {
             }
         }
         invaders.removeAll( removedInvaders );
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void botherToxicants(){
@@ -1091,18 +1138,19 @@ public class Game {
     public String upgradeArmory(int id){
         for( Armory armory: armories ){
             if( armory.getId() == id )
-                //return ( armory.levelUp(property) );//todo
+                //return ( armory.levelUp(property) );
                 return ( armory.levelUp() );
         }
         return "No such Armory";
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void sellArmory(int id){
+    public String sellArmory(int id){
+        String s="";
         for( Armory armory: armories ){
             if( armory.getId() == id ) {
                 property.increasePrice( armory.getPrice() );
                 this.playGround.getPlaceHolder(id).setOwner(null);
-                System.out.println("Armory id: "+id+" got sold");
+                s=("Armory id: "+id+" got sold")+"\n";
                 if( armory instanceof Barracks ){
                     for( Soldier soldier: soldiers  ){
                         if( soldier.getBarracksOwner().getId() == id )
@@ -1112,10 +1160,12 @@ public class Game {
                 armories.remove(armory);
             }
         }
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void setTargetForArmory( int armoryID, int invaderID ) {
+    public String setTargetForArmory( int armoryID, int invaderID ) {
 
+        String s="";
         Armory whichArmory = null;
         Invader targetInvader = null;
         boolean armoryFounded = false;
@@ -1135,15 +1185,16 @@ public class Game {
                 }
             }
             if( invaderFounded ){
-                whichArmory.setTargetPriority(TargetPriority.SpecificTarget);
+                s=s+whichArmory.setTargetPriority(TargetPriority.SpecificTarget)+"\n";
                 whichArmory.setSpecificTargetInvader( targetInvader );
             } else {
-                System.out.println("No Such Invader in Game");
+                s=("No Such Invader in Game")+"\n";
             }
         } else {
-            System.out.println("No Such Armory in Game");
+            s=("No Such Armory in Game")+"\n";
         }
 
+        return s;
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1155,15 +1206,17 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void useTesla( Coordinate originCoordinate ){
+    public String useTesla( Coordinate originCoordinate ){
+        String s="";
         if( this.remainedTeslas > 0 ){
             ArrayList<Invader> targetInvaders = findInvaders( originCoordinate, this.teslaRange, TargetPriority.AllInRange );
             for( Invader invader : targetInvaders ) {
 
+                gameShots.removeAll( cleanShots( invader ) );
                 invaders.remove( invader );
                 for( Armory armory : armories ){
                     if( armory.specificTargetInvader.equals( invader ) ){
-                        armory.setTargetPriority( TargetPriority.MinimumHealth );
+                        s=s+armory.setTargetPriority( TargetPriority.MinimumHealth )+"\n";
                         armory.specificTargetInvader = null;
                     }
                 }
@@ -1181,11 +1234,13 @@ public class Game {
             }
             this.remainedTeslas--;
         } else {
-            System.out.println("You Don't have Tesla");
+            s=("You Don't have Tesla")+"\n";
         }
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void interventionKillAll(){
+    public String interventionKillAll(){
+        String s="";
         if( !this.interventionUsed ){
             hero.setInMission(false);
             for( Soldier soldier : soldiers ){
@@ -1193,28 +1248,34 @@ public class Game {
             }
             for( Armory armory : armories ){
                 armory.setSpecificTargetInvader( null );
-                armory.setTargetPriority(TargetPriority.MinimumHealth);
+                s=s+armory.setTargetPriority(TargetPriority.MinimumHealth)+"\n";
             }
+            gameShots.clear();
             invaders.clear();
             this.interventionUsed = true;
-            System.out.println("Ha Ha Ha !!! :)))");
+            s=("Ha Ha Ha !!! :)))")+"\n";
         } else
-            System.out.println("You have used Intervention!");
+            s=("You have used Intervention!")+"\n";
+
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void makeGameSoldiers(){
+    public String makeGameSoldiers(){
+        String s="";
         if( !this.gameSoldierIsUsed ){
             soldiers.add( new Soldier( new Coordinate(10,10), null, 0, new HealthLevel(100) ) );
             soldiers.add( new Soldier( new Coordinate(10,10), null, 1, new HealthLevel(100) ) );
             soldiers.add( new Soldier( new Coordinate(10,10), null, 2, new HealthLevel(100) ) );
             this.gameSoldierIsUsed = true;
-            System.out.println("Game Soldiers are now here to help you! Please move them");
+            s=("Game Soldiers are now here to help you! Please move them")+"\n";
         } else {
-            System.out.println("You have used Game Soldiers!");
+            s=("You have used Game Soldiers!")+"\n";
         }
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void spreadPlague(){
+    public String spreadPlague(){
+        String s="";
         for( Invader invader : invaders ){
             if( invader.getTarget(0) instanceof Soldier ){
                 invader.clearTarget();
@@ -1227,10 +1288,13 @@ public class Game {
             }
         }
         soldiers.clear();
-        System.out.println("Plague is Spread! Keep on");
+        s=("Plague is Spread! Keep on")+"\n";
+
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void naturalEventHappening(){
+    public String naturalEventHappening(){
+        String s="";
         if( armories.size()>0 ) {
             Random rand = new Random();
             if (armories.size() > 0) {
@@ -1255,11 +1319,12 @@ public class Game {
                     ((Barracks) poorArmory).removeSoldier(2, gameTime);
                 }
                 armories.remove(poorArmory);
-                System.out.println("Sorry . It is natural :))");
+                s=("Sorry . It is natural :))")+"\n";
             }
         } else {
-            System.out.println("It is natural but you are too poor :)))");
+            s=("It is natural but you are too poor :)))")+"\n";
         }
+        return s;
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean isEnded(){

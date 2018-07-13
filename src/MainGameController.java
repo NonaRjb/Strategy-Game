@@ -36,6 +36,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private ArrayList<ImageView> soldiersIMV = new ArrayList<>();
     private ArrayList<ImageView> previousSoldierIMV = new ArrayList<>();
     private ArrayList<Label> armoryLbls = armoryId();
+    private Line laserLine;
+    private Line previousLaserLine;
 
     private Image placeHolderImage;
     private Image barracksImage;
@@ -66,6 +68,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private Image fireImage;
     private Image iceImage;
     private Image poisonImage;
+    private Image rocketshotImage;
 
     private Image heroImage;
     private Image soldierImage;
@@ -73,6 +76,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private DropShadow burningEffect;
     private DropShadow frozenEffect;
     private DropShadow toxicantEffect;
+    private Bloom minerUnseenEffect;
 
     private String coinCounter;
     private String xpCounter;
@@ -98,11 +102,11 @@ public class MainGameController implements ArmoryPlaceBuilder{
         invadersIMV = this.InvaderBuilder();
         shotsIMV = this.shotBuilder();
         soldiersIMV = this.soldierBuilder();
+        ((AnchorPane)GameFX.root).getChildren().removeAll(armoryLbls);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousHeroIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousInvadersIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousSoldierIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousShotsIMV);
-        ((AnchorPane)GameFX.root).getChildren().removeAll(armoryLbls);
         ((AnchorPane)GameFX.root).getChildren().addAll(shotsIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(invadersIMV);
@@ -261,6 +265,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
         this.fireImage = new Image("./fire.png");
         this.iceImage = new Image("./ice.png");
         this.poisonImage = new Image("./poison.png");
+        this.rocketshotImage = new Image( "./rocketshot.png" );
 
         this.heroImage = new Image("./hero.png");
         this.soldierImage = new Image("./soldier.png");
@@ -276,6 +281,9 @@ public class MainGameController implements ArmoryPlaceBuilder{
         this.toxicantEffect = new DropShadow();
         this.toxicantEffect.setColor( Color.GREEN );
         this.toxicantEffect.setRadius(40);
+
+        this.minerUnseenEffect = new Bloom();
+        this.minerUnseenEffect.setThreshold(0.1);
 
         doCommand.setOnAction( event -> {
             comments.setText( gameController.playRound( textField.getText() ) );
@@ -533,6 +541,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( burningEffect );
                 if( invader.isPoisoned() )
                     imageView.setEffect( toxicantEffect );
+                if( !((Miner) invader).isVisible( gameController.getGame().getHero()!=null ) )
+                    imageView.setEffect( minerUnseenEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Smelly){
                 //Image image = new Image("./smelly.png");
@@ -660,14 +670,18 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.prefHeight(currentPoison.getRange());
                 shotsIMV.add(imageView);
                 //System.out.println("Poison");
-            }/*else if (shot instanceof LaserShot){
+            } else if (shot instanceof LaserShot){
                 LaserShot currentLaserShot = (LaserShot)shot;
-                Line line = new Line();
-                line.setFill(Color.RED);
-                line.setStartX( currentLaserShot.getCoordinate().getX() );
-                line.setStartY( currentLaserShot.getCoordinate().getY() );
-                line.setEndX( currentLaserShot.getEndCoordinate().getX() );
-                line.setEndY( currentLaserShot.getEndCoordinate().getY() );
+                laserLine = new Line();
+                laserLine.setFill(Color.RED);
+                laserLine.setStroke(Color.RED);
+                laserLine.setStartX( currentLaserShot.getCoordinate().getY()-50 );
+                laserLine.setStartY( currentLaserShot.getCoordinate().getX()-50 );
+                laserLine.setEndX( currentLaserShot.getEndCoordinate().getY()-50 );
+                laserLine.setEndY( currentLaserShot.getEndCoordinate().getX()-50 );
+                ((AnchorPane)GameFX.root).getChildren().removeAll(previousLaserLine);
+                ((AnchorPane)GameFX.root).getChildren().addAll(laserLine);
+                previousLaserLine = laserLine;
                 /*Image image = new Image("./fire.png");
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
@@ -677,8 +691,22 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(10);
                 imageView.prefWidth(10);
                 imageView.prefHeight(10);
+                shotsIMV.add(imageView);*/
+            } else if( shot instanceof RocketShot ){
+                //System.out.println("ooo");
+                //Image image = new Image("./rocketshot.png");
+                RocketShot currentRocketShot = (RocketShot) shot;
+                ImageView imageView = new ImageView();
+                imageView.setImage(this.rocketshotImage);
+                imageView.setX(shot.getCoordinate().getY()-60);
+                imageView.setY(shot.getCoordinate().getX()-80);
+                imageView.setFitHeight(currentRocketShot.getRange()*5);
+                imageView.setFitWidth(currentRocketShot.getRange()*5);
+                imageView.prefWidth(currentRocketShot.getRange()*5);
+                imageView.prefHeight(currentRocketShot.getRange()*5);
                 shotsIMV.add(imageView);
-            }*/
+                //System.out.println("Rocket");
+            }
         }
         return shotsIMV;
 

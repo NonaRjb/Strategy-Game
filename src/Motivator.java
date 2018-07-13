@@ -13,7 +13,7 @@ public class Motivator extends Invader {
         this.motiveRate = 2; //motives every 2 time units
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
-        super.healthDegree = new HealthLevel(2); //Medium degree of health
+        super.healthDegree = new HealthLevel(3*Invader.healthUnit); //Medium degree of health
         super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
         super.range = 2; //low range
     }

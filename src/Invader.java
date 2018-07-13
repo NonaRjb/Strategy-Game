@@ -19,6 +19,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     private Time freezingTime;
     private int icePower = 0;
     private int pathID;
+    static final int healthUnit = 10;
 
     static final int numberOfInvaderKinds = 13;
 

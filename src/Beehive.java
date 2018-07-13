@@ -12,7 +12,7 @@ public class Beehive extends Armory implements Weapon{
         super.coordinate = coordinate;
         super.level = 1; //Beginning
         super.range = 2 * super.rangeUnit; //Medium Range
-        this.attackRateTime = new Time((int)(0.5 * (double)super.attackTimeUnit)); //Low Attack Speed
+        this.attackRateTime = new Time( 4*super.attackTimeUnit );//new Time((int)(0.5 * (double)super.attackTimeUnit)); //Low Attack Speed
         super.healthDegree = new HealthLevel(2); //Medium Health Level
         super.price = new Price(Price.medPrice); //Medium Price
         super.setTargetPriority(TargetPriority.AllInRange);
@@ -30,7 +30,7 @@ public class Beehive extends Armory implements Weapon{
             super.level++;
             Game.property.decreasePrice(this.getLevelUpPrice());
             super.range = (int)((double)super.range * 1.15);
-            this.attackRateTime = new Time( (int)( (double)this.attackRateTime.getTime()*1.15) );
+            this.attackRateTime = new Time( (int)( (double)this.attackRateTime.getTime()*0.85) );
             s = ("Beehive id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
         }
         return s;

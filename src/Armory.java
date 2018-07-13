@@ -14,7 +14,7 @@ abstract class Armory implements DetailShow {
     private int icePower;
 
     final int priceUnit = Price.basePrice;
-    final int attackTimeUnit = 1;
+    final int attackTimeUnit = 2;
     final int rangeUnit = 50;
     final int shotPowerUnit = 10;
 
@@ -28,9 +28,9 @@ abstract class Armory implements DetailShow {
     }
 
     // Setters
-    public void setTargetPriority(TargetPriority targetPriority) {
+    public String setTargetPriority(TargetPriority targetPriority) {
         this.targetPriority = targetPriority;
-        System.out.println("Armory ID: "+this.id+" Priority is set to: "+this.targetPriority);
+        return ("Armory ID: "+this.id+" Priority is set to: "+this.targetPriority);
     }
     public void setSpecificTargetInvader(Invader specificTargetInvader) {
         this.specificTargetInvader = specificTargetInvader;

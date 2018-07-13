@@ -111,6 +111,8 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
             }
         } );
 
+        updateView();
+
         /*textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {

@@ -17,7 +17,7 @@ public class Excalibur extends Armory implements Weapon{
         super.coordinate = coordinate;
         super.level = 1; //Beginning
         super.range = 100 * super.rangeUnit; //Infinity Range
-        this.attackRateTime = new Time( (int)(0.5 * (double)super.attackTimeUnit) ); //Very Low Attack Speed
+        this.attackRateTime = new Time(5*super.attackTimeUnit);//new Time( (int)(0.5 * (double)super.attackTimeUnit) ); //Very Low Attack Speed
         super.healthDegree = new HealthLevel(3); //High Health Level
         super.price = new Price(Price.veryHighPrice); //Very High Price
         super.setTargetPriority(TargetPriority.MinimumHealth);
@@ -49,7 +49,7 @@ public class Excalibur extends Armory implements Weapon{
             super.level++;
             Game.property.decreasePrice( super.getLevelUpPrice() );
             super.range = (int) ((double) super.range * 1.15);
-            this.attackRateTime = new Time((int) ((double) this.attackRateTime.getTime() * 1.15));
+            this.attackRateTime = new Time((int) ((double) this.attackRateTime.getTime() * 0.85));
             this.shotPower = (int) ((double) this.shotPower * 1.15);
             s = ("Excalibur id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
         }

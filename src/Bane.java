@@ -13,7 +13,7 @@ public class Bane extends Invader{
         this.attackRateTime = new Time(3); //attacks every 3 time units
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
-        super.healthDegree = new HealthLevel(1); //High degree of health
+        super.healthDegree = new HealthLevel( 4*Invader.healthUnit ); //High degree of health
         super.movementSpeed = 1 * super.speedConst; //moves 1 pixels in each time unit
         super.range = 2; //low range
     }
