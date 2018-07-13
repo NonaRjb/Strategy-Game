@@ -72,7 +72,7 @@ public class Soldier implements DetailShow{
     }
     public void addNumberOfKillings(){ this.numberOfKillings++; }
     public void setLastAttack(Time lastAttack) {
-        this.lastAttack = lastAttack;
+        this.lastAttack.setTime(lastAttack.getTime());// = lastAttack;
     }
     public void setStopped(boolean stopped) {
         isStopped = stopped;

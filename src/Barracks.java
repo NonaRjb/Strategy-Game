@@ -64,7 +64,7 @@ public class Barracks extends Armory{
 
     public void removeSoldier( int soldierID, Time currentTime ){
         soldiers[soldierID] = null;
-        lastKilledsoldierTime[soldierID] = currentTime;
+        lastKilledsoldierTime[soldierID].setTime( currentTime.getTime() );// = currentTime;
     }
 
     public void reviveSoldiers( Time currentTime, ArrayList<Soldier> gameSoldiers){

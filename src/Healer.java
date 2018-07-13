@@ -34,7 +34,7 @@ public class Healer extends Invader {
     }
 
     public void setLastAttack(Time time){
-        lastAttack = time;
+        lastAttack.setTime(time.getTime());// = time;
     }
 
     @Override

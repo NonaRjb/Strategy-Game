@@ -19,7 +19,7 @@ public class Miner extends Invader{
     }
 
     public void setLastAttack(Time lastAttack) {
-        this.lastAttack = lastAttack;
+        this.lastAttack.setTime(lastAttack.getTime());// = lastAttack;
     }
 
     public Time getLastAttack() {

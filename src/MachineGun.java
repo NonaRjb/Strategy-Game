@@ -52,7 +52,7 @@ public class MachineGun extends Armory implements Weapon{
     }
 
     public void setLastAttack(Time t){
-        this.lastAttack = t;
+        this.lastAttack.setTime(t.getTime());
     }
 
     @Override

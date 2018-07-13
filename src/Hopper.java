@@ -32,7 +32,7 @@ public class Hopper extends Invader{
     }
 
     public void setLastAttack(Time lastAttack) {
-        this.lastAttack = lastAttack;
+        this.lastAttack.setTime(lastAttack.getTime());// = lastAttack;
     }
 
     public void accelerate(){

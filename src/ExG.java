@@ -31,7 +31,7 @@ public class ExG extends Invader{
     }
 
     public void setLastAttack(Time time){
-        this.lastAttack = time;
+        this.lastAttack.setTime(time.getTime());// = time;
     }
 
     @Override

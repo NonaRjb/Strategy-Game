@@ -23,8 +23,10 @@ public class StartPageController {
             //this.gameController.setCommand("go ahead one sec");
             try {
                 FXMLLoader prepareGameLoader = new FXMLLoader(getClass().getResource("prepareGame.fxml"));
-                Parent prepareGameRoot = prepareGameLoader.load();
-                Scene prepareGameScene = new Scene(prepareGameRoot,1600,900);
+                //Parent prepareGameRoot = prepareGameLoader.load();
+                GameFX.root = prepareGameLoader.load();
+                //Scene prepareGameScene = new Scene(prepareGameRoot,1600,900);
+                Scene prepareGameScene = new Scene( GameFX.root, 1600, 900 );
                 //Stage stage = new Stage();
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 stage.setScene(prepareGameScene);

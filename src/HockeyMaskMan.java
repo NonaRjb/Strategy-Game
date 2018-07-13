@@ -29,7 +29,7 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
     public Time getLastAttack(){ return  lastAttack; }
 
     public void setLastAttack(Time lastAttack) {
-        this.lastAttack = lastAttack;
+        this.lastAttack.setTime(lastAttack.getTime());// = lastAttack;
     }
 
     @Override

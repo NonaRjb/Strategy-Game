@@ -25,8 +25,8 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
 
     GameController gameController = GameController.getInstance();
     private PlayGround playGround = PlayGround.getInstance();
-    private ArrayList<ImageView> soldiersIMV = new ArrayList<>();
-    private ArrayList<ImageView> previousSoldierIMV = new ArrayList<>();
+    private ArrayList<ImageView> soldiersIMV;
+    private ArrayList<ImageView> previousSoldierIMV;
     private PlaceHolder[] placeOfArmories = playGround.getPlaceHolder();
     //private ArrayList<ImageView> armoryPlaces = armoryPlaceBuilder();
 
@@ -58,6 +58,8 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
 
     @FXML
     private void initialize() {
+        soldiersIMV = new ArrayList<>();
+        previousSoldierIMV = new ArrayList<>();
         doCommand.setOnAction( event -> {
             comments.setText( gameController.playBreak( textField.getText() ) );
             textField.clear();
@@ -84,6 +86,7 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
 
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 stage.setScene(mainGameScene);
+                stage.setTitle("Main Game");
                 stage.show();
                 //System.out.println("Shame!");
                 //Button bb = new Button("ll");
@@ -187,8 +190,8 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
             Image image = new Image("./soldier.png");
             ImageView imageView = new ImageView();
             imageView.setImage(image);
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(100);
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
             imageView.setY(soldier.getCoordinate().getX());
             imageView.setX(soldier.getCoordinate().getY());
             soldierIMV.add(imageView);

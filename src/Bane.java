@@ -22,7 +22,7 @@ public class Bane extends Invader{
         return this.lastAttack;
     }
     public void setLastAttack(Time time){
-        this.lastAttack = time;
+        this.lastAttack.setTime(time.getTime());// = time;
     }
     public int getShootPower() {
         return shootPower;

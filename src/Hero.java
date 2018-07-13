@@ -87,7 +87,7 @@ public class Hero implements DetailShow {
         return isStopped;
     }
     public void setTarget(Invader invader){ this.targetInvader = invader; }
-    public void setLastAttack(Time currentTime){ this.lastAttack = currentTime; }
+    public void setLastAttack(Time currentTime){ this.lastAttack.setTime(currentTime.getTime());}// = currentTime; }
     public void setIdle(Time currentTime){
         this.isIdle = true;
         this.idleStartTime = currentTime;

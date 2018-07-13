@@ -25,6 +25,7 @@ public class Game {
     private final int teslaRange = 20;
     private int invaderCounter = 1;
     private static boolean loser = false;
+    private ArrayList<Shot> removedShots;
 
     // Constructor
     public Game() {
@@ -343,10 +344,11 @@ public class Game {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void invaderMaker(){
         if( thisRoundNumberOfInvaders > 0 ) {
+            //System.out.println(this.gameTime.getTime() - this.lastInvaderTime.getTime());//todo: lastInvaderTime = gameTime a great class mistake!
             if (this.gameTime.getTime() - this.lastInvaderTime.getTime() >= this.invaderRate.getTime()) {
                 this.produceInvader();
                 thisRoundNumberOfInvaders--;
-                this.lastInvaderTime = this.gameTime;
+                this.lastInvaderTime.setTime( this.gameTime.getTime() );
             }
         }
     }
@@ -451,9 +453,11 @@ public class Game {
             soldierAttackGame(soldier);
         }
 
+        this.removedShots = new ArrayList<>();
         for( Shot shot: gameShots ){
-            effectShot( shot ); //todo: concurrent modification?
+            effectShot( shot ); //concurrent modification solved
         }
+        this.gameShots.removeAll( this.removedShots );
 
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -464,12 +468,15 @@ public class Game {
 
         // If Miner is in invadersInRange it should be removed because it cannot be seen by anybody except hero
         if(invadersInRange != null) {
-            //System.out.println(invadersInRange.get(0).instanceNum);//TODO
+            //System.out.println(invadersInRange.get(0).instanceNum);
+            ArrayList<Invader> removedMiners = new ArrayList<>();
             for (Invader invader : invadersInRange) {
                 if (invader instanceof Miner) {
-                    invadersInRange.remove(invader); //TODO: concurrent modification here
+                    //invadersInRange.remove(invader); //concurrent modification solved
+                    removedMiners.add(invader);
                 }
             }
+            invadersInRange.removeAll( removedMiners );
         }
         //
 
@@ -845,7 +852,8 @@ public class Game {
                     } else {
                         targetInvader.getHealthDegree().decreaseHealth( shot.getPower() );
                     }
-                    gameShots.remove( shot );
+                    //gameShots.remove( shot );
+                    this.removedShots.add( shot );
                     this.property.increasePrice(new Price(10));
                 }
             } else if (target instanceof Soldier){
@@ -861,7 +869,8 @@ public class Game {
                     } else {
                         targetSoldier.getHealth().decreaseHealth(shot.getPower());
                     }
-                    gameShots.remove( shot );
+                    //gameShots.remove( shot );
+                    this.removedShots.add( shot );
                 }
             } else if (target instanceof Hero){
                 Hero targetHero = (Hero) target;
@@ -874,7 +883,8 @@ public class Game {
                             ((Invader)currentBullet.getOwner()).addNumberOfHeroKill();
                         }
                     }
-                    gameShots.remove( shot );
+                    //gameShots.remove( shot );
+                    this.removedShots.add( shot );
                 }
             }
             if (target instanceof Armory){
@@ -895,21 +905,24 @@ public class Game {
                 if( shot.getCoordinate().isEqual( targetInvader.getCoordinate() ) ){
                     System.out.println("The Invader got Frozen!");
                     targetInvader.setFrozen( true , shot.getPower(), gameTime);
-                    gameShots.remove( shot );
+                    //gameShots.remove( shot );
+                    this.removedShots.add( shot );
                 }
             } else if (target instanceof Armory) {
                 Armory targetArmory = (Armory) target;
                 if (shot.getCoordinate().isEqual(targetArmory.getCoordinate())) {
                     System.out.println("The Armory got Frozen!");
                     targetArmory.setStopped(true, shot.getPower(), gameTime);
-                    gameShots.remove( shot );
+                    //gameShots.remove( shot );
+                    this.removedShots.add( shot );
                 }
             }
         } else if( shot instanceof Fire ){
             ArrayList<Invader> burningInvaders = findInvaders( shot.getCoordinate(), ((Fire) shot).getRange(), TargetPriority.AllInRange );
             if( burningInvaders == null ){
                 ((Fire)shot).getOwner().setBurning( false );
-                gameShots.remove( shot );
+                //gameShots.remove( shot );
+                this.removedShots.add( shot );
             } else {
                 for (Invader invader : burningInvaders) {
                     invader.setBurning(true);
@@ -920,7 +933,8 @@ public class Game {
             for (Invader invader : poisonedInvaders) {
                 invader.setPoisoned( true );
             }
-            gameShots.remove( shot );
+            //gameShots.remove( shot );
+            this.removedShots.add( shot );
         } else if( shot instanceof RocketShot ){
             ArrayList<Invader> shoootedInvaders = findInvaders( shot.getCoordinate(), ((RocketShot) shot).getRange(), TargetPriority.AllInRange );
             for (Invader invader : shoootedInvaders) {
@@ -930,7 +944,8 @@ public class Game {
                 } else {
                     invader.getHealthDegree().decreaseHealth( shot.getPower() );
                 }
-                gameShots.remove( shot );
+                //gameShots.remove( shot );
+                this.removedShots.add( shot );
             }
         } else if( shot instanceof LaserShot ) {
             Invader targetInvader = (Invader) shot.getTarget();
@@ -938,7 +953,8 @@ public class Game {
                 System.out.println("Invader got killed !");
                 invaders.remove( targetInvader );
                 ((LaserShot)shot).getOwner().endAttack();
-                gameShots.remove( shot );
+                //gameShots.remove( shot );
+                this.removedShots.add( shot );
 
             } else {
                 targetInvader.getHealthDegree().decreaseHealth( shot.getPower() );
