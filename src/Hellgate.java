@@ -34,14 +34,16 @@ public class Hellgate extends Armory implements Weapon{
     // Other Methods
 
     @Override
-    public void levelUp(Price gamePrice) {
-        if( gamePrice.getPrice() >= super.getLevelUpPrice().getPrice() ) {
+    public String levelUp(){//Price gamePrice) {
+        String s = "";
+        if( Game.property.getPrice() >= super.getLevelUpPrice().getPrice() ) {
             super.level++;
-            gamePrice.decreasePrice(this.getLevelUpPrice());
+            Game.property.decreasePrice(this.getLevelUpPrice());
             super.range = (int)((double)super.range * 1.15);
             this.shotPower = (int)((double)this.shotPower * 1.15);
-            System.out.println("Hellgate id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
+            s = ("Hellgate id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
         }
+        return s;
     }
 
     @Override

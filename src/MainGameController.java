@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -72,6 +74,11 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private DropShadow burningEffect;
     private DropShadow frozenEffect;
 
+    private String coinCounter;
+    private String xpCounter;
+
+    private Tooltip coordinateToolTip;
+
 
 
     private void updateView(){
@@ -105,6 +112,11 @@ public class MainGameController implements ArmoryPlaceBuilder{
         previousInvadersIMV = invadersIMV;
         previousShotsIMV = shotsIMV;
         previousSoldierIMV = soldiersIMV;
+
+        coinCounter = ""+gameController.getGame().getProperty().getPrice();
+        xpCounter = ""+gameController.getGame().getXP();
+        coins.setText(coinCounter);
+        xps.setText(xpCounter);
         /*if(!done)
         ((AnchorPane)GameFX.root).getChildren().addAll(button);
         done = true;*/
@@ -115,6 +127,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
 
     }
 
+    @FXML
+    private AnchorPane gameAnchorPane;
     @FXML
     private TextField textField = new TextField();
     @FXML
@@ -137,6 +151,10 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private ImageView ID_6;
     @FXML
     private ImageView ID_7;
+    @FXML
+    private TextField coins;
+    @FXML
+    private TextField xps;
 
     /*public void setGameController(GameController gameController) {
         this.gameController = gameController;
@@ -202,6 +220,12 @@ public class MainGameController implements ArmoryPlaceBuilder{
     @FXML
     private void initialize() {
         gameController.initiateRound();
+        coordinateToolTip = new Tooltip();
+        Tooltip.install( gameAnchorPane, coordinateToolTip );
+        gameAnchorPane.setOnMouseEntered( event -> {
+            Coordinate mouseCoordinate = new Coordinate( (int)event.getX(),(int)event.getY() );
+            coordinateToolTip.setText( "("+event.getX() +"," +event.getY()+") ; is on way: "+gameController.getGame().isOnWay(mouseCoordinate) );
+        } );
         //timer.schedule(playing,0L, 2*1000L);
         timer.scheduleAtFixedRate(playing, 1000L, 1*200L);
 

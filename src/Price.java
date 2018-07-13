@@ -20,11 +20,12 @@ public class Price {
     }
 
     // Other Methods
-    public void decreasePrice(Price dPrice){
-        if( this.price - dPrice.price >= 0 )
+    public String decreasePrice(Price dPrice) {
+        if (this.price - dPrice.price >= 0) {
             this.price -= dPrice.price;
-        else{
-            System.out.println("Not Enough Money");
+            return "Successfully Bought";
+        } else {
+            return "Not Enough Money";
         }
     }
 

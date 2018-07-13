@@ -29,6 +29,8 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
     private ArrayList<ImageView> previousSoldierIMV;
     private PlaceHolder[] placeOfArmories = playGround.getPlaceHolder();
     //private ArrayList<ImageView> armoryPlaces = armoryPlaceBuilder();
+    private String coinCounter;
+    private String xpCounter;
 
     @FXML
     private TextField textField = new TextField();
@@ -54,10 +56,20 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
     private ImageView ID_6;
     @FXML
     private ImageView ID_7;
+    @FXML
+    private TextField coins;
+    @FXML
+    private TextField xps;
 
 
     @FXML
     private void initialize() {
+
+        coinCounter = ""+gameController.getGame().getProperty().getPrice();
+        xpCounter = ""+gameController.getGame().getXP();
+        coins.setText(coinCounter);
+        xps.setText(xpCounter);
+
         soldiersIMV = new ArrayList<>();
         previousSoldierIMV = new ArrayList<>();
         doCommand.setOnAction( event -> {
@@ -181,6 +193,11 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousSoldierIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
         previousSoldierIMV = soldiersIMV;
+
+        coinCounter = ""+gameController.getGame().getProperty().getPrice();
+        xpCounter = ""+gameController.getGame().getXP();
+        coins.setText(coinCounter);
+        xps.setText(xpCounter);
     }
 
     public ArrayList<ImageView> soldierBuilder(){

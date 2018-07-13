@@ -18,7 +18,7 @@ public class Game {
     private final int boomerStopConst = 10;
     static Time burningTimeConst = new Time(10);
     private int thisRoundNumberOfInvaders;
-    private Price property;
+    static Price property;
     private boolean gameSoldierIsUsed;
     private boolean interventionUsed;
     private int remainedTeslas;
@@ -39,7 +39,7 @@ public class Game {
         this.invaderRate = new Time(2);
         this.lastInvaderTime = new Time(0);
         this.hero = new Hero( new Coordinate(430,1500) );
-        this.property = new Price(10);
+        this.property = new Price(100);
         this.gameSoldierIsUsed = false;
         this.interventionUsed = false;
         this.remainedTeslas = 3;
@@ -67,95 +67,161 @@ public class Game {
 
 
     // Other Methods
-    public void createArmory(String armoryType, int id) {
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    public String createArmory(String armoryType, int id) {
+
+        String s="";
 
         if( armoryType.equals("Barracks") ) {
 
             if( playGround.getPlaceHolder(id).getOwner() != null ){
-                System.out.println("Place ID "+id+" is Full!");
+                s=("Place ID "+id+" is Full!");
             } else {
                 Barracks barracks = new Barracks(id, playGround.getPlaceHolder(id).getPlaceCoordinate(), soldiers);
-                this.armories.add( barracks );
-                ArrayList<Soldier> barracksSoldiers = barracks.getBarracksSoldiers();
-                for (int i = 0; i < barracksSoldiers.size(); i++ ){
-                    this.soldiers.add(barracksSoldiers.get(i));
+                if( property.getPrice() > barracks.getPrice().getPrice() ) {
+                    property.decreasePrice( barracks.getPrice() );
+                    this.armories.add(barracks);
+                    ArrayList<Soldier> barracksSoldiers = barracks.getBarracksSoldiers();
+                    for (int i = 0; i < barracksSoldiers.size(); i++) {
+                        this.soldiers.add(barracksSoldiers.get(i));
+                    }
+                    this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
+                    s="Barracks Built Successfully";
+                } else {
+                    s="Not Enough Coins!";
                 }
-                this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
             }
 
         } else if( armoryType.equals("Freezer") ){
 
             if( playGround.getPlaceHolder(id).getOwner() != null ){
-                System.out.println("Place ID "+id+" is Full!");
+                s=("Place ID "+id+" is Full!");
             } else {
-                this.armories.add(new Freezer(id, playGround.getPlaceHolder(id).getPlaceCoordinate()));
-                this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                Freezer freezer = new Freezer(id, playGround.getPlaceHolder(id).getPlaceCoordinate());
+                if(  property.getPrice() > freezer.getPrice().getPrice() ) {
+                    property.decreasePrice( freezer.getPrice() );
+                    this.armories.add(freezer);
+                    this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
+                    s="Freezer Built Successfully";
+                } else {
+                    s="Not Enough Coins!";
+                }
             }
 
         } else if (armoryType.equals("MachineGun")) {
 
                 if( playGround.getPlaceHolder(id).getOwner() != null ){
-                    System.out.println("Place ID "+id+" is Full!");
+                    s=("Place ID "+id+" is Full!");
                 } else {
-                    this.armories.add(new MachineGun(id, playGround.getPlaceHolder(id).getPlaceCoordinate()));
-                    this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                    MachineGun machineGun = new MachineGun(id, playGround.getPlaceHolder(id).getPlaceCoordinate());
+                    if( property.getPrice() > machineGun.getPrice().getPrice() ) {
+                        property.decreasePrice( machineGun.getPrice() );
+                        this.armories.add(machineGun);
+                        this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
+                        s="MachineGun Built Successfully";
+                    } else {
+                        s="Not Enough Coins!";
+                    }
                 }
 
         } else if (armoryType.equals("Laser")) {
 
                 if( playGround.getPlaceHolder(id).getOwner() != null ){
-                        System.out.println("Place ID "+id+" is Full!");
+                        s=("Place ID "+id+" is Full!");
                 } else {
-                        this.armories.add(new Laser(id, playGround.getPlaceHolder(id).getPlaceCoordinate()));
-                        this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                        Laser laser = new Laser(id, playGround.getPlaceHolder(id).getPlaceCoordinate());
+                        if( property.getPrice() > laser.getPrice().getPrice() ) {
+                            property.decreasePrice( laser.getPrice() );
+                            this.armories.add(laser);
+                            this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
+                            s="Laser Built Successfully";
+                        } else {
+                            s="Not Enough Coins!";
+                        }
                 }
 
         } else if (armoryType.equals("Rocket")) {
 
                 if( playGround.getPlaceHolder(id).getOwner() != null ){
-                        System.out.println("Place ID "+id+" is Full!");
+                        s=("Place ID "+id+" is Full!");
                 } else {
-                        this.armories.add(new Rocket(id, playGround.getPlaceHolder(id).getPlaceCoordinate()));
-                        this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                    Rocket rocket = new Rocket(id, playGround.getPlaceHolder(id).getPlaceCoordinate());
+                    if( property.getPrice() > rocket.getPrice().getPrice() ) {
+                        property.decreasePrice( rocket.getPrice() );
+                        this.armories.add(rocket);
+                        this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
+                        s="Rocket Built Successfully";
+                    } else {
+                        s="Not Enough Coins!";
+                    }
                 }
 
         } else if (armoryType.equals("Excalibur")) {
 
                 if( playGround.getPlaceHolder(id).getOwner() != null ){
-                        System.out.println("Place ID "+id+" is Full!");
+                        s=("Place ID "+id+" is Full!");
                 } else {
-                        this.armories.add(new Excalibur(id, playGround.getPlaceHolder(id).getPlaceCoordinate(), this.gameTime));
-                        this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                        Excalibur excalibur = new Excalibur(id, playGround.getPlaceHolder(id).getPlaceCoordinate(), this.gameTime);
+                        if( property.getPrice() > excalibur.getPrice().getPrice() ) {
+                            property.decreasePrice( excalibur.getPrice() );
+                            this.armories.add(excalibur);
+                            this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
+                            s="Excalibur Built Successfully";
+                        } else {
+                            s="Not Enough Coins!";
+                        }
                 }
 
         } else if (armoryType.equals("Beehive")){
 
                 if( playGround.getPlaceHolder(id).getOwner() != null ){
-                        System.out.println("Place ID "+id+" is Full!");
+                        s=("Place ID "+id+" is Full!");
                 } else {
-                        this.armories.add(new Beehive(id, playGround.getPlaceHolder(id).getPlaceCoordinate()));
+                    Beehive beehive = new Beehive(id, playGround.getPlaceHolder(id).getPlaceCoordinate());
+                    if( property.getPrice() > beehive.getPrice().getPrice() ){
+                        property.decreasePrice( beehive.getPrice() );
+                        this.armories.add(beehive);
                         this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                        s="Beehive Built Successfully";
+                    } else {
+                        s="Not Enough Coins!";
+                    }
                 }
 
         } else if (armoryType.equals("Hellgate")) {
 
                 if( playGround.getPlaceHolder(id).getOwner() != null ){
-                        System.out.println("Place ID "+id+" is Full!");
+                        s=("Place ID "+id+" is Full!");
                 } else {
-                        this.armories.add(new Hellgate(id, playGround.getPlaceHolder(id).getPlaceCoordinate()));
-                        this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                        Hellgate hellgate = new Hellgate(id, playGround.getPlaceHolder(id).getPlaceCoordinate());
+                        if( property.getPrice() > hellgate.getPrice().getPrice() ){
+                            property.decreasePrice( hellgate.getPrice() );
+                            this.armories.add(hellgate);
+                            this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                            s="Hellgate Built Successfully";
+                        } else {
+                            s="Not Enough Coins!";
+                        }
                 }
 
         } else if (armoryType.equals("Sauron")) {
 
                 if( playGround.getPlaceHolder(id).getOwner() != null ){
-                        System.out.println("Place ID "+id+" is Full!");
+                        s=("Place ID "+id+" is Full!");
                 } else {
-                        this.armories.add(new Sauron(id, playGround.getPlaceHolder(id).getPlaceCoordinate()));
-                        this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                        Sauron sauron = new Sauron(id, playGround.getPlaceHolder(id).getPlaceCoordinate());
+                        if( property.getPrice() > sauron.getPrice().getPrice() ){
+                            property.decreasePrice( sauron.getPrice() );
+                            this.armories.add(sauron);
+                            this.playGround.getPlaceHolder(id).setOwner( this.armories.get( this.armories.size()-1 ) );
+                            s="Sauron Built Successfully";
+                        } else {
+                            s="Not Enough Coins!";
+                        }
                 }
 
         }
+        return s;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void setArmoryTargetPriority(int id, TargetPriority targetPriority){
@@ -189,8 +255,8 @@ public class Game {
         this.moveObjects();
         this.botherBurnings();
         this.botherToxicants();
-        this.botherBurnings();
-        this.botherToxicants();//todo: double?
+        //this.botherBurnings();
+        //this.botherToxicants();//todo: double?
         this.refreshFrozenArmories();
         this.doAttacks();
         this.moveObjects();
@@ -995,11 +1061,13 @@ public class Game {
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void upgradeArmory(int id){
+    public String upgradeArmory(int id){
         for( Armory armory: armories ){
             if( armory.getId() == id )
-                armory.levelUp(property);
+                //return ( armory.levelUp(property) );//todo
+                return ( armory.levelUp() );
         }
+        return "No such Armory";
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void sellArmory(int id){
@@ -1192,6 +1260,18 @@ public class Game {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static boolean getLoser(){
         return loser;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public Price getProperty(){
+        return property;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public int getXP(){
+        return hero.getXpCnt();
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public boolean isOnWay( Coordinate c ){
+        return playGround.isInWay(c);
     }
 }
 

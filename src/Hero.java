@@ -180,4 +180,8 @@ public class Hero implements DetailShow {
            return true;
         }
     }
+
+    public int getXpCnt(){
+        return xpCnt;
+    }
 }

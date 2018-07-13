@@ -89,7 +89,7 @@ public class GameController implements DetailShow {
 
             if (command.matches("add [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
-                game.createArmory(tmp[1], Integer.parseInt(tmp[4]));
+                return ( game.createArmory(tmp[1], Integer.parseInt(tmp[4])) );
             }
             if (command.matches("show details [a-z]{4,8}")){
                 String[] tmp = command.split(" ");
@@ -141,7 +141,7 @@ public class GameController implements DetailShow {
 
             if (command.matches("upgrade [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
-                game.upgradeArmory(Integer.parseInt(tmp[4]));
+                return ( game.upgradeArmory(Integer.parseInt(tmp[4])) );
             }
 
             if (command.matches("sell [a-zA-Z]{5,10} in place [0-9]{1,2}")){
@@ -236,12 +236,12 @@ public class GameController implements DetailShow {
             if (command.contains("add")){
                 String[] tmp = command.split(" ");
                 if(tmp.length == 5) {
-                    game.createArmory(tmp[1], Integer.parseInt(tmp[4]));
+                    return ( game.createArmory(tmp[1], Integer.parseInt(tmp[4])) );
                 }
             }
             if (command.matches("upgrade [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");
-                game.upgradeArmory(Integer.parseInt(tmp[4]));
+                return ( game.upgradeArmory(Integer.parseInt(tmp[4])) );
             }
             if (command.matches("sell [a-zA-Z]{5,10} in place [0-9]{1,2}")){
                 String[] tmp = command.split(" ");

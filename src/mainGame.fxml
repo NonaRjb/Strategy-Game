@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.shape.Line?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('grass1.jpg')" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainGameController">
+
+<AnchorPane fx:id="gameAnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('grass1.jpg')" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainGameController">
 <children>
     <FlowPane layoutX="14.0" layoutY="8.0" prefHeight="265.0" prefWidth="266.0" vgap="20.0">
         <children>
@@ -81,5 +78,13 @@
             <Image url="@home.png" />
         </image>
     </ImageView>
+      <TilePane layoutX="1240.0" layoutY="38.0" prefHeight="66.0" prefWidth="342.0">
+         <children>
+            <TextField editable="false" prefHeight="27.0" prefWidth="131.0" text="Coins:" />
+            <TextField fx:id="coins"/>
+            <TextField editable="false" prefHeight="27.0" prefWidth="138.0" text="XPs:" />
+            <TextField fx:id="xps"/>
+         </children>
+      </TilePane>
 </children>
 </AnchorPane>

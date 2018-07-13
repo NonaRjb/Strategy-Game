@@ -50,15 +50,17 @@ public class Barracks extends Armory{
     }
 
     @Override
-    public void levelUp(Price gamePrice) {
-        if (gamePrice.getPrice() >= super.getLevelUpPrice().getPrice()) {
+    public String levelUp(){//Price gamePrice) {
+        String s = "";
+        if (Game.property.getPrice() >= super.getLevelUpPrice().getPrice()) {
             super.level++;
-            gamePrice.decreasePrice(this.getLevelUpPrice());
+            Game.property.decreasePrice(this.getLevelUpPrice());
             super.range = (int) ((double) super.range * 1.15);
             this.soldiersInitHealth.increaseHealth( (int)(this.soldiersInitHealth.getHealthLevel()*0.2) );
             this.soldierCompensationTime = new Time( (int)(this.soldierCompensationTime.getTime()*0.9) );
-            System.out.println("Barracks id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
+            s = ("Barracks id: " + super.id + " is successfully upgraded to Level " + super.level + " !");
         }
+        return s;
     }
 
 

@@ -56,7 +56,9 @@ abstract class Armory implements DetailShow {
     }
 
     // Other Methods
-    public void levelUp(Price gamePrice){}
+    public String levelUp(){//Price gamePrice){
+        return "";
+    }
 
     public void setStopped(boolean stopped , int power, Time currentTime) {
         this.isStopped = stopped;
