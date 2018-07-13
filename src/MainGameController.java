@@ -36,7 +36,6 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private ArrayList<ImageView> soldiersIMV = new ArrayList<>();
     private ArrayList<ImageView> previousSoldierIMV = new ArrayList<>();
     private ArrayList<Label> armoryLbls = armoryId();
-    private int idAdded = 0;
 
     private Image placeHolderImage;
     private Image barracksImage;
@@ -103,14 +102,13 @@ public class MainGameController implements ArmoryPlaceBuilder{
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousInvadersIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousSoldierIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousShotsIMV);
+        ((AnchorPane)GameFX.root).getChildren().removeAll(armoryLbls);
         ((AnchorPane)GameFX.root).getChildren().addAll(shotsIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(invadersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(heroIMV);
-        if (idAdded == 0){
-            ((AnchorPane)GameFX.root).getChildren().addAll(armoryLbls);
-            idAdded = 1;
-        }
+        ((AnchorPane)GameFX.root).getChildren().addAll(armoryLbls);
+
         //((AnchorPane)GameFX.root).getChildren().setAll( primaryNodes );//, (ArrayList<Node>)invadersIMV );
         //((AnchorPane)GameFX.root).getChildren().addAll( invadersIMV );
         previousHeroIMV = heroIMV;
@@ -370,7 +368,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
         PlaceHolder[] armories = playGround.getPlaceHolder();
         for (PlaceHolder armory : armories){
             Label label = new Label();
-            label.setText(Integer.toString(armory.getId()));
+            label.setText(Integer.toString(armory.getId()) + 1);
             label.setLayoutX(armory.getPlaceCoordinate().getY()-20);
             label.setLayoutY(armory.getPlaceCoordinate().getX()-20);
             label.setStyle("-fx-background-color: #FFFF00");

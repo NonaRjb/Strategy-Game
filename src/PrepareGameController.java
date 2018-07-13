@@ -32,7 +32,6 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
     //private ArrayList<ImageView> armoryPlaces = armoryPlaceBuilder();
     private String coinCounter;
     private String xpCounter;
-    private int idAdded = 0;
 
     @FXML
     private TextField textField = new TextField();
@@ -196,12 +195,11 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
         heroIMV = this.heroBuilder();
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousHeroIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousSoldierIMV);
+        ((AnchorPane)GameFX.root).getChildren().removeAll(armoryLbls);
         ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(heroIMV);
-        if(idAdded == 0){
-            ((AnchorPane)GameFX.root).getChildren().addAll(armoryLbls);
-            idAdded = 1;
-        }
+        ((AnchorPane)GameFX.root).getChildren().addAll(armoryLbls);
+
         previousSoldierIMV = soldiersIMV;
         previousHeroIMV = heroIMV;
 
@@ -244,7 +242,7 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
         PlaceHolder[] armories = playGround.getPlaceHolder();
         for (PlaceHolder armory : armories){
             Label label = new Label();
-            label.setText(Integer.toString(armory.getId()));
+            label.setText(Integer.toString(armory.getId()) + 1);
             label.setLayoutX(armory.getPlaceCoordinate().getY()-20);
             label.setLayoutY(armory.getPlaceCoordinate().getX()-20);
             label.setStyle("-fx-background-color: #FFFF00");
