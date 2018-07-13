@@ -15,6 +15,10 @@ public class PlaceHolder implements DetailShow{
     public Coordinate getPlaceCoordinate() { return placeCoordinate; }
     public Armory getOwner() { return owner; }
 
+    public int getId() {
+        return id;
+    }
+
     // Setters
     public void setOwner(Armory owner) { this.owner = owner; }
 

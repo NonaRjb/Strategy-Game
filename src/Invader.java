@@ -18,6 +18,7 @@ abstract class Invader implements DetailShow, InvaderAttack{
     private Time burningTime;
     private Time freezingTime;
     private int icePower = 0;
+    private int pathID;
 
     static final int numberOfInvaderKinds = 13;
 
@@ -66,6 +67,9 @@ abstract class Invader implements DetailShow, InvaderAttack{
     public int getMovementSpeed() {
         return movementSpeed;
     }
+    public int getPathID(){
+        return pathID;
+    }
 
     public boolean isFighting() {
         return isFighting;
@@ -80,6 +84,11 @@ abstract class Invader implements DetailShow, InvaderAttack{
         freezingTime = currentTime;
         isFrozen = frozen;
     }
+
+    public void setPathID(int pathID) {
+        this.pathID = pathID;
+    }
+
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }

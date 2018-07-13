@@ -24,7 +24,7 @@ public class Soldier implements DetailShow{
         this.attackRate = new Time(2); // attacks every 2 time units
         this.speed = 3; // moves 3 pixels every time unit
         this.shootPower = 10;
-        this.range = 2; // low Range
+        this.range = 50; // low Range
         this.barracksOwner = barracksOwner;
         this.soldierID = soldierID;
         this.numberOfKillings = 0;

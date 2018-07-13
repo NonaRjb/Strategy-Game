@@ -33,12 +33,12 @@ public class Icer extends Invader{
             return false;
         }else {
             this.setLastAttack(currentTime);
-            PlaceHolder target = (PlaceHolder) targets.get(0);
-            int distance = Coordinate.distance(  target.getPlaceCoordinate(), this.coordinate ) ;
-            for (Object placeHolder : targets) {
-                if ( Coordinate.distance( ((PlaceHolder) placeHolder).getPlaceCoordinate(), this.coordinate ) < distance) {
-                    distance = Coordinate.distance( ((PlaceHolder) placeHolder).getPlaceCoordinate(), this.coordinate );
-                    target = (PlaceHolder) placeHolder;
+            Armory target = (Armory) targets.get(0);
+            int distance = Coordinate.distance(  target.getCoordinate(), this.coordinate ) ;
+            for (Object armory : targets) {
+                if ( Coordinate.distance( ((Armory) armory).getCoordinate(), this.coordinate ) < distance) {
+                    distance = Coordinate.distance( ((Armory) armory).getCoordinate(), this.coordinate );
+                    target = (Armory) armory;
                 }
             }
             super.setTarget(target);

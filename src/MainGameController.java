@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,6 +35,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private ImageView previousHeroIMV = new ImageView();
     private ArrayList<ImageView> soldiersIMV = new ArrayList<>();
     private ArrayList<ImageView> previousSoldierIMV = new ArrayList<>();
+    private ArrayList<Label> armoryLbls = armoryId();
+    private int idAdded = 0;
 
     private Image placeHolderImage;
     private Image barracksImage;
@@ -108,6 +107,10 @@ public class MainGameController implements ArmoryPlaceBuilder{
         ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(invadersIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(heroIMV);
+        if (idAdded == 0){
+            ((AnchorPane)GameFX.root).getChildren().addAll(armoryLbls);
+            idAdded = 1;
+        }
         //((AnchorPane)GameFX.root).getChildren().setAll( primaryNodes );//, (ArrayList<Node>)invadersIMV );
         //((AnchorPane)GameFX.root).getChildren().addAll( invadersIMV );
         previousHeroIMV = heroIMV;
@@ -360,6 +363,20 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 }
             }
             return armoryPlaces;
+    }
+
+    public ArrayList<Label> armoryId(){
+        ArrayList<Label> armoryLbl= new ArrayList<>();
+        PlaceHolder[] armories = playGround.getPlaceHolder();
+        for (PlaceHolder armory : armories){
+            Label label = new Label();
+            label.setText(Integer.toString(armory.getId()));
+            label.setLayoutX(armory.getPlaceCoordinate().getY()-20);
+            label.setLayoutY(armory.getPlaceCoordinate().getX()-20);
+            label.setStyle("-fx-background-color: #FFFF00");
+            armoryLbl.add(label);
+        }
+        return armoryLbl;
     }
 
     public ArrayList<ImageView> InvaderBuilder(){

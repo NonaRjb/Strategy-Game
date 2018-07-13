@@ -17,15 +17,15 @@ public class Map {
         tileNo = new ArrayList[9];
 
 
-        Path path0 = new Path();
-        Path path1 = new Path();
-        Path path2 = new Path();
-        Path path3 = new Path();
-        Path path4 = new Path();
-        Path path5 = new Path();
-        Path path6 = new Path();
-        Path path7 = new Path();
-        Path path8 = new Path();
+        Path path0 = new Path(0);
+        Path path1 = new Path(1);
+        Path path2 = new Path(2);
+        Path path3 = new Path(3);
+        Path path4 = new Path(4);
+        Path path5 = new Path(5);
+        Path path6 = new Path(6);
+        Path path7 = new Path(7);
+        Path path8 = new Path(8);
 
 
 
@@ -367,9 +367,9 @@ public class Map {
 
     // returns the next coordinate of a given coordinate
     // if the given coordinate is the last coordinate of the path the method returns (450,1599)
-    public Coordinate nextCoordinate(Coordinate currentCoordinate){
+    public Coordinate nextCoordinate(Coordinate currentCoordinate , int pathId){
         for (Path path : paths ) {
-            if(path.isInWay(currentCoordinate)){
+            if(path.isInWay(currentCoordinate) && path.getId() == pathId){
                 return path.nextCoordinate(currentCoordinate);
             }
         }

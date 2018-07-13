@@ -169,10 +169,10 @@ public class GameController implements DetailShow {
 
             if( command.contains("move hero to") ){
                 String[] tmp = command.split(" ");  // (x,y)
-                String coordinateString = tmp[3];
-                int x = coordinateString.charAt(1);
-                int y = coordinateString.charAt(3);
-                game.moveHero( new Coordinate(x,y) );
+                String[] XY = tmp[3].split("[(),]");
+                Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
+                game.moveHero(coordinate);
+
             }
 
             //TODO hero stop time
@@ -248,12 +248,12 @@ public class GameController implements DetailShow {
                 game.sellArmory(Integer.parseInt(tmp[4]));
             }
             if (command.contains("move hero to")){
-                String[] tmp = command.split("");
-                if (tmp.length == 4){
+                String[] tmp = command.split(" ");
+              //  if (tmp.length == 4){
                     String[] XY = tmp[3].split("[(),]");
                     Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
                     game.moveHero(coordinate);
-                }
+              //  }
             }
             if (command.contains("set infantry")){ ////set infantry [0 1 2] of barracks in place N to go to (X,Y)
                 String[] tmp = command.split(" ");

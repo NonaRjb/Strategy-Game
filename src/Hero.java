@@ -35,7 +35,7 @@ public class Hero implements DetailShow {
         healthLevel = new HealthLevel(1); //Hero's health unit is one
         delayConst = 10; //Just to be here! should be changed
         speedLevel = 1; // High Speed
-        range = 4; // High Range
+        range = 100; // High Range
         this.xpCnt = 0;
         numberOfKillings = 0;
         deathNum = 0;
@@ -142,8 +142,8 @@ public class Hero implements DetailShow {
     }
 
     public void moveTo(Coordinate coordinate){
-
-        this.coordinate = coordinate;
+        this.coordinate.setX(coordinate.getX());
+        this.coordinate.setY(coordinate.getY());
     }
 
     @Override

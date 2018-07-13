@@ -314,7 +314,7 @@ public class Game {
             }
             Coordinate nextCoordinate;
             for (int i = 1; i <= currentSpeed; i++) {
-                nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
+                nextCoordinate = playGround.nextCoordinate(invader.getCoordinate() , invader.getPathID());
                 invader.setCoordinate(nextCoordinate);
                 if (nextCoordinate.getX() == 450 && nextCoordinate.getY() == 1599){
                     //invaders.remove(invader);  //concurrent solved
@@ -363,12 +363,13 @@ public class Game {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets hero's coordinate
     public void moveHero(Coordinate coordinate){
-        if (playGround.isInWay(coordinate)){
+        hero.moveTo(coordinate);
+        /*if (playGround.isInWay(coordinate)){
             hero.moveTo(coordinate);
         }
         else {
             System.out.println("Moving to the this coordinate is not allowed");
-        }
+        }*/
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // sets Shot's coordinate
@@ -428,47 +429,67 @@ public class Game {
         Random rand = new Random();
         int enemyKindNumber= rand.nextInt( Invader.numberOfInvaderKinds );
         Coordinate invaderEnteringCoordinate = playGround.randomOriginMaker();
+        int pathId = 0;
+        int cnt = 0;
+        for (Coordinate coordinate : playGround.getPathOriginCoordinate()){
+            if(coordinate.getX() == invaderEnteringCoordinate.getX() && coordinate.getY() == invaderEnteringCoordinate.getY()){
+                pathId = cnt;
+                break;
+            }
+            cnt++;
+        }
         switch( enemyKindNumber ){
             case 0:
                 newInvader = new Henchman( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
-
+                newInvader.setPathID(pathId);
                 break;
             case 1:
                 newInvader = new Skipper( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
-
+                newInvader.setPathID(pathId);
                 break;
             case 2:
                 newInvader = new Bane( thisRoundNumberOfInvaders ,invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 3:
                 newInvader = new Sparrow( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 4:
                 newInvader = new Boomer( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 5:
                 newInvader = new Healer( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 6:
                 newInvader = new Motivator( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 7:
                 newInvader = new Icer( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 8:
                 newInvader = new Miner( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 9:
                 newInvader = new Smelly( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 10:
                 newInvader = new Hopper( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 11:
                 newInvader = new ExG( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             case 12:
                 newInvader = new HockeyMaskMan( thisRoundNumberOfInvaders, invaderEnteringCoordinate );
+                newInvader.setPathID(pathId);
                 break;
             default:
                 newInvader = null;
@@ -795,11 +816,15 @@ public class Game {
             //Todo is in mission mix with go after Invader
             if (hero.isInMission() == false) {
                 targets = findInvaders(hero.getCoordinate(), hero.getRange(), TargetPriority.AllInRange);
+                ArrayList<Integer> idxs = new ArrayList<>();
                 if (targets != null) {
                     for (Invader invader : targets) {
                         if (invader instanceof Sparrow) {
-                            targets.remove(invader);
+                            idxs.add(targets.indexOf(invader));
                         }
+                    }
+                    for (int i = idxs.size()-1; i > 0; i++){
+                        targets.remove(idxs.get(i));
                     }
                 }
                 if (targets != null) {
@@ -826,7 +851,7 @@ public class Game {
         if (invaderFound) {
             Coordinate nextCoordinate = hero.getCoordinate();
             while (Coordinate.distance(hero.getCoordinate(), target.getCoordinate()) != hero.getRange()) {
-                nextCoordinate = playGround.nextCoordinate(target.getCoordinate());
+                nextCoordinate = playGround.nextCoordinate(target.getCoordinate(), target.getPathID());
             }
             if (nextCoordinate != null) {
                 hero.goAfterInvader(target, nextCoordinate);
@@ -884,7 +909,7 @@ public class Game {
             if(invaderFound){
                 Coordinate nextCoordinate = targetSoldier.getCoordinate();
                 while (Coordinate.distance(targetSoldier.getCoordinate(), targetInvader.getCoordinate()) != targetSoldier.getRange()){
-                    nextCoordinate = playGround.nextCoordinate(targetInvader.getCoordinate());
+                    nextCoordinate = playGround.nextCoordinate(targetInvader.getCoordinate(), targetInvader.getPathID());
                 }
                 if(nextCoordinate != null) {
                     if (targetSoldier.getBarracksOwner() != null){

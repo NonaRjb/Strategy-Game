@@ -3,13 +3,19 @@ import java.util.ArrayList;
 public class Path {
 
     private ArrayList<Coordinate> pathWay = new ArrayList<>();
+    private int id;
 
     // Constructor
-    public Path() {}
+    public Path(int id) {
+       this.id = id;
+    }
 
     // Other Methods
     public void buildPath(int x, int y){
         pathWay.add( new Coordinate(x,y) );
+    }
+    public int getId(){
+        return id;
     }
 
     // checks if the path contains the given coordinate

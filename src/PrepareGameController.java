@@ -6,12 +6,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -28,9 +25,14 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
     private ArrayList<ImageView> soldiersIMV;
     private ArrayList<ImageView> previousSoldierIMV;
     private PlaceHolder[] placeOfArmories = playGround.getPlaceHolder();
+    private ImageView heroIMV = new ImageView();
+    private ImageView previousHeroIMV = new ImageView();
+    private Image heroImage;
+    private ArrayList<Label> armoryLbls = armoryId();
     //private ArrayList<ImageView> armoryPlaces = armoryPlaceBuilder();
     private String coinCounter;
     private String xpCounter;
+    private int idAdded = 0;
 
     @FXML
     private TextField textField = new TextField();
@@ -65,6 +67,7 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
     @FXML
     private void initialize() {
 
+        this.heroImage = new Image("./hero.png");
         coinCounter = ""+gameController.getGame().getProperty().getPrice();
         xpCounter = ""+gameController.getGame().getXP();
         coins.setText(coinCounter);
@@ -190,9 +193,17 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
         ID_6.setImage(armories.get(6));
         ID_7.setImage(armories.get(7));
         soldiersIMV = this.soldierBuilder();
+        heroIMV = this.heroBuilder();
+        ((AnchorPane)GameFX.root).getChildren().removeAll(previousHeroIMV);
         ((AnchorPane)GameFX.root).getChildren().removeAll(previousSoldierIMV);
         ((AnchorPane)GameFX.root).getChildren().addAll(soldiersIMV);
+        ((AnchorPane)GameFX.root).getChildren().addAll(heroIMV);
+        if(idAdded == 0){
+            ((AnchorPane)GameFX.root).getChildren().addAll(armoryLbls);
+            idAdded = 1;
+        }
         previousSoldierIMV = soldiersIMV;
+        previousHeroIMV = heroIMV;
 
         coinCounter = ""+gameController.getGame().getProperty().getPrice();
         xpCounter = ""+gameController.getGame().getXP();
@@ -214,5 +225,31 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
             soldierIMV.add(imageView);
         }
         return soldierIMV;
+    }
+
+    public ImageView heroBuilder(){
+        ImageView heroIMV = new ImageView();
+        //Image heroIMG = new Image("./hero.png");
+        Hero hero = gameController.getGame().getHero();
+        heroIMV.setImage(this.heroImage);
+        heroIMV.setX(hero.getCoordinate().getY()-50);
+        heroIMV.setY(hero.getCoordinate().getX()-50);
+        heroIMV.setFitWidth(100);
+        heroIMV.setFitHeight(100);
+        return heroIMV;
+    }
+
+    public ArrayList<Label> armoryId(){
+        ArrayList<Label> armoryLbl= new ArrayList<>();
+        PlaceHolder[] armories = playGround.getPlaceHolder();
+        for (PlaceHolder armory : armories){
+            Label label = new Label();
+            label.setText(Integer.toString(armory.getId()));
+            label.setLayoutX(armory.getPlaceCoordinate().getY()-20);
+            label.setLayoutY(armory.getPlaceCoordinate().getX()-20);
+            label.setStyle("-fx-background-color: #FFFF00");
+            armoryLbl.add(label);
+        }
+        return armoryLbl;
     }
 }

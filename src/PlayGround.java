@@ -24,6 +24,15 @@ public class PlayGround {
                                          new Coordinate(899,590),
                                          new Coordinate(899,600),
                                          new Coordinate(899,610)};
+    private final int[] pathOriginIDs ={ 0,
+                                         1,
+                                         2,
+                                         3,
+                                         4,
+                                         5,
+                                         6,
+                                         7,
+                                         8};
 
     PlaceHolder[] placeHolder = new PlaceHolder[numberOfPlaces];
 
@@ -64,8 +73,8 @@ public class PlayGround {
 
     // returns the next coordinate of a given coordinate
     // if the given coordinate is the last coordinate of the path the method returns (450,1599)
-    public Coordinate nextCoordinate (Coordinate currentCoordinate){
-        return map.nextCoordinate(currentCoordinate);
+    public Coordinate nextCoordinate (Coordinate currentCoordinate, int pathId){
+        return map.nextCoordinate(currentCoordinate, pathId);
     }
 
     // Just to see if a specific Coordinate is in a path
@@ -77,4 +86,7 @@ public class PlayGround {
         return map;
     }
 
+    public Coordinate[] getPathOriginCoordinate() {
+        return pathOriginCoordinate;
+    }
 }
