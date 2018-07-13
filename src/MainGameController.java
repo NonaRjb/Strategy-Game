@@ -67,12 +67,14 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private Image bulletImage;
     private Image fireImage;
     private Image iceImage;
+    private Image poisonImage;
 
     private Image heroImage;
     private Image soldierImage;
 
     private DropShadow burningEffect;
     private DropShadow frozenEffect;
+    private DropShadow toxicantEffect;
 
     private String coinCounter;
     private String xpCounter;
@@ -257,6 +259,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
         this.bulletImage = new Image("./bullet.png");
         this.fireImage = new Image("./fire.png");
         this.iceImage = new Image("./ice.png");
+        this.poisonImage = new Image("./poison.png");
 
         this.heroImage = new Image("./hero.png");
         this.soldierImage = new Image("./soldier.png");
@@ -268,6 +271,10 @@ public class MainGameController implements ArmoryPlaceBuilder{
         this.frozenEffect = new DropShadow();
         this.frozenEffect.setColor( Color.BLUE );
         this.frozenEffect.setRadius(40);
+
+        this.toxicantEffect = new DropShadow();
+        this.toxicantEffect.setColor( Color.GREEN );
+        this.toxicantEffect.setRadius(40);
 
         doCommand.setOnAction( event -> {
             comments.setText( gameController.playRound( textField.getText() ) );
@@ -373,6 +380,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Henchman){
                 //Image image = new Image("./Henchman1.png");
@@ -388,6 +397,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Skipper){
                 //Image image = new Image("./skipper.png");
@@ -403,6 +414,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Sparrow){
                 //Image image = new Image("./sparrow.png");
@@ -418,6 +431,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Boomer){
                 //Image image = new Image("./boomer.png");
@@ -433,6 +448,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Healer){
                 //Image image = new Image("./healer.png");
@@ -448,6 +465,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Motivator){
                 //Image image = new Image("./motivator.png");
@@ -463,6 +482,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Icer){
                 //Image image = new Image("./icer.png");
@@ -478,6 +499,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Miner){
                 //Image image = new Image("./miner.png");
@@ -493,6 +516,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Smelly){
                 //Image image = new Image("./smelly.png");
@@ -508,6 +533,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Hopper){
                 //Image image = new Image("./hopper.png");
@@ -523,6 +550,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof ExG){
                 //Image image = new Image("./exg.png");
@@ -538,6 +567,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof HockeyMaskMan){
                 //Image image = new Image("./hockeymaskman.png");
@@ -553,6 +584,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     imageView.setEffect( frozenEffect );
                 if( invader.isBurning() )
                     imageView.setEffect( burningEffect );
+                if( invader.isPoisoned() )
+                    imageView.setEffect( toxicantEffect );
                 invadersIMV.add(imageView);
             }
         }
@@ -594,12 +627,25 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setImage(this.fireImage);
                 imageView.setX(shot.getCoordinate().getY()-80);
                 imageView.setY(shot.getCoordinate().getX()-100);
-                imageView.setFitHeight(currentFire.getOwner().getRange()); //TODO: fire range
+                imageView.setFitHeight(currentFire.getOwner().getRange());
                 imageView.setFitWidth(currentFire.getOwner().getRange());
                 imageView.prefWidth(currentFire.getOwner().getRange());
                 imageView.prefHeight(currentFire.getOwner().getRange());
                 shotsIMV.add(imageView);
-            } /*else if (shot instanceof LaserShot){
+            } else if( shot instanceof Poison ) {
+                //Image image = new Image("./fire.png");
+                Poison currentPoison = (Poison) shot;
+                ImageView imageView = new ImageView();
+                imageView.setImage(this.poisonImage);
+                imageView.setX(shot.getCoordinate().getY()-80);
+                imageView.setY(shot.getCoordinate().getX()-100);
+                imageView.setFitHeight(currentPoison.getRange());
+                imageView.setFitWidth(currentPoison.getRange());
+                imageView.prefWidth(currentPoison.getRange());
+                imageView.prefHeight(currentPoison.getRange());
+                shotsIMV.add(imageView);
+                //System.out.println("Poison");
+            }/*else if (shot instanceof LaserShot){
                 LaserShot currentLaserShot = (LaserShot)shot;
                 Line line = new Line();
                 line.setFill(Color.RED);

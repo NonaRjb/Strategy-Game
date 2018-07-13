@@ -509,6 +509,12 @@ public class Game {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     public void doAttacks(){
 
+        this.removedShots = new ArrayList<>();
+        for( Shot shot: gameShots ){
+            effectShot( shot ); //concurrent modification solved
+        }
+        this.gameShots.removeAll( this.removedShots );
+
         for( Armory armory : armories ){
             armoryAttackGame( armory );
         }
@@ -522,12 +528,6 @@ public class Game {
         for (Soldier soldier : soldiers){
             soldierAttackGame(soldier);
         }
-
-        this.removedShots = new ArrayList<>();
-        for( Shot shot: gameShots ){
-            effectShot( shot ); //concurrent modification solved
-        }
-        this.gameShots.removeAll( this.removedShots );
 
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1004,8 +1004,10 @@ public class Game {
             }
         } else if( shot instanceof Poison ){
             ArrayList<Invader> poisonedInvaders = findInvaders( shot.getCoordinate(), ((Poison) shot).getRange(), TargetPriority.AllInRange );
-            for (Invader invader : poisonedInvaders) {
-                invader.setPoisoned( true );
+            if( poisonedInvaders != null ) {
+                for (Invader invader : poisonedInvaders) {
+                    invader.setPoisoned(true);
+                }
             }
             //gameShots.remove( shot );
             this.removedShots.add( shot );
