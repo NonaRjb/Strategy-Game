@@ -373,7 +373,8 @@ public class Map {
                 return path.nextCoordinate(currentCoordinate);
             }
         }
-        return null;
+        //return null;//todo
+        return currentCoordinate;
     }
 
     // Just to see if a specific Coordinate is in a path

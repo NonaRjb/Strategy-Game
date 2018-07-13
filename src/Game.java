@@ -26,6 +26,7 @@ public class Game {
     private int invaderCounter = 1;
     private static boolean loser = false;
     private ArrayList<Shot> removedShots;
+    private ArrayList<Invader> removedInvaders;
 
     // Constructor
     public Game() {
@@ -202,9 +203,11 @@ public class Game {
 
         //move Soldier and Hero with direct command from the player
 
+        removedInvaders = new ArrayList<>();
         for (Invader invader: invaders ) {
             this.moveInvader(invader );
         }
+        invaders.removeAll( removedInvaders );
 
         /*for( Soldier soldier: soldiers){
             this.moveSoldier( soldier );
@@ -248,7 +251,8 @@ public class Game {
                 nextCoordinate = playGround.nextCoordinate(invader.getCoordinate());
                 invader.setCoordinate(nextCoordinate);
                 if (nextCoordinate.getX() == 450 && nextCoordinate.getY() == 1599){
-                    invaders.remove(invader);
+                    //invaders.remove(invader);  //concurrent solved
+                    removedInvaders.add(invader);
                     invaderCounter--;
                     if(invaderCounter == 0){
                         loser = true;
@@ -480,12 +484,14 @@ public class Game {
         }
         //
 
-        Invader targetInvader;
+        Invader targetInvader = null;
         if( invadersInRange != null ) {
             if (armory.getTargetPriority() == TargetPriority.SpecificTarget && invadersInRange.contains(armory.getSpecificTargetInvader()))
                 targetInvader = armory.getSpecificTargetInvader();
-            else
-                targetInvader = invadersInRange.get(0);
+            else {
+                if (invadersInRange.size() > 0)
+                    targetInvader = invadersInRange.get(0);
+            }
         } else {
             targetInvader = null;
         }
@@ -504,6 +510,8 @@ public class Game {
                 if (!currentHellgate.isBurning()) {
                     if (targetInvader != null) {
                         Shot attackShot = currentHellgate.attack(null, null);
+                        if( attackShot != null )
+                            this.gameShots.add( attackShot );
                         currentHellgate.setBurning(true);
                     }
                 }
@@ -964,16 +972,19 @@ public class Game {
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void botherBurnings(){
+        ArrayList<Invader> removedInvaders = new ArrayList<>();
         for( Invader invader: invaders ){
             if( invader.isBurning() ){
                 if( invader instanceof Icer ){
                     System.out.println("Icer got Burned !");
-                    invaders.remove(invader);
+                    removedInvaders.add( invader );
+                    //invaders.remove(invader); //Concurrent exception solved
                 } else {
                     invader.decreaseBurningTime();
                 }
             }
         }
+        invaders.removeAll( removedInvaders );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void botherToxicants(){
@@ -1127,26 +1138,32 @@ public class Game {
     public void naturalEventHappening(){
         if( armories.size()>0 ) {
             Random rand = new Random();
-            int poorArmoryIndex = rand.nextInt(armories.size());
-            Armory poorArmory = armories.get(poorArmoryIndex);
-            for (Invader invader : invaders) {
-                if (invader.getTarget(0).equals(poorArmory)) {
-                    invader.setFighting(false);
-                    invader.clearTarget();
-                }
-            }
-            if (poorArmory instanceof Barracks) {
-                for (Soldier soldier : soldiers) {
-                    if (soldier.getBarracksOwner().getId() == poorArmory.getId()) {
-                        soldiers.remove(soldier);
+            if (armories.size() > 0) {
+                int poorArmoryIndex = rand.nextInt(armories.size());
+                Armory poorArmory = armories.get(poorArmoryIndex);
+                for (Invader invader : invaders) {
+                    if( invader.getTarget(0)!=null ) {
+                        if (invader.getTarget(0).equals(poorArmory)) {
+                            invader.setFighting(false);
+                            invader.clearTarget();
+                        }
                     }
                 }
-                ((Barracks) poorArmory).removeSoldier(0, gameTime);
-                ((Barracks) poorArmory).removeSoldier(1, gameTime);
-                ((Barracks) poorArmory).removeSoldier(2, gameTime);
+                if (poorArmory instanceof Barracks) {
+                    for (Soldier soldier : soldiers) {
+                        if (soldier.getBarracksOwner().getId() == poorArmory.getId()) {
+                            soldiers.remove(soldier);
+                        }
+                    }
+                    ((Barracks) poorArmory).removeSoldier(0, gameTime);
+                    ((Barracks) poorArmory).removeSoldier(1, gameTime);
+                    ((Barracks) poorArmory).removeSoldier(2, gameTime);
+                }
+                armories.remove(poorArmory);
+                System.out.println("Sorry . It is natural :))");
             }
-            armories.remove(poorArmory);
-            System.out.println("Sorry . It is natural :))");
+        } else {
+            System.out.println("It is natural but you are too poor :)))");
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////

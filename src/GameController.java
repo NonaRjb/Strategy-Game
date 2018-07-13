@@ -50,7 +50,7 @@ public class GameController implements DetailShow {
     }
 
     public void initiateRound(){
-        game.setInvaderRate( new Time(4-this.currentRound) ); //todo
+        game.setInvaderRate( new Time(10-this.currentRound) ); //todo
         game.setThisRoundNumberOfInvaders((this.currentRound+1)*10);
     }
 

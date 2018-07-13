@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -67,6 +68,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
 
     private Image heroImage;
     private Image soldierImage;
+
+    private DropShadow burningEffect;
 
 
 
@@ -148,6 +151,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 //TODO now infinity Rounds!
                 if (Game.getLoser()){
                     try {
+                        timer.cancel();
                         FXMLLoader loserPageLoader = new FXMLLoader(getClass().getResource("loserPage.fxml"));
                         GameFX.root = loserPageLoader.load();
                         Scene loserPageScene = new Scene(GameFX.root,1600,900);
@@ -158,8 +162,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
                     } catch (IOException io){
                         io.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     try {
                         timer.cancel();
                         FXMLLoader detailGameLoader = new FXMLLoader(getClass().getResource("detailGame.fxml"));
@@ -232,6 +235,10 @@ public class MainGameController implements ArmoryPlaceBuilder{
 
         this.heroImage = new Image("./hero.png");
         this.soldierImage = new Image("./soldier.png");
+
+        this.burningEffect = new DropShadow();
+        this.burningEffect.setColor( Color.ORANGERED );
+        this.burningEffect.setRadius(40);
 
         doCommand.setOnAction( event -> {
             comments.setText( gameController.playRound( textField.getText() ) );
@@ -333,6 +340,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Henchman){
                 //Image image = new Image("./Henchman1.png");
@@ -344,6 +353,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Skipper){
                 //Image image = new Image("./skipper.png");
@@ -355,6 +366,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Sparrow){
                 //Image image = new Image("./sparrow.png");
@@ -366,6 +379,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Boomer){
                 //Image image = new Image("./boomer.png");
@@ -377,6 +392,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Healer){
                 //Image image = new Image("./healer.png");
@@ -388,6 +405,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Motivator){
                 //Image image = new Image("./motivator.png");
@@ -399,6 +418,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Icer){
                 //Image image = new Image("./icer.png");
@@ -410,6 +431,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Miner){
                 //Image image = new Image("./miner.png");
@@ -421,6 +444,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Smelly){
                 //Image image = new Image("./smelly.png");
@@ -432,6 +457,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof Hopper){
                 //Image image = new Image("./hopper.png");
@@ -443,6 +470,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof ExG){
                 //Image image = new Image("./exg.png");
@@ -454,6 +483,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             } else if (invader instanceof HockeyMaskMan){
                 //Image image = new Image("./hockeymaskman.png");
@@ -465,6 +496,8 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 imageView.setFitWidth(50);
                 imageView.prefWidth(50);
                 imageView.prefHeight(50);
+                if( invader.isBurning() )
+                    imageView.setEffect( burningEffect );
                 invadersIMV.add(imageView);
             }
         }
@@ -501,14 +534,15 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 shotsIMV.add(imageView);
             } else if (shot instanceof Fire) {
                 //Image image = new Image("./fire.png");
+                Fire currentFire = (Fire)shot;
                 ImageView imageView = new ImageView();
                 imageView.setImage(this.fireImage);
-                imageView.setX(shot.getCoordinate().getY() - 50);
-                imageView.setY(shot.getCoordinate().getX() - 50);
-                imageView.setFitHeight(100); //TODO: fire range
-                imageView.setFitWidth(100);
-                imageView.prefWidth(100);
-                imageView.prefHeight(100);
+                imageView.setX(shot.getCoordinate().getY()-80);
+                imageView.setY(shot.getCoordinate().getX()-100);
+                imageView.setFitHeight(currentFire.getOwner().getRange()); //TODO: fire range
+                imageView.setFitWidth(currentFire.getOwner().getRange());
+                imageView.prefWidth(currentFire.getOwner().getRange());
+                imageView.prefHeight(currentFire.getOwner().getRange());
                 shotsIMV.add(imageView);
             } /*else if (shot instanceof LaserShot){
                 LaserShot currentLaserShot = (LaserShot)shot;
