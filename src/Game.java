@@ -552,9 +552,11 @@ public class Game {
             armoryAttackGame( armory );
         }
 
+        removedInvaders = new ArrayList<>();
         for( Invader invader : invaders ){
             invaderAttackGame( invader );
         }
+        invaders.removeAll( removedInvaders );
 
         heroAttackGame();
 
@@ -842,7 +844,7 @@ public class Game {
                 isBoomer = true;
             }
         }
-        if (isBoomer)   invaders.remove(invader);
+        if (isBoomer)   removedInvaders.add(invader);//invaders.remove(invader);  //concurrent
 
     }
 
@@ -1006,6 +1008,7 @@ public class Game {
                     if (targetSoldier.getHealth().getHealthLevel() <= shot.getPower()){
                         s=("Soldier got killed!")+"\n";
                         targetSoldier.getBarracksOwner().removeSoldier( targetSoldier.getSoldierID(), gameTime );
+                        removedShots.addAll( cleanShots( targetSoldier ) );
                         soldiers.remove(targetSoldier);
                         if( currentBullet.getOwner() instanceof Invader ){
                             ((Invader)currentBullet.getOwner()).addNumberOfKillings();
@@ -1021,6 +1024,7 @@ public class Game {
                 if (shot.getCoordinate().isEqual(targetHero.getCoordinate())) {
                     if (targetHero.getHealthLevel().getHealthLevel() <= shot.getPower()){
                         s=("Hero will be idle for " + hero.getDelayConst() + " seconds")+"\n";
+                        removedShots.addAll( cleanShots( hero ) );
                         hero.addDeathNum();
                         hero.setIdle(gameTime);
                         if( currentBullet.getOwner() instanceof Invader ){
@@ -1037,6 +1041,7 @@ public class Game {
                     if (targetArmory.getHealthDegree().getHealthLevel() <= shot.getPower()){
                         s=("The Armory got ruined! Place " + targetArmory.getId() + " is now empty!")+"\n";
                         playGround.getPlaceHolder(targetArmory.getId()).setOwner(null);
+                        removedShots.addAll( cleanShots( targetArmory ) );
                         armories.remove(targetArmory);
                     }
                     this.removedShots.add( shot );
@@ -1119,19 +1124,68 @@ public class Game {
 
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private ArrayList<Shot> cleanShots( Invader invader ){
+    private ArrayList<Shot> cleanShots( Object target ){
+        ArrayList<Shot> removedShots = new ArrayList<>();
+        if( target instanceof Invader ){
+            Invader goalInvader = (Invader)target;
+            for( Shot shot : gameShots ) {
+                if (shot.getTarget() instanceof Invader) {
+                    Invader targetInvader = (Invader) shot.getTarget();
+                    if (targetInvader.equals(goalInvader)) {
+                        removedShots.add(shot);
+                    }
+                }
+            }
+        } else if( target instanceof Armory ){
+            Armory goalArmory = (Armory)target;
+            for( Shot shot : gameShots ) {
+                if (shot.getTarget() instanceof Armory) {
+                    Armory targetArmory = (Armory) shot.getTarget();
+                    if (targetArmory.equals(goalArmory)) {
+                        removedShots.add(shot);
+                    }
+                }
+            }
+        } else if( target instanceof Soldier ){
+            Soldier goalSoldier = (Soldier) target;
+            for( Shot shot : gameShots ) {
+                if (shot.getTarget() instanceof Soldier) {
+                    Soldier targetSoldier = (Soldier) shot.getTarget();
+                    if (targetSoldier.equals(goalSoldier)) {
+                        removedShots.add(shot);
+                    }
+                }
+            }
+        } else if( target instanceof Hero ){
+            Hero goalHero = (Hero) target;
+            for( Shot shot : gameShots ) {
+                if (shot.getTarget() instanceof Hero) {
+                    Hero targetHero = (Hero) shot.getTarget();
+                    if (targetHero.equals(goalHero)) {
+                        removedShots.add(shot);
+                    }
+                }
+            }
+        }
+
+        return removedShots;
+
+        //gameShots.removeAll( removedShots );
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*private ArrayList<Shot> cleanShotsArmory( Armory armory ){
         ArrayList<Shot> removedShots = new ArrayList<>();
         for( Shot shot : gameShots ){
-            if( shot.getTarget() instanceof Invader ){
-                Invader targetInvader = (Invader)shot.getTarget();
-                if( targetInvader.equals(invader) ){
+            if( shot.getTarget() instanceof Armory ){
+                Armory targetArmory = (Armory) shot.getTarget();
+                if( targetArmory.equals(armory) ){
                     removedShots.add( shot );
                 }
             }
         }
         return removedShots;
         //gameShots.removeAll( removedShots );
-    }
+    }*/
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public String botherBurnings(){
         String s="";

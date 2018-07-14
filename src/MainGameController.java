@@ -81,7 +81,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private String coinCounter;
     private String xpCounter;
 
-    private Tooltip coordinateToolTip;
+    //private Tooltip coordinateToolTip;
 
 
 
@@ -162,15 +162,18 @@ public class MainGameController implements ArmoryPlaceBuilder{
     private TextField coins;
     @FXML
     private TextField xps;
+    @FXML
+    private Button pauseButton;
 
     /*public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }*/
 
-    private TimerTask playing = new TimerTask() {
+    private final TimerTask playing = new TimerTask() {
         @Override
         public void run() {
-            Platform.runLater( ()->{
+            timerTaskTasks();
+            /*Platform.runLater( ()->{
 
             //} );
             if( gameController.goAheadRound() ){
@@ -208,12 +211,55 @@ public class MainGameController implements ArmoryPlaceBuilder{
                 updateView();
             }
 
-            } );
+            } );*/
 
         }
     };
 
-    private Timer timer = new Timer();
+
+    private void timerTaskTasks(){
+        Platform.runLater( ()->{
+
+            //} );
+            if( gameController.goAheadRound() ){
+                //TODO now infinity Rounds!
+                if (Game.getLoser()){
+                    try {
+                        timer.cancel();
+                        FXMLLoader loserPageLoader = new FXMLLoader(getClass().getResource("loserPage.fxml"));
+                        GameFX.root = loserPageLoader.load();
+                        Scene loserPageScene = new Scene(GameFX.root,1600,900);
+                        Stage stage = (Stage) doCommand.getScene().getWindow();
+                        stage.setScene(loserPageScene);
+                        stage.setTitle("you lost!");
+                        stage.show();
+                    } catch (IOException io){
+                        io.printStackTrace();
+                    }
+                } else {
+                    try {
+                        timer.cancel();
+                        FXMLLoader detailGameLoader = new FXMLLoader(getClass().getResource("detailGame.fxml"));
+                        GameFX.root = detailGameLoader.load();
+                        Scene detailGameScene = new Scene(GameFX.root, 1600, 900);
+
+                        Stage stage = (Stage) doCommand.getScene().getWindow();
+                        stage.setScene(detailGameScene);
+                        stage.setTitle("Game Details");
+                        stage.show();
+
+                    } catch (IOException io) {
+                        io.printStackTrace();
+                    }
+                }
+            } else {
+                updateView();
+            }
+
+        } );
+    }
+
+    private Timer timer;// = new Timer();
 
     /*private boolean done=false;
     public void addButton(){
@@ -227,13 +273,14 @@ public class MainGameController implements ArmoryPlaceBuilder{
     @FXML
     private void initialize() {
         gameController.initiateRound();
-        coordinateToolTip = new Tooltip();
-        Tooltip.install( gameAnchorPane, coordinateToolTip );
-        gameAnchorPane.setOnMouseEntered( event -> {
+        //coordinateToolTip = new Tooltip();
+        //Tooltip.install( gameAnchorPane, coordinateToolTip );
+        /*gameAnchorPane.setOnMouseEntered( event -> {
             Coordinate mouseCoordinate = new Coordinate( (int)event.getX(),(int)event.getY() );
             coordinateToolTip.setText( "("+event.getX() +"," +event.getY()+") ; is on way: "+gameController.getGame().isOnWay(mouseCoordinate) );
-        } );
+        } );*/
         //timer.schedule(playing,0L, 2*1000L);
+        timer = new Timer();
         timer.scheduleAtFixedRate(playing, 1000L, 1*200L);
 
         this.placeHolderImage = new Image("./placeholder.png");
@@ -288,6 +335,24 @@ public class MainGameController implements ArmoryPlaceBuilder{
         doCommand.setOnAction( event -> {
             comments.setText( gameController.playRound( textField.getText() ) );
             textField.clear();
+        } );
+
+        pauseButton.setOnAction( event -> {
+            if( pauseButton.getText().equals("Pause Game") ){
+                pauseButton.setText("Continue");
+                timer.cancel();
+                timer = new Timer();
+            } else {
+                pauseButton.setText("Pause Game");
+                //timer = new Timer();
+                TimerTask nowPlay = new TimerTask() {
+                    @Override
+                    public void run() {
+                        timerTaskTasks();
+                    }
+                };
+                timer.scheduleAtFixedRate(nowPlay, 1000L, 1*200L);
+            }
         } );
 
         //primaryNodes = GameFX.root.getChildrenUnmodifiable();

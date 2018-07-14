@@ -116,6 +116,7 @@ public class GameController implements DetailShow {
             if( command.equals("pause") ){
                 //isPaused = true;
                 //playPause();
+                return "Game Paused";
             }
 
             /*if (command.equals("go ahead one sec")){
@@ -176,12 +177,13 @@ public class GameController implements DetailShow {
                 String[] XY = tmp[3].split("[(),]");
                 Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
                 game.moveHero(coordinate);
-
+                return "Hero Moved";
             }
 
             //TODO hero stop time
             if (command.equals("let hero stop time")){
                 //method
+                return "Hero Still cannot stop time :))";
             }
 
             //Todo game speed
@@ -189,6 +191,7 @@ public class GameController implements DetailShow {
                 String[] tmp = command.split(" ");
                 String[] speed = tmp[1].split("[x]");
                 /// method for changing the speed
+                return "Time is fixed :))";
             }
 
             if (command.equals("divine intervention kill all")){
@@ -199,7 +202,7 @@ public class GameController implements DetailShow {
                 return game.makeGameSoldiers();
             }
 
-            return "Done :))";
+            return "Bad Command";
 
             /*if( round == this.plagueRound && game.getGameTime().getTime()==this.plagueTime.getTime() ){
                 game.spreadPlague();
@@ -257,6 +260,7 @@ public class GameController implements DetailShow {
                     String[] XY = tmp[3].split("[(),]");
                     Coordinate coordinate = new Coordinate(Integer.parseInt(XY[1]), Integer.parseInt(XY[2]));
                     game.moveHero(coordinate);
+                    return "Hero moved";
               //  }
             }
             if (command.contains("set infantry")){ ////set infantry [0 1 2] of barracks in place N to go to (X,Y)
@@ -271,7 +275,7 @@ public class GameController implements DetailShow {
                     return game.moveSoldier(PlayGround.numberOfPlaces , Integer.parseInt(tmp[2]), coordinate);
                 }
             }
-            return "Done :))";
+            return "Bad Command";
             //command = scanner.nextLine();
         //}
     }

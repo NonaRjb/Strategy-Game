@@ -81,10 +81,11 @@
       <TilePane layoutX="1240.0" layoutY="38.0" prefHeight="66.0" prefWidth="342.0">
          <children>
             <TextField editable="false" prefHeight="27.0" prefWidth="131.0" text="Coins:" />
-            <TextField fx:id="coins"/>
+            <TextField fx:id="coins" />
             <TextField editable="false" prefHeight="27.0" prefWidth="138.0" text="XPs:" />
-            <TextField fx:id="xps"/>
+            <TextField fx:id="xps" />
          </children>
       </TilePane>
+      <Button fx:id="pauseButton" layoutX="1088.0" layoutY="38.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="91.0" text="Pause Game" textAlignment="CENTER" wrapText="true" />
 </children>
 </AnchorPane>
