@@ -11,12 +11,13 @@ public class Hopper extends Invader{
     Hopper(int id, Coordinate init_coordinate){
         super();
         super.instanceNum = id;
-        this.shootPower = 3; //Medium shoot power
+        this.shootPower = 3 * shootPowerUnit; //Medium shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2*Invader.healthUnit); //Low degree of health
         super.movementSpeed = 3 * super.speedConst; //moves 3 pixels in each time unit
-        super.range = 3; //Medium range
+        super.range = 3 * rangeUnit; //Medium range
+        this.lastAttack = new Time(0);
     }
 
     public int getShootPower() {
@@ -40,9 +41,10 @@ public class Hopper extends Invader{
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
-            return false;
+            return shots;
         }
         else{
             this.setLastAttack(currentTime);
@@ -50,9 +52,9 @@ public class Hopper extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
+                shots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
-            return true;
+            return shots;
         }
     }
 

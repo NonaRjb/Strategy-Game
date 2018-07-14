@@ -24,15 +24,6 @@ public class PlayGround {
                                          new Coordinate(899,590),
                                          new Coordinate(899,600),
                                          new Coordinate(899,610)};
-    private final int[] pathOriginIDs ={ 0,
-                                         1,
-                                         2,
-                                         3,
-                                         4,
-                                         5,
-                                         6,
-                                         7,
-                                         8};
 
     PlaceHolder[] placeHolder = new PlaceHolder[numberOfPlaces];
 

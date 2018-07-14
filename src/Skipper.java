@@ -10,13 +10,13 @@ public class Skipper extends Invader{
     Skipper(int id, Coordinate init_coordinate){
         super();
         super.instanceNum = id;
-        this.shootPower = 5; //high shoot power
+        this.shootPower = 5 * shootPowerUnit; //high shoot power
         this.attackRateTime = new Time(1); //high attack speed
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2*Invader.healthUnit); //Low degree of health
         super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
-        super.range = 4; //High range
+        super.range = 4 * rangeUnit; //High range
     }
     public int getShootPower() {
         return shootPower;
@@ -35,9 +35,10 @@ public class Skipper extends Invader{
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
-            return false;
+            return shots;
         }
         else{
             this.setLastAttack(currentTime);
@@ -45,9 +46,9 @@ public class Skipper extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
+                shots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
-            return true;
+            return shots;
         }
     }
 

@@ -84,7 +84,8 @@ public class Game {
                     this.armories.add(barracks);
                     ArrayList<Soldier> barracksSoldiers = barracks.getBarracksSoldiers();
                     for (int i = 0; i < barracksSoldiers.size(); i++) {
-                        this.soldiers.add(barracksSoldiers.get(i));
+                        soldiers.add(barracksSoldiers.get(i));
+                        System.out.println(barracksSoldiers.get(i).getCoordinate().getX() + "," + barracksSoldiers.get(i).getCoordinate().getY());
                     }
                     this.playGround.getPlaceHolder(id).setOwner(this.armories.get(this.armories.size() - 1));
                     s="Barracks Built Successfully"+"\n";
@@ -305,7 +306,7 @@ public class Game {
         }
         else {
             for (Soldier soldier : soldiers) {
-                if ((Coordinate.distance(invader.getCoordinate(), soldier.getCoordinate()) <= invader.getRange())
+                if ((Coordinate.distance(invader.getCoordinate(), soldier.getCoordinate()) <= soldier.getRange())
                         && !(invader instanceof Miner) && !(invader instanceof Sparrow) && !(invader instanceof HockeyMaskMan)) {
                     invader.setFighting(true);
                 }
@@ -361,12 +362,12 @@ public class Game {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     private String goSoldier( Soldier soldier, Coordinate coordinate){
         String s="";
-        if (playGround.isInWay(coordinate)){
+        //if (playGround.isInWay(coordinate)){
             soldier.moveGame(coordinate);
-        }
-        else {
-            s=("Moving to the this coordinate is not allowed")+"\n";
-        }
+       // }
+        //else {
+        //    s=("Moving to the this coordinate is not allowed")+"\n";
+       // }
         return s;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -747,7 +748,7 @@ public class Game {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     /// Invader Attack
     private void invaderAttackGame( Invader invader ){
-
+        boolean isBoomer = false;
         if(invader instanceof Henchman || invader instanceof Skipper || invader instanceof Bane
                 || invader instanceof Sparrow || invader instanceof Miner || invader instanceof Smelly || invader instanceof Hopper){
             ArrayList<Object> targets = new ArrayList<>();
@@ -762,7 +763,11 @@ public class Game {
                 }
             }
             if (targets.size() != 0) {
-                invader.attack(gameTime, gameShots, targets);
+                ArrayList<Shot> shots = new ArrayList<>();
+                shots = invader.attack(gameTime, gameShots, targets);
+                for (Shot shot : shots){
+                    gameShots.add(shot);
+                }
             }
         }
         if (invader instanceof ExG){
@@ -770,7 +775,11 @@ public class Game {
             if( hero != null ) {
                 if ( Coordinate.distance( invader.getCoordinate(), hero.getCoordinate() ) <= invader.getRange()) {
                     targets.add(hero);
-                    invader.attack(gameTime, gameShots, targets);
+                    ArrayList<Shot> shots = new ArrayList<>();
+                    shots = invader.attack(gameTime, gameShots, targets);
+                    for (Shot shot : shots){
+                        gameShots.add(shot);
+                    }
                 }
             }
         }
@@ -782,7 +791,11 @@ public class Game {
                 }
             }
             if (targets.size() != 0) {
-                invader.attack(gameTime, gameShots, targets);
+                ArrayList<Shot> shots = new ArrayList<>();
+                shots = invader.attack(gameTime, gameShots, targets);
+                for (Shot shot : shots){
+                    gameShots.add(shot);
+                }
             }
         }
         if(invader instanceof Healer || invader instanceof Motivator){
@@ -795,7 +808,11 @@ public class Game {
                 }
             }
             if (targets.size() != 0) {
-                invader.attack(gameTime, gameShots, targets);
+                ArrayList<Shot> shots = new ArrayList<>();
+                shots = invader.attack(gameTime, gameShots, targets);
+                for (Shot shot : shots){
+                    gameShots.add(shot);
+                }
             }
         }
         if(invader instanceof Boomer){
@@ -816,10 +833,16 @@ public class Game {
                 }
             }
             if (targets.size() != 0) {
-                invader.attack(gameTime, gameShots, targets);
-                invaders.remove(invader);
+                ArrayList<Shot> shots = new ArrayList<>();
+                shots = invader.attack(gameTime, gameShots, targets);
+                for (Shot shot : shots){
+                    gameShots.add(shot);
+                }
+                //invaders.remove(invader);
+                isBoomer = true;
             }
         }
+        if (isBoomer)   invaders.remove(invader);
 
     }
 
@@ -837,7 +860,7 @@ public class Game {
                             idxs.add(targets.indexOf(invader));
                         }
                     }
-                    for (int i = idxs.size()-1; i > 0; i++){
+                    for (int i = idxs.size()-1; i >= 0; i--){
                         targets.remove(idxs.get(i));
                     }
                 }
@@ -1016,7 +1039,9 @@ public class Game {
                         playGround.getPlaceHolder(targetArmory.getId()).setOwner(null);
                         armories.remove(targetArmory);
                     }
+                    this.removedShots.add( shot );
                 }
+                //this.removedShots.add( shot );
             }
         }
         else if( shot instanceof Ice ){
@@ -1060,9 +1085,9 @@ public class Game {
             this.removedShots.add( shot );
         } else if( shot instanceof RocketShot ){
             //System.out.println("Inja");
-            ArrayList<Invader> shoootedInvaders = findInvaders( shot.getCoordinate(), ((RocketShot) shot).getRange(), TargetPriority.AllInRange );
-            if( shoootedInvaders != null ) {
-                for (Invader invader : shoootedInvaders) {
+            ArrayList<Invader> shootedInvaders = findInvaders( shot.getCoordinate(), ((RocketShot) shot).getRange(), TargetPriority.AllInRange );
+            if( shootedInvaders != null ) {
+                for (Invader invader : shootedInvaders) {
                     if (invader.getHealthDegree().getHealthLevel() <= shot.getPower()) {
                         s = ("Invader got killed !") + "\n";
                         removedShots.addAll(cleanShots(invader));
@@ -1309,10 +1334,15 @@ public class Game {
                     }
                 }
                 if (poorArmory instanceof Barracks) {
+                    ArrayList<Integer> idxs = new ArrayList<>();
                     for (Soldier soldier : soldiers) {
                         if (soldier.getBarracksOwner().getId() == poorArmory.getId()) {
-                            soldiers.remove(soldier);
+                            idxs.add(soldiers.indexOf(soldier));
+                            //soldiers.remove(soldier);
                         }
+                    }
+                    for (int i = idxs.size()-1; i >= 0; i--){
+                        soldiers.remove(idxs.get(i));
                     }
                     ((Barracks) poorArmory).removeSoldier(0, gameTime);
                     ((Barracks) poorArmory).removeSoldier(1, gameTime);
@@ -1322,7 +1352,7 @@ public class Game {
                 s=("Sorry . It is natural :))")+"\n";
             }
         } else {
-            s=("It is natural but you are too poor :)))")+"\n";
+            s=("It is natural but don't feel so miserable :)))")+"\n";
         }
         return s;
     }

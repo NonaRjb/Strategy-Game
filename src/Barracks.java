@@ -24,6 +24,9 @@ public class Barracks extends Armory{
         soldiers[0] = new Soldier(coordinate, this, 0, soldiersInitHealth);
         soldiers[1] = new Soldier(coordinate, this, 1, soldiersInitHealth);;
         soldiers[2] = new Soldier(coordinate, this, 2, soldiersInitHealth);;
+        lastKilledsoldierTime[0] = new Time(0);
+        lastKilledsoldierTime[1] = new Time(0);
+        lastKilledsoldierTime[2] = new Time(0);
         barracksSoldiers.add(soldiers[0]);
         barracksSoldiers.add(soldiers[1]);
         barracksSoldiers.add(soldiers[2]);

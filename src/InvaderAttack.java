@@ -1,5 +1,5 @@
 import java.util.ArrayList;
 
 public interface InvaderAttack {
-    Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> target);
+    ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> target);
 }

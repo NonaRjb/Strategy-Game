@@ -9,13 +9,13 @@ public class Motivator extends Invader {
     Motivator(int id, Coordinate init_coordinate){
         super();
         super.instanceNum = id;
-        this.motivePower = 1; //low motive power
+        this.motivePower = 1 * shootPowerUnit; //low motive power
         this.motiveRate = 2; //motives every 2 time units
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3*Invader.healthUnit); //Medium degree of health
         super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
-        super.range = 2; //low range
+        super.range = 2 * rangeUnit; //low range
     }
 
     public int getMotivePower() {
@@ -35,16 +35,17 @@ public class Motivator extends Invader {
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.motiveRate){
-            return false;
+            return shots;
         }
         else{
             this.setLastAttack(currentTime);
             for (Object target : targets){
                 super.setTarget(target);
             }
-            return true;
+            return shots;
         }
     }
 

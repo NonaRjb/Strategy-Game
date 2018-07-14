@@ -11,11 +11,12 @@ public class Boomer extends Invader{
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(1*Invader.healthUnit); //Very low degree of health
         super.movementSpeed = 4 * super.speedConst; //moves 4 pixels in each time unit
-        super.range = 3; //Medium range
+        super.range = 3 * rangeUnit; //Medium range
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         for (Object target : targets) {
             if (target instanceof Armory){
                 ((Armory) target).setStopped(true, boomingTimeConst ,currentTime);
@@ -26,7 +27,7 @@ public class Boomer extends Invader{
             }
             super.setTarget(target);
         }
-        return true;
+        return shots;
     }
 
     @Override

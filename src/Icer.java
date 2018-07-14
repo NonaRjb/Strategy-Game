@@ -12,7 +12,7 @@ public class Icer extends Invader{
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(4*Invader.healthUnit); //High degree of health
         super.movementSpeed = 1 * super.speedConst; //moves 1 pixels in each time unit
-        super.range = 3; //Medium range
+        super.range = 3 * rangeUnit; //Medium range
     }
 
     public Time getLastAttack() {
@@ -28,9 +28,10 @@ public class Icer extends Invader{
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if ((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
-            return false;
+            return shots;
         }else {
             this.setLastAttack(currentTime);
             Armory target = (Armory) targets.get(0);
@@ -43,7 +44,7 @@ public class Icer extends Invader{
             }
             super.setTarget(target);
             gameShots.add(new Ice(this.coordinate, target, 10));
-            return true;
+            return shots;
 
         }
     }

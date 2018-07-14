@@ -13,7 +13,7 @@ public class GameController implements DetailShow {
     private int plagueRound;
     private Time naturalEventTime;
     private int naturalEventRound;
-
+    private boolean isPaused = false;
     private final int numberOfRounds = 5;
 
     // Constructor
@@ -63,7 +63,10 @@ public class GameController implements DetailShow {
                 //playWinnerEnd();
             }
             return true;
-        } else {
+        }/* else if(isPaused == true){
+                playPause();
+                return false;
+        }*/ else {
             game.increaseTime();
             if(game.getLoser()){
                return true;
@@ -110,8 +113,9 @@ public class GameController implements DetailShow {
                 }
             }
 
-            if( command.equals("Pause") ){
-                playPause();
+            if( command.equals("pause") ){
+                //isPaused = true;
+                //playPause();
             }
 
             /*if (command.equals("go ahead one sec")){
@@ -274,11 +278,12 @@ public class GameController implements DetailShow {
 
     public void playPause(){
 
-        command = scanner.next();
+        command = scanner.nextLine();
         while (!command.equals("OK")){
             command = scanner.nextLine();
+            //this.playBreak(command);
         }
-
+       // isPaused = false;
     }
 
     public void playEndRound(){
@@ -336,5 +341,9 @@ public class GameController implements DetailShow {
 
     public Game getGame() {
         return game;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 }

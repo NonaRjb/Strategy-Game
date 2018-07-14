@@ -18,7 +18,7 @@ public class Healer extends Invader {
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(2*Invader.healthUnit); //Low degree of health
         super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
-        super.range = 2; //low range
+        super.range = 2 * rangeUnit; //low range
     }
 
     public int getHealPower() {
@@ -38,9 +38,10 @@ public class Healer extends Invader {
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.healRate){
-            return false;
+            return shots;
         }
         else{
             this.setLastAttack(currentTime);
@@ -54,7 +55,7 @@ public class Healer extends Invader {
                     ((Invader) invader).setHealthDegree(new HealthLevel(this.healPower));
                 }
             }
-            return true;
+            return shots;
         }
     }
 

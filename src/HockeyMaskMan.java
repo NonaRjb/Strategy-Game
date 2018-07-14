@@ -9,13 +9,13 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
     HockeyMaskMan(int id, Coordinate init_coordinate){
         super();
         super.instanceNum = id;
-        this.shootPower = 3; //Medium shoot power
+        this.shootPower = 3 * shootPowerUnit; //Medium shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(4*Invader.healthUnit); //High degree of health
         super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
-        super.range = 3; //Medium range
+        super.range = 3 * rangeUnit; //Medium range
     }
 
     public int getShootPower() {
@@ -33,9 +33,10 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
-            return false;
+            return shots;
         }
         else{
             this.setLastAttack(currentTime);
@@ -43,9 +44,9 @@ public class HockeyMaskMan extends Invader implements InvaderAttack{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
+                shots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
-            return true;
+            return shots;
         }
     }
 

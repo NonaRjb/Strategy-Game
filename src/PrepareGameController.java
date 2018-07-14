@@ -165,13 +165,13 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
                     Image image = new Image("./laser1.png");
                     armoryPlaces.add(image);
                 } else if (placeHolder.getOwner() instanceof Rocket){
-                    Image image = new Image("./machineGun.png"); //todo should be changed
+                    Image image = new Image("./rocket.png");
                     armoryPlaces.add(image);
                 } else if (placeHolder.getOwner() instanceof Excalibur){
                     Image image = new Image("./machineGun.png"); //todo should be changed
                     armoryPlaces.add(image);
                 } else if (placeHolder.getOwner() instanceof Beehive){
-                    Image image = new Image("./machineGun.png"); //todo should be changed
+                    Image image = new Image("./beehive.png");
                     armoryPlaces.add(image);
                 } else if (placeHolder.getOwner() instanceof Sauron){
                     Image image = new Image("./machineGun.png"); //todo should be changed
@@ -244,7 +244,7 @@ public class PrepareGameController implements ArmoryPlaceBuilder{
         PlaceHolder[] armories = playGround.getPlaceHolder();
         for (PlaceHolder armory : armories){
             Label label = new Label();
-            label.setText(Integer.toString(armory.getId()) + 1);
+            label.setText(Integer.toString(armory.getId() + 1));
             label.setLayoutX(armory.getPlaceCoordinate().getY()-20);
             label.setLayoutY(armory.getPlaceCoordinate().getX()-20);
             label.setStyle("-fx-background-color: #FFFF00");

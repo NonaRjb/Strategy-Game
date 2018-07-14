@@ -9,13 +9,13 @@ public class Henchman extends Invader{
     Henchman(int id, Coordinate init_coordinate){
         super();
         super.instanceNum = id;
-        this.shootPower = 2; //Low shoot power
+        this.shootPower = 2 * shootPowerUnit; //Low shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         super.coordinate = init_coordinate;
         this.lastAttack = new Time(0);
         super.healthDegree = new HealthLevel(3*Invader.healthUnit); //Medium healthLevel
         super.movementSpeed = 4 * super.speedConst; //moves 4 pixels in each time unit
-        super.range = 3; //Medium Range
+        super.range = 3 * rangeUnit; //Medium Range
     }
 
     //getters
@@ -37,9 +37,10 @@ public class Henchman extends Invader{
 
     ////// attack method
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets){
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets){
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
-            return false;
+            return shots;
         }
         else{
             this.setLastAttack(currentTime);
@@ -47,9 +48,9 @@ public class Henchman extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
+                shots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
-            return true;
+            return shots;
         }
     }
 

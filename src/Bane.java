@@ -9,13 +9,13 @@ public class Bane extends Invader{
     Bane( int id, Coordinate init_coordinate){
         super();
         super.instanceNum = id;
-        this.shootPower = 5; //High shoot power
+        this.shootPower = 4 * shootPowerUnit; //High shoot power
         this.attackRateTime = new Time(3); //attacks every 3 time units
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel( 4*Invader.healthUnit ); //High degree of health
         super.movementSpeed = 1 * super.speedConst; //moves 1 pixels in each time unit
-        super.range = 2; //low range
+        super.range = 2 * rangeUnit; //low range
     }
 
     public Time getLastAttack(){
@@ -32,9 +32,10 @@ public class Bane extends Invader{
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
-            return false;
+            return shots;
         }
         else{
             this.setLastAttack(currentTime);
@@ -42,9 +43,9 @@ public class Bane extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
+                shots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
-            return true;
+            return shots;
         }
 
     }

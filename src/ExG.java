@@ -9,13 +9,13 @@ public class ExG extends Invader{
     ExG(int id, Coordinate init_coordinate){
         super();
         super.instanceNum = id;
-        this.shootPower = 2; //Low shoot power
+        this.shootPower = 2 * shootPowerUnit; //Low shoot power
         this.attackRateTime = new Time(2); //attacks every 2 time units
         this.lastAttack = new Time(0);
         super.coordinate = init_coordinate;
         super.healthDegree = new HealthLevel(3*Invader.healthUnit); //Medium degree of health
         super.movementSpeed = 2 * super.speedConst; //moves 2 pixels in each time unit
-        super.range = 2; //Medium range
+        super.range = 3 * rangeUnit; //Medium range
     }
 
     public int getShootPower() {
@@ -35,9 +35,10 @@ public class ExG extends Invader{
     }
 
     @Override
-    public Boolean attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+    public ArrayList<Shot> attack(Time currentTime, ArrayList<Shot> gameShots, ArrayList<Object> targets) {
+        ArrayList<Shot> shots = new ArrayList<>();
         if((currentTime.getTime() - this.getLastAttack().getTime()) < this.getAttackRateTime().getTime()){
-            return false;
+            return shots;
         }
         else {
             this.lastAttack = currentTime;
@@ -45,9 +46,9 @@ public class ExG extends Invader{
                 super.setTarget(target);
             }
             for (int i = 0; i < super.targetNum(); i++) {
-                gameShots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
+                shots.add(new Bullet(super.coordinate, this, super.getTarget(i), shootPower));
             }
-            return true;
+            return shots;
         }
     }
 

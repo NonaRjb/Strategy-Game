@@ -242,9 +242,9 @@ public class MainGameController implements ArmoryPlaceBuilder{
         this.freezerImage = new Image("./freezer1.png");
         this.hellgateImage = new Image("./hellgate1.png");
         this.laserImage = new Image("./laser1.png");
-        this.rocketImage = new Image("./machineGun.png"); //todo should be changed
+        this.rocketImage = new Image("./rocket.png");
         this.excaliburImage = new Image("./machineGun.png"); //todo should be changed
-        this.beehiveImage = new Image("./machineGun.png"); //todo should be changed
+        this.beehiveImage = new Image("./beehive.png");
         this.sauronImage = new Image("./machineGun.png"); //todo should be changed
 
         this.henchmanImage = new Image("./Henchman1.png");
@@ -376,7 +376,7 @@ public class MainGameController implements ArmoryPlaceBuilder{
         PlaceHolder[] armories = playGround.getPlaceHolder();
         for (PlaceHolder armory : armories){
             Label label = new Label();
-            label.setText(Integer.toString(armory.getId()) + 1);
+            label.setText(Integer.toString(armory.getId() + 1));
             label.setLayoutX(armory.getPlaceCoordinate().getY()-20);
             label.setLayoutY(armory.getPlaceCoordinate().getX()-20);
             label.setStyle("-fx-background-color: #FFFF00");
